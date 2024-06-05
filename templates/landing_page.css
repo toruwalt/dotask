@@ -1,0 +1,263 @@
+@media (min-width: 768px) {
+    /* Styles for screens with a maximum width of 768px */
+}
+  body {
+    /*background-color: wheat;*/
+    padding: 0%;
+    margin: auto;
+    font-family: graduate;
+    }
+
+    .main-page{
+        width: 100%;
+        height: 99vh;
+        display: flex;
+    }
+
+    .hero-left{
+        width: 50%;
+        height: 100%;
+        border-right: 1px solid black;
+    }
+
+
+    .hero-left  > .hp_top{
+        width: auto;
+        height: 10vh;
+    }
+
+    .hp_top_left{
+        width: 95%;
+        height: 100%;
+        padding-left: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid black;
+    }
+
+    .hp_top_left > h1{
+        color: blue;
+    }
+
+    .logo{
+        margin-right: 15%;
+    }
+
+    .logo-mini{
+        height: 5vw;
+        width: 5vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-text{
+        width: 100%;
+        height: 100%;
+        margin-left: 5%;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .top-bar-text-1{
+        width: 100%;
+        height: 100%;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        /*border-right: 1px solid fuchsia;*/
+    }
+
+    .hero-text{
+        width: 50%;
+        height: 60%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-text-div{
+        width: 100%;
+        height: 80%;
+    }
+
+    #hero-big-text{
+        color: blue;
+        font-size: 36px;
+    }
+
+
+
+    .hero-base{
+        width: 100%;
+        display: grid;
+        
+        
+    }
+
+    .hero-base-art{
+        width: 100%;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        display: flex;
+        justify-content: space-around;
+        align-items: center; 
+    }
+
+    .hero-reg{
+        width: 100%;
+        height: 20vh;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    #sign-bottom{
+        width: 100%;
+        height: 100%;
+        display: grid;
+        align-items: center;
+        text-align: center;
+    }
+      
+    #sign-bottom:hover {
+        background-color: blue;
+        color: white;
+        transition: background-color 0.5s ease; /* Animation properties */
+      }
+
+
+      /*
+        Right Side of the hero section
+      */
+    .hero-right{
+        width: 50%;
+        height: 100%;
+    }
+
+      .hp-row-1{
+        height:20vh;
+        width: 100%;
+        margin-top: 2px;
+        font-family: inter;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        text-align: center;
+      }
+
+      .hp-row-1 > div{
+        height: 100%;
+        width: 25%;
+      }
+
+      .A{
+        text-align: center;
+        border-bottom: 1px solid black;
+      }
+
+      #A1{
+        border-right: 2px solid black;
+      }
+
+      .AA{
+        font-family: graduate;
+        font-size: 10em;
+        position: relative;
+        top:-120px;
+        color: black;
+      }
+
+      .AA:hover, .BB:hover, .CC:hover{
+        color: blue;
+        transition: color 0.5s ease;
+      }
+
+      .BB{
+        font-family: graduate;
+        font-size: 1em;
+        position: relative;
+        top: 25px;
+      }
+
+      .A-3-1 {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid black;
+      }
+
+
+      .A-3-2 {
+        width: 100%;
+        height: 49%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .CC{
+        font-family: graduate;
+      }
+
+      #CC{
+        border-right: 1px solid black;
+      }
+
+      #img-border-1{
+        background-image: url("../static/Frame1.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-right: 0.1px solid black;
+      }
+
+      #img-border-2{
+        background-image: url("../static/Frame2.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      #img-border-3{
+        background-image: url("../static/Frame3.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      .hp-row-2{
+        height: 39vh;
+        width: 100%;
+        margin-top: 1px;
+        display: flex;
+        text-align: center;
+        }
+
+      .hp-row-last{
+        height: 50%;
+        width: 24.7%;
+        display: block;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hp-row-last > #DDDD{
+        height: 100%;
+        width: 98%;
+        display: flex;
+        justify-content: center;
+        border: 0px solid black;
+      }
+
+      .hp-row-3{
+        height: 39vh;
+        width: 50%;
+        background-color: grey;
+      }
