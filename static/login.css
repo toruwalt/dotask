@@ -83,11 +83,15 @@
 }
 
 @media (max-width: 769px) {
+    body{
+	width:98%;
+    }
     .hero-right{
         display: none;
     }
 
     .hero-left{
+	width: 98%;
         display: block;
     }
 
@@ -141,7 +145,7 @@
         background-color: #5694F2;
     }
 
-    input[type=email], input[type=password], [type=password],select, textarea {
+    input[type=email], input[type=text], [type=password],select, textarea {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
