@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Successful</title>
+    <script>
+        window.setTimeout(function() {
+            window.location.href = "{{ url_for('hello_register') }}";
+        }, 5000); // 5000 milliseconds = 60 seconds
+    </script>
+</head>
+<body>
+    <h1>Registration Unsuccessful!</h1>
+    <h3>Please follow the rules below when logging in</h3>
+    <ol>
+        <li><h4>Enter a email less than 40 characters</h4></li>
+        <li><h4>Enter a password</h4></li>
+    </ol>
+    <h3>You will be redirected to the registration page in a few seconds.</h3>
+</body>
+</html>
