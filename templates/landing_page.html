@@ -8,32 +8,24 @@
     <link rel="shortcut icon" type="image/x-icon" href="../static/Logo.ico">
 
     <!-- Font CSS -->
-    <link href="../templates/fonts.css">
-
+    <link href="../static/fonts.css">
 
 
     <!-- CSS files-->
-    <link href="./landing_page.css" rel="stylesheet">
-    <link href="./landing_page_right.css" rel="stylesheet">
-
-    <!-- Bootstrap CSS
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    -->
+    <link href="../static/landing_page.css" rel="stylesheet">
 
     <!-- Font to Use -->
-    <link rel="stylesheet" type="text/css" href="fonts.css">
+    <link rel="stylesheet" type="text/css" href="../static/fonts.css">
 
-
-    <title>Hello, world!</title>
   </head>
   <body>
     <div class="off-screen-menu">
-        <div class="top-bar-text-1">HOME</div>
-        <div class="top-bar-text-1">COMPANY</div>
-          <div class="top-bar-text-1">BLOG</div>
-          <div class="top-bar-text-1">LOGIN</div>
-          <div class="top-bar-text-1">REGISTER</div>
-          <div class="top-bar-text-1">CONTACT US</div>
+        <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
+        <div class="top-bar-text-1"><a href="{{ url_for('hello_company') }}">COMPANY</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_blog') }}">BLOG</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_contact_us') }}">CONTACT US</a></div>
           </div>
     </div>
     <div class="main-page">
@@ -45,10 +37,10 @@
               </div>
             <div><h1 class="logo-title">DOTASK</h1></div>
             <div class="header-text">
-            <div class="top-bar-text-1">HOME</div>
-            <div class="top-bar-text-1">COMPANY</div>
-              <div class="top-bar-text-1">BLOG</div>
-              </div>
+              <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
+              <div class="top-bar-text-1"><a href="{{ url_for('hello_company') }}">COMPANY</a></div>
+              <div class="top-bar-text-1"><a href="{{ url_for('hello_blog') }}">BLOG</a></div>
+            </div>
             <div class="ham"></div>
             <nav><div class="hamburger">
               <span></span>
@@ -94,8 +86,8 @@
             </div>
           </div>
           <div class="hero-reg">
-            <div id="sign-bottom">Sign In</div>
-            <div id="sign-bottom">Sign Up</div>
+            <div  id="sign-bottom"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
+            <div class="sign-up-button" id="sign-bottom"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
           </div>
         </div>
         
@@ -153,8 +145,8 @@
           </div>   
         </div>
         <div class="call-to-action">
-          <div class="signup">SIGN IN</div>
-          <div class="signup">REGISTER</div>
+          <div class="signup"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
+          <div class="signup"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
         </div>
         </div>
       </div>
@@ -165,8 +157,9 @@
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
+    <!-- <script src="{{ url_for('static', filename='xyz.js') }}"></script> -->
 
-    <script src="../templates/xyz.js"></script>
+    <script src="../static/xyz.js"></script>
 
     <!-- Option 1: Bootstrap Bundle with Popper 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
