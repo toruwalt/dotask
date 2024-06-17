@@ -1,17 +1,9 @@
-.flashes{
-    padding: 10px;
-    border: 1px solid black;
-    background-color: yellow;
-    font-family: inter;
-    font-style: inter;
-}
-
 @media (min-width: 768px) {
         .hero-text{
         width: 80%;
         height: 60%;
         margin: auto;
-        display: block;
+        display: flex;
         align-items: center;
     }
 
@@ -51,7 +43,7 @@
         color: #3457D5;
     }
 
-    input[type=email], input[type=password], input[type=text], select, textarea {
+    input[type=email], input[type=password], select, textarea {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -104,11 +96,9 @@
     .hero-text{
         width: 80%;
         height: 60%;
-        margin: auto;
-        margin-top: 1%;
-        display: block;
+        margin: 10%;
+        display: flex;
         align-items: center;
-        background-color: aqua;
     }
 
     .hero-text-div{
@@ -123,7 +113,6 @@
     .hero-text-div > div {
         display: flex;
         flex-direction: column;
-        background-color: red;
     }
 
 
@@ -143,27 +132,11 @@
         background-color: #5694F2;
     }
 
-    input[type=email], input[type=password], input[type=text],select, textarea {
+    input[type=email], input[type=password], select, textarea {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
             box-sizing: border-box;
         }
-
-    .hero-base{
-        width: 100%;
-        display: flex;
-        background-color: #04AA6D;
-    }
-
-    .hero-base-art{
-        width: 100%;
-        margin-bottom: 1%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        position: fixed;
-        bottom: 0px;
-    }
 
 }
