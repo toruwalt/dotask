@@ -51,15 +51,35 @@
           </div>
         </div>
         <div class="hero-text">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
           <div class="hero-text-div">
-              <div><h2>Create an Account</h2>
-              <h5>Please register to continue to use our service</h5></div>
+              <div><h2>Create an Account</h2></div>
               <form action="/register" method="POST">
               <label for="email">Email</label>
               <input type="email" name="email" class="labels" id="email">
+
+              <label for="username">Username</label>
+              <input type="text" name="username" class="labels" id="username">
+
+              <label for="first_name">First Name</label>
+              <input type="text" name="first_name" class="labels" id="first_name">
+
+              <label for="last_name">Last Name</label>
+              <input type="text" name="last_name" class="labels" id="last_name">
             
               <label for="password">Password</label>
               <input type="password" name="password" class="labels" id="password">
+
+              <label for="confirm">Confirm Password</label>
+              <input type="password" name="confirm" class="labels" id="confirm">
               <input type="submit" value="Register">
             </form>
           <h4 style="text-align: center;">Already have an account?  <span style="color: blue; cursor: pointer;"> <a href="{{ url_for('hello_login') }}">LogIn</a></span> </h4></div>

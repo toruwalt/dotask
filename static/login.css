@@ -1,9 +1,18 @@
+.flashes{
+    padding: 10px;
+    border: 1px solid black;
+    background-color: yellow;
+    font-family: inter;
+    font-style: inter;
+}
+
 @media (min-width: 768px) {
         .hero-text{
         width: 80%;
         height: 60%;
         margin: auto;
-        display: flex;
+        margin-top: 1%;
+        display: block;
         align-items: center;
     }
 
@@ -43,7 +52,7 @@
         color: #3457D5;
     }
 
-    input[type=email], input[type=password], select, textarea {
+    input[type=email], input[type=password], input[type=text], select, textarea {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -132,11 +141,27 @@
         background-color: #5694F2;
     }
 
-    input[type=email], input[type=password], select, textarea {
+    input[type=email], input[type=password], [type=password],select, textarea {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
             box-sizing: border-box;
         }
+
+    .hero-base{
+        width: 100%;
+        display: flex;
+        background-color: #04AA6D;
+    }
+
+    .hero-base-art{
+        width: 100%;
+        margin-bottom: 1%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0px;
+    }
 
 }

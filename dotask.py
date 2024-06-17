@@ -48,7 +48,7 @@ class Task(db.Model):
 
 
 with app.app_context():
-    db.reflect()
+    db.create_all()
 
 
 @app.route("/dashboard")
@@ -83,17 +83,21 @@ def hello_register():
 
     if request.method == 'POST':
         if form.validate():
-            flash('Thanks for registering')
-            """
-            with engine.connect() as conn:
-                user = User(form.username.data, form.email.data,
-                    form.password.data)
-            db_session.add(user)
-            """
+            user = User(
+                email = form.email.data,
+                username = form.username.data,
+                first_name = form.first_name.data,
+                last_name = form.last_name.data,
+                password = form.password.data
+                )
+            db.session.add(user)
+            db.session.commit()
+            flash("Registration Succesful")
             return redirect(url_for('hello_dashboard'))
             
         else:
-            return render_template('register_error.html')
+            flash(form.errors, category='error')
+            return render_template('register.html')
     
 @app.route("/submit", methods=['GET', 'POST'])
 def hello_submit():
