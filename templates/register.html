@@ -51,15 +51,15 @@
           </div>
         </div>
         <div class="hero-text">
+          <div class="flash-div">
           {% with messages = get_flashed_messages() %}
             {% if messages %}
-              <ul class=flashes>
               {% for message in messages %}
                 {{ message }}
               {% endfor %}
-              </ul>
             {% endif %}
           {% endwith %}
+          </div>
           <div class="hero-text-div">
               <div><h2>Create an Account</h2></div>
               <form action="/register" method="POST">

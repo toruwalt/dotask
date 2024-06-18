@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """My Taskkeeper"""
 
-import os, enum
-from flask import Flask, render_template,  redirect, request, url_for, flash
+import os, enum, time
+from flask import Flask,render_template,  redirect, request, url_for, flash
 from forms import RegisterForm, LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import date
-from sqlalchemy import Enum
+from sqlalchemy import Enum, text,select, exists
 from sqlalchemy.orm import relationship
 
 
@@ -83,18 +83,29 @@ def hello_register():
 
     if request.method == 'POST':
         if form.validate():
-            user = User(
-                email = form.email.data,
-                username = form.username.data,
-                first_name = form.first_name.data,
-                last_name = form.last_name.data,
-                password = form.password.data
-                )
-            db.session.add(user)
-            db.session.commit()
-            flash("Registration Succesful")
+            user = User.query.filter_by(email=form.email.data).first()
+            username = User.query.filter_by(username=form.username.data).first()
+            if user:
+                flash("Email already used")
+                return render_template('register.html')
+            if username:
+                flash("Username already exist")
+                return render_template('register.html')
+            return render_template('login.html')
+                
+            """
+                user = User(
+                    email = form.email.data,
+                    username = form.username.data,
+                    first_name = form.first_name.data,
+                    last_name = form.last_name.data,
+                    password = form.password.data
+                    )
+                db.session.add(user)
+                db.session.commit()
             return redirect(url_for('hello_dashboard'))
-            
+        
+            """
         else:
             flash(form.errors, category='error')
             return render_template('register.html')

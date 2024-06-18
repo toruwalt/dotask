@@ -1,13 +1,15 @@
-.flashes{
-    padding: 10px;
-    border: 1px solid black;
-    background-color: yellow;
+.flash-div {
+    margin-top: 2%;
     font-family: inter;
-    font-style: inter;
-}
+    background-color: #ffcccc;
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+  
 
 @media (min-width: 768px) {
-        .hero-text{
+
+    .hero-text{
         width: 80%;
         height: 60%;
         margin: auto;
@@ -85,13 +87,21 @@
 @media (max-width: 769px) {
     body{
 	width:98%;
+    font-family: inter;
+    font-size: 16px;
+    }
+
+    h4{
+        font-size: 0.5em;  /* Adjust as needed */
+        font-weight: lighter;  /* Adjust as needed */
+        margin: 0.5em 0;  /* Adjust as needed */
     }
     .hero-right{
         display: none;
     }
 
     .hero-left{
-	width: 98%;
+	    width: 98%;
         display: block;
     }
 
@@ -110,7 +120,7 @@
         width: 80%;
         height: 60%;
         margin: 10%;
-        display: flex;
+        display: block;
         align-items: center;
     }
 
