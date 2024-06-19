@@ -1,7 +1,7 @@
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import Form, StringField, PasswordField, validators, EmailField
 
 class RegisterForm(Form):
-    email = StringField('Email Address', [validators.Length(min=6, max=35)], )
+    email = EmailField('Email Address', [validators.Length(min=6, max=35)], )
     password = PasswordField('Password', [
         validators.DataRequired()])
     username = StringField('Username', [validators.Length(min=2, max=35)])
@@ -13,6 +13,6 @@ class RegisterForm(Form):
     confirm = PasswordField('Repeat Password')
 
 class LoginForm(Form):
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
-    password = PasswordField('Password', [
-        validators.DataRequired()])
+    email = EmailField('Login Email Address', [validators.InputRequired()])
+    password = PasswordField('Login Password', [
+        validators.InputRequired()])

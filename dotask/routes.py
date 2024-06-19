@@ -1,9 +1,8 @@
 from flask import render_template,  redirect, request, url_for, flash
-from dotask import app,db
+from dotask import app, db
+from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm
 from dotask.models import User
-
-
 
 @app.route("/dashboard")
 def hello_dashboard():
@@ -50,7 +49,7 @@ def hello_register():
                 username = form.username.data,
                 first_name = form.first_name.data,
                 last_name = form.last_name.data,
-                password = form.password.data
+                password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
                 )
             db.session.add(user)
             db.session.commit()
@@ -72,12 +71,29 @@ def hello_submit():
 @app.route("/login", methods=['GET', 'POST'])
 def hello_login():
     form = LoginForm(request.form)
-    if request.method == 'POST' and form.validate():
-        flash('Thanks for registering')
-        return redirect(url_for('hello_dashboard'))
-    else:
-        flash(form.errors, category='error')
-        return render_template('login.html')
+    if request.method == 'GET':
+        return render_template('login.html', form=form)
+
+    if request.method == 'POST':
+        if form.validate():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user:
+                password = user.password
+                if bcrypt.check_password_hash(password, form.password.data) == True:
+                    flash('Thanks for registering')
+                    return redirect(url_for('hello_dashboard'))
+
+                else:
+                    flash("Invalid login credentials. Please check your password.", category='error')
+                    return render_template('login.html')
+            
+            else:
+                    flash("Invalid login credentials. Please check your email.", category='error')
+                    return render_template('login.html')
+        else:
+            flash(form.errors, category='error')
+            return render_template('login.html')
+       
 
 @app.route("/contact_us", methods=['GET', 'POST'])
 def hello_contact_us():
