@@ -8,6 +8,9 @@ from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
+
+login_manager = LoginManager()
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -18,6 +21,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'do
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app) 
 migrate = Migrate(app, db)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
+login_manager.login_view = "hello_login"
+
+from dotask.models import User
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 from dotask import routes

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font to Use -->
+    <link rel="stylesheet" type="text/css" href="../static/fonts.css">
+
+    <!-- CSS file to use -->
+    <link rel="stylesheet" href="../static/layout.css" />
+    {% block head %}
+    <title>{% block title %}{% endblock %} </title>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/layout.css" {% endblock %}/>
+    {% endblock %}
+</head>
+<body>
+    <div class="sidebar">
+        <div id="logo">
+            <img src="../static/Logo.svg" height="60px" width="60px">
+        </div>
+        <div>
+            <a class="a1" href="{{ url_for('hello_dashboard') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/dashboard.svg">
+                <h4 class="sidebar-text">Dashboard</h4>
+            </div>
+            </a>
+        </div>
+        <div>
+            <a class="a2" href="{{ url_for('hello_tasks') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/tasks.svg">
+                <h4 class="sidebar-text">Tasks</h4>
+            </div>
+            </a>
+        </div>
+        <div>
+            <a class="a3" href="{{ url_for('hello_profile') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/profile.svg">
+                <h4 class="sidebar-text">Profile</h4>
+            </div>
+            </a>
+        </div>
+        <div>
+            <a class="a4" href="{{ url_for('hello_settings') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/settings.svg">
+                <h4 class="sidebar-text">Settings</h4>
+            </div>
+            </a>
+        </div>
+        <div>
+            <a href="{{ url_for('hello_logout') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/logout.svg">
+                <h4 class="sidebar-text">Logout</h4>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div id="content">
+        {% block nav_title %}
+        {% endblock nav_title %}
+        
+        {% block content %}
+            <h1>Hi name!</h1>
+            <ol>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+                <li>G</li>
+                <li>H</li>
+                <li>I</li>
+                <li>J</li>
+                <li>K</li>
+                <li>L</li>
+                <li>M</li>
+                <li>N</li>
+                <li>O</li>
+                <li>P</li>
+                <li>Q</li>
+                <li>R</li>
+                <li>S</li>
+                <li>T</li>
+                <li>U</li>
+                <li>V</li>
+                <li>W</li>
+                <li>X</li>
+                <li>Y</li>
+                <li>Z</li>
+            </ol>
+            <ol>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+                <li>G</li>
+                <li>H</li>
+                <li>I</li>
+                <li>J</li>
+                <li>K</li>
+                <li>L</li>
+                <li>M</li>
+                <li>N</li>
+                <li>O</li>
+                <li>P</li>
+                <li>Q</li>
+                <li>R</li>
+                <li>S</li>
+                <li>T</li>
+                <li>U</li>
+                <li>V</li>
+                <li>W</li>
+                <li>X</li>
+                <li>Y</li>
+                <li>Z</li>
+            </ol>
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    {% extends "layout.html" %}
+    {% block head %}
+        <title>{% block title %}{% endblock %} Dashboard - DoTask</title>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/dashboard.css" {% endblock %}/>
+    {% endblock %}
 </head>
 <body>
-    <h1> WELCOME HOME!!! </h1>
-    {{ message }}
+    {% block nav_title %}
+    <div class="nav_title">{% if current_user.is_authenticated %}
+        Hi {{ current_user.name }}!
+      {% endif %}
+    </div>
+    {% endblock nav_title %}
+
+    
 </body>
 </html>

@@ -1,8 +1,8 @@
 from sqlalchemy import Enum
 from sqlalchemy.orm import relationship
-from dotask import app, db, enum
+from dotask import app, db, enum, UserMixin
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), nullable=False, unique=True)

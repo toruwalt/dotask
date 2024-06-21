@@ -3,12 +3,18 @@ from dotask import app, db
 from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm
 from dotask.models import User
+from dotask import login_manager, current_user, login_user, login_required, logout_user
+
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
 
 @app.route("/dashboard")
+@login_required
 def hello_dashboard():
     """The Dashboard"""
-    return render_template('dashboard.html')
-
+    return render_template('dashboard.html', name=current_user.first_name)
 
 @app.route("/")
 @app.route("/home")
@@ -25,7 +31,6 @@ def hello_company():
 def hello_blog():
     """The about page"""
     return "<p>Hello, Blog!</p>"
-
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -80,7 +85,9 @@ def hello_login():
             if user:
                 password = user.password
                 if bcrypt.check_password_hash(password, form.password.data) == True:
-                    flash('Thanks for registering')
+                    current_user.is_authenticated
+                    login_user(user)
+
                     return redirect(url_for('hello_dashboard'))
 
                 else:
@@ -96,6 +103,31 @@ def hello_login():
        
 
 @app.route("/contact_us", methods=['GET', 'POST'])
+@login_required
 def hello_contact_us():
     """The about page"""
     return "<p>Hello, Contact Us!</p>"
+
+@app.route("/profile")
+@login_required
+def hello_profile():
+    """The profile page"""
+    return render_template('profile.html')
+
+
+@app.route("/tasks")
+@login_required
+def hello_tasks():
+    return render_template("tasks.html")
+
+
+@app.route("/settings")
+@login_required
+def hello_settings():
+    return render_template("settings.html")
+
+@app.route("/logout")
+def hello_logout():
+    logout_user()
+    flash("You have been logged out")
+    return redirect(url_for('hello_login'))
