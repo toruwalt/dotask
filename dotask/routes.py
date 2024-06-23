@@ -10,11 +10,16 @@ def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     return response
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+
 @app.route("/dashboard")
 @login_required
 def hello_dashboard():
     """The Dashboard"""
-    return render_template('dashboard.html', name=current_user.first_name)
+    return render_template('dashboard.html')
 
 @app.route("/")
 @app.route("/home")
@@ -58,7 +63,7 @@ def hello_register():
                 )
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('hello_login'))
+            return render_template('login.html')
         else:
             flash(form.errors, category='error')
             return render_template('register.html')
@@ -85,10 +90,8 @@ def hello_login():
             if user:
                 password = user.password
                 if bcrypt.check_password_hash(password, form.password.data) == True:
-                    current_user.is_authenticated
                     login_user(user)
-
-                    return redirect(url_for('hello_dashboard'))
+                    return redirect(url_for('hello_dashboard', user=current_user))
 
                 else:
                     flash("Invalid login credentials. Please check your password.", category='error')
@@ -112,6 +115,7 @@ def hello_contact_us():
 @login_required
 def hello_profile():
     """The profile page"""
+    data_first = current_user.first_name
     return render_template('profile.html')
 
 
@@ -119,6 +123,12 @@ def hello_profile():
 @login_required
 def hello_tasks():
     return render_template("tasks.html")
+
+
+@app.route("/new_task")
+@login_required
+def hello_add_tasks():
+    return render_template("new_task.html")
 
 
 @app.route("/settings")

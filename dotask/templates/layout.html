@@ -20,36 +20,44 @@
             <img src="../static/Logo.svg" height="60px" width="60px">
         </div>
         <div>
+            {% block dash_image_colour %}
             <a class="a1" href="{{ url_for('hello_dashboard') }}">
             <div id="logos">
                 <img class="imgs" src="../static/dashboard.svg">
                 <h4 class="sidebar-text">Dashboard</h4>
             </div>
             </a>
+            {% endblock dash_image_colour %}
         </div>
         <div>
+            {% block task_image_colour %}
             <a class="a2" href="{{ url_for('hello_tasks') }}">
             <div id="logos">
                 <img class="imgs" src="../static/tasks.svg">
                 <h4 class="sidebar-text">Tasks</h4>
             </div>
             </a>
+            {% endblock task_image_colour %}
         </div>
         <div>
+            {% block profile_image_colour %}
             <a class="a3" href="{{ url_for('hello_profile') }}">
             <div id="logos">
                 <img class="imgs" src="../static/profile.svg">
                 <h4 class="sidebar-text">Profile</h4>
             </div>
             </a>
+            {% endblock profile_image_colour %}
         </div>
         <div>
+            {% block settings_image_colour %}
             <a class="a4" href="{{ url_for('hello_settings') }}">
             <div id="logos">
                 <img class="imgs" src="../static/settings.svg">
                 <h4 class="sidebar-text">Settings</h4>
             </div>
             </a>
+            {% endblock settings_image_colour %}
         </div>
         <div>
             <a href="{{ url_for('hello_logout') }}">
@@ -63,9 +71,18 @@
     <div id="content">
         {% block nav_title %}
         {% endblock nav_title %}
+
+        {% block categories %}
+        {% endblock categories %}
+
+        {% block add_task %}
+        {% endblock add_task %}
+
+        {% block tasks %}
+        {% endblock tasks %}
         
         {% block content %}
-            <h1>Hi name!</h1>
+        
             <ol>
                 <li>A</li>
                 <li>B</li>

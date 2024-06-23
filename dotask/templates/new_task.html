@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% extends "layout.html" %}
+    {% block head %}
+        <title>{% block title %}{% endblock %} Add Task - DoTask</title>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css" {% endblock %}/>
+    {% endblock %}
+</head>
+<body>
+    {% block task_image_colour %}
+            <a class="a2" href="{{ url_for('hello_tasks') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/tasks_active.svg">
+                <h4 class="sidebar-text">Tasks</h4>
+            </div>
+            </a>
+            {% endblock task_image_colour %}
+    <h1>Welcome to new task</h1>
+</body>

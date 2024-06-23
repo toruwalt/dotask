@@ -4,6 +4,7 @@
         padding: auto;
         background-color: #E5ECEA;
         display: flex;
+        font-family: inter;
     }
     .sidebar{
         width: 300px;
@@ -33,11 +34,16 @@
     }
 
     a{
+        text-decoration: none;
+        color: black;
+    }
+
+    .sidebar > div > a{
         width: 90%;
         text-decoration: none;
     }
 
-    a > div{
+    .sidebar > div > a > div{
         width: 100%;
         height: 10%;
         padding-left: 30px;
@@ -45,7 +51,7 @@
         border-radius: 20px;
     }
 
-    a > div:hover{
+    .sidebar > div > a > div:hover{
         background-color: blue;
     }
 
@@ -84,8 +90,9 @@
     }
 
     #content{
-        width: 70vw;
+        width: 600px;
         display: block;
+        margin-top: 2%;
         padding-left: 400px;
     }
 }

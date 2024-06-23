@@ -11,12 +11,59 @@
     {% endblock %}
 </head>
 <body>
+    {% block dash_image_colour %}
+    <a class="a1" href="{{ url_for('hello_dashboard') }}">
+    <div id="logos">
+        <img class="imgs" src="../static/dashboard_active.svg">
+        <h4 class="sidebar-text">Dashboard</h4>
+    </div>
+    </a>
+    {% endblock dash_image_colour %}
     {% block nav_title %}
-    <div class="nav_title">{% if current_user.is_authenticated %}
-        Hi {{ current_user.name }}!
-      {% endif %}
+    <div class="nav_title">
+        <h1>Hi {{ current_user.first_name }}</h1>
     </div>
     {% endblock nav_title %}
+
+    {% block categories %}
+    <h3>Categories</h3>
+    <div class="cate">
+        <a href="">
+            <div class="cate-container-1">
+                <img src="../static/in_process.png">
+                <h3>In-process</h3>
+            </div>
+        </a>
+        <a href="">
+            <div class="cate-container-2">
+                <img src="../static/completed.svg">
+                <h3>Completed</h3>
+            </div>
+        </a>
+        <a href="">
+            <div class="cate-container-3">
+                <img src="../static/cancelled.svg">
+                <h3>Cancelled</h3>
+            </div>
+        </a>
+    </div>
+    {% endblock categories %}
+
+    {% block add_task %}
+    <h3>Add New</h3>
+    <div class="cate">
+        <a href="{{ url_for('hello_add_tasks') }}">
+            <div class="cate-container-4">
+                <img src="../static/add_task.svg">
+                <h3>Add New Task</h3>
+            </div>
+        </a>
+    </div>
+    {% endblock add_task %}
+
+    {% block tasks %}
+
+    {% endblock tasks %}
 
     
 </body>

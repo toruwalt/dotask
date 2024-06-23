@@ -3,3 +3,23 @@
     <title>{% block title %}{% endblock %} Profile - DoTask</title>
     <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/profile.css" {% endblock %}/>
 {% endblock %}
+
+{% block profile_image_colour %}
+            <a class="a3" href="{{ url_for('hello_profile') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/profile_active.svg">
+                <h4 class="sidebar-text">Profile</h4>
+            </div>
+            </a>
+            {% endblock profile_image_colour %}
+
+{% block tasks %}
+    {% if current_user %}
+        <p>First name: {{ current_user.first_name }}</p>
+        <p>Last name: {{ current_user.last_name }}</p>
+        <p>Username: {{ current_user.username }}</p>
+        <p>Email: {{ current_user.email }}</p>
+        {% else %}
+        <p>No user found.</p>
+    {% endif %}
+{% endblock tasks %}

@@ -18,15 +18,54 @@
 }
 
 .nav_title{
-    padding: 5%;
-    background-color: aqua;
+    padding-left: 5%;
+    background-image: linear-gradient(to right, #B5C2CA , #CCD6D9, #B5C2CA);
     display: flex;
     justify-content: start;
     align-items: center;
     width: 60vw;
-    height: 10vh;
+    height: 15vh;
 }
 
 img{
     padding-right: 2%;
+}
+
+.cate{
+    width: 60vw;
+    display: flex;
+}
+
+.cate > a {
+    width: 100%;
+}
+
+.cate > a > div{
+    width: 100%;
+    padding: 2%;
+    border-radius: 5px;
+    display: flex;
+    justify-self: start;
+    align-items: center;
+}
+
+.cate-container-1{
+    background-color: #FEC347;
+    justify-content: center;
+}
+
+.cate-container-2{
+    background-color: #5694F2;
+    justify-content: center;
+}
+
+.cate-container-3{
+    background-color: #F26E56;
+    justify-content: center;
+}
+
+.cate-container-4{
+    background-color: #53C2C5;
+    align-items: center;
+    justify-content: center;
 }
