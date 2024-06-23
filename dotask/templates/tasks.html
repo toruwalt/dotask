@@ -4,10 +4,11 @@
     <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css" {% endblock %}/>
 {% endblock %}
 {% block task_image_colour %}
-            <a class="a2" href="{{ url_for('hello_tasks') }}">
-            <div id="logos">
-                <img class="imgs" src="../static/tasks_active.svg">
-                <h4 class="sidebar-text">Tasks</h4>
-            </div>
-            </a>
-            {% endblock task_image_colour %}
+    <a class="a2" href="{{ url_for('hello_tasks') }}">
+    <div id="logos">
+        <img class="imgs" src="../static/tasks_active.svg">
+        <h4 class="sidebar-text">Tasks</h4>
+    </div>
+    </a>
+{% endblock task_image_colour %}
+<h1>Welcome to new task</h1>

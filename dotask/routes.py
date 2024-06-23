@@ -1,8 +1,9 @@
+from datetime import date
 from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm
-from dotask.models import User
+from dotask.models import User, Task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
 
 @app.after_request
@@ -115,8 +116,7 @@ def hello_contact_us():
 @login_required
 def hello_profile():
     """The profile page"""
-    data_first = current_user.first_name
-    return render_template('profile.html')
+    return render_template('profile.html', current_user=current_user)
 
 
 @app.route("/tasks")
@@ -125,10 +125,35 @@ def hello_tasks():
     return render_template("tasks.html")
 
 
-@app.route("/new_task")
-@login_required
-def hello_add_tasks():
-    return render_template("new_task.html")
+@app.route("/new_task", methods=['GET', 'POST'])
+def hello_new_task():
+    form = request.form
+    if request.method == 'GET':
+        return render_template("new_task.html")
+
+    if request.method == 'POST':
+        try:
+            due_date_str = form.get('due_date')
+            year, month, day = map(int, due_date_str.split('-')[:3])
+            due_date = date(year, month, day)
+            task = Task(
+                title  = form.get('title'),
+                description  = form.get('description'),
+                due_date = due_date,
+                status = form.get('status'),
+                user_id = current_user.id
+            )
+            db.session.add(task)
+            db.session.commit()
+            flash('Task created successfully!')
+            return redirect(url_for('hello_dashboard'))  # Replace with your desired route
+
+        except Exception as e:  # Catch potential errors during data processing
+            flash(f'Error creating task: {str(e)}')
+            return render_template("new_task.html")
+
+
+
 
 
 @app.route("/settings")

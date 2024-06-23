@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, PasswordField, validators, EmailField
+from wtforms import Form, StringField, PasswordField, validators, EmailField, DateTimeLocalField, SelectField
 
 class RegisterForm(Form):
     email = EmailField('Email Address', [validators.Length(min=6, max=35)], )
@@ -16,3 +16,9 @@ class LoginForm(Form):
     email = EmailField('Login Email Address', [validators.InputRequired()])
     password = PasswordField('Login Password', [
         validators.InputRequired()])
+
+class TaskForm(Form):
+    title  = StringField('Title')
+    description  = StringField('Description')
+    due_date = DateTimeLocalField('Due Date')
+    status = SelectField(u'Status', choices=['In Process','Completed','Cancelled'])

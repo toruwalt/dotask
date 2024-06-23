@@ -11,13 +11,48 @@
     {% endblock %}
 </head>
 <body>
+    {% block nav_title %}
+    <div class="nav_title">
+        <h1>Add New Task</h1>
+    </div>
+    {% endblock nav_title %}
     {% block task_image_colour %}
-            <a class="a2" href="{{ url_for('hello_tasks') }}">
-            <div id="logos">
-                <img class="imgs" src="../static/tasks_active.svg">
-                <h4 class="sidebar-text">Tasks</h4>
-            </div>
-            </a>
-            {% endblock task_image_colour %}
-    <h1>Welcome to new task</h1>
+        <a class="a2" href="{{ url_for('hello_tasks') }}">
+        <div id="logos">
+            <img class="imgs" src="../static/tasks_active.svg">
+            <h4 class="sidebar-text">Tasks</h4>
+        </div>
+        </a>
+    {% endblock task_image_colour %}
+    {% block new_task_form %}
+        <form action="/new_task" method="POST">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="labels" id="title">
+
+            <label for="description">Description</label>
+            <input type="textarea" name="description" class="labels" id="description">
+
+            <label for="check">Check</label>
+            <textarea
+                name="check" class="labels" id="check" rows="4" cols="30">
+            </textarea>
+
+            <label for="due_date">Due Date</label>
+            <input type="date" name="due_date" class="labels" id="due_date">
+            
+            <!--
+            <label for="due_time">Due Time</label>
+            <input type="time" name="due_time" class="labels" id="due_time">
+            -->
+
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                <option value="in_process">In Process</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+
+            <input type="submit" value="Add Task">
+        </form>
+    {% endblock new_task_form %}
 </body>
