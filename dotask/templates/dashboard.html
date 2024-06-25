@@ -65,7 +65,7 @@
         {% if tasks %}
            <h2 class="task-h2">Tasks</h2>
             {% for task in tasks %}
-            <a href="">
+            <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
             <div class="message-box">
                 <div class="message">
                     <h4> {{ task['title'] }} </h4>

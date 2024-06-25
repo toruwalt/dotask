@@ -84,6 +84,10 @@ a{
     display: flex;
     margin-top: 2%;
     padding-right: 10%;
+    padding-left: 10%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border-left: 4px solid #A08BF2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,7 +95,6 @@ a{
 
 .message{
     width: 100%;
-    padding: 2%;
     border-radius: 5px;
     display: block;
     justify-content: center;

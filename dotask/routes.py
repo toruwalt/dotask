@@ -126,7 +126,6 @@ def hello_profile():
     """The profile page"""
     return render_template('profile.html', current_user=current_user)
 
-
 @app.route("/tasks")
 @login_required
 def hello_tasks():
@@ -191,9 +190,12 @@ def hello_new_task():
             flash(f'Error creating task: {str(e)}')
             return render_template("new_task.html")
 
-
-
-
+@app.route("/task/<task_id>", methods=['GET','POST'])
+@login_required
+def hello_each_task(task_id):
+        task = Task.query.get_or_404(task_id)
+        if task:
+            return render_template("each_task.html", task=task)
 
 @app.route("/settings")
 @login_required
