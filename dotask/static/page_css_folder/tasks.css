@@ -28,7 +28,7 @@
     height: 15vh;
 }
 
-input[type=text], input[type=textarea], input[type=date], input[type=submit], select {
+input[type=text], input[type=date], input[type=submit], select {
     background-color: #FFFFFF;
     width: 600px;
     font-size: 20px;
@@ -41,34 +41,36 @@ input[type=text], input[type=textarea], input[type=date], input[type=submit], se
     cursor: pointer;
 }
 
-input[type=textarea] {
-    padding-left: 16px ;
-    font-size: 20px;
-    height:200px;
-}
-
 input[type=submit] {
+    width: 600px;
+    height: 10vh;
     background-color: #A08BF2;
     color: #FFFFFF;
     font-size: 20px;
     font-weight: bold;
+    margin-top: 50px;
 }
 
 select{
     padding-left: 5%;
+    margin-bottom: 5%;
+    margin-top: 2%;
 }
 
-input[type=submit] {
-    width: 600px;
-    height: 10vh;
-    margin-top: 80px;
-}
 
-#check {
+label {
+    color: #333;
+    font-weight: bold;
+  }
+
+#description {
     width: 600px;
     height: 200px;
+    font-size: 20px;
     padding: 16px 32px;
     border: none;
     border-radius: 10px;
     color: #000000;
+    margin-top: 2%;
+    margin-bottom: 5%;
 }

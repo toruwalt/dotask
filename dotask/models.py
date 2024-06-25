@@ -13,9 +13,15 @@ class User(db.Model, UserMixin):
     tasks = relationship('Task', back_populates='user')
 
 class TaskStatus(enum.Enum):
-    IN_PROGRESS = "in_progress"
-    COMPLETED = "completed"
-    CANCELLED = "cancelled"
+    In_Progress = "In_Progress"
+    Completed = "Completed"
+    Cancelled = "Cancelled"
+
+class TaskTag(enum.Enum):
+    Work = "Work"
+    Personal = "Personal"
+    Errands = "Errands"
+    Home = "Home"
 
 
 class Task(db.Model):
@@ -25,6 +31,7 @@ class Task(db.Model):
     description = db.Column(db.String(400), nullable=False)
     due_date = db.Column(db.Date, nullable=False)
     status = db.Column(Enum(TaskStatus))
+    tag = db.Column(Enum(TaskTag))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = relationship('User', back_populates='tasks')
 

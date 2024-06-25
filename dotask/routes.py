@@ -20,6 +20,14 @@ def load_user(user_id):
 @login_required
 def hello_dashboard():
     """The Dashboard"""
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    if tasks:
+        return render_template("dashboard.html", tasks=tasks)
+    else:
+        return render_template("dashboard.html")
+
+
+
     return render_template('dashboard.html')
 
 @app.route("/")
@@ -122,8 +130,11 @@ def hello_profile():
 @app.route("/tasks")
 @login_required
 def hello_tasks():
-    return render_template("tasks.html")
-
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    if tasks:
+        return render_template("tasks.html", tasks=tasks)
+    else:
+        return render_template("tasks.html")
 
 @app.route("/new_task", methods=['GET', 'POST'])
 def hello_new_task():
@@ -141,6 +152,7 @@ def hello_new_task():
                 description  = form.get('description'),
                 due_date = due_date,
                 status = form.get('status'),
+                tag = form.get('tag'),
                 user_id = current_user.id
             )
             db.session.add(task)

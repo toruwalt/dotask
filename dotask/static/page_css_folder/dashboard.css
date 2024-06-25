@@ -69,3 +69,39 @@ img{
     align-items: center;
     justify-content: center;
 }
+
+.message-box{
+    display: flex;
+    margin-top: 5%;
+    padding-right: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message{
+    width: 100%;
+    padding: 2%;
+    border-radius: 5px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-dot{
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+}
+
+.progress-task {
+    background-color: #FEC347; /* Light orange for work tasks */
+}
+  
+.completed-task {
+    background-color: #5694F2; /* Light blue for personal tasks */
+}
+
+.cancelled-task {
+    background-color: #F26E56; /* Light blue for personal tasks */
+}

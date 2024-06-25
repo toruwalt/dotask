@@ -12,3 +12,12 @@
     </a>
 {% endblock task_image_colour %}
 <h1>Welcome to new task</h1>
+
+{% block tasks %}
+    {% for task in tasks %}
+        <div class="message">
+            <p> {{ task['title'] }} </p>
+            <p> {{ task['description'] }} </p>
+        </div>
+    {% endfor %}
+{% endblock tasks %}
