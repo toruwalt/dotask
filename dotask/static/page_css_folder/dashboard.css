@@ -34,7 +34,7 @@ img{
 
 .cate{
     width: 60vw;
-    display: flex;
+    margin-bottom: 50px;
 }
 
 a{
@@ -42,7 +42,7 @@ a{
 }
 
 .cate > a {
-    width: 100%;
+    width: 60vw;
     padding-bottom: 50px;
 }
 
@@ -71,14 +71,18 @@ a{
 }
 
 .cate-container-4{
-    background-color: #53C2C5;
+    background-color: #A08BF2;
     align-items: center;
     justify-content: center;
 }
 
+.task-h2{
+    text-decoration: underline;
+}
+
 .message-box{
     display: flex;
-    margin-top: 5%;
+    margin-top: 2%;
     padding-right: 10%;
     display: flex;
     justify-content: center;
@@ -99,6 +103,7 @@ a{
     height: 20px;
     border-radius: 50px;
 }
+
 
 .progress-task {
     background-color: #FEC347; /* Light orange for work tasks */

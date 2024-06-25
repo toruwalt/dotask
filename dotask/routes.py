@@ -135,6 +135,33 @@ def hello_tasks():
         return render_template("tasks.html", tasks=tasks)
     else:
         return render_template("tasks.html")
+    
+@app.route("/in_process_tasks")
+@login_required
+def hello_in_process_tasks():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    if tasks:
+        return render_template("in_process_tasks.html", tasks=tasks)
+    else:
+        return render_template("in_process_tasks.html")
+    
+@app.route("/completed_tasks")
+@login_required
+def hello_completed_tasks():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    if tasks:
+        return render_template("completed_tasks.html", tasks=tasks)
+    else:
+        return render_template("completed_tasks.html")
+    
+@app.route("/cancelled_tasks")
+@login_required
+def hello_cancelled_tasks():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    if tasks:
+        return render_template("cancelled_tasks.html", tasks=tasks)
+    else:
+        return render_template("cancelled_tasks.html")
 
 @app.route("/new_task", methods=['GET', 'POST'])
 def hello_new_task():
