@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block head %}
     <title>{% block title %}{% endblock %} Tasks - DoTask</title>
-    <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css" {% endblock %}/>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css"> 
+    {% endblock %}
 {% endblock %}
 {% block task_image_colour %}
     <a class="a2" href="{{ url_for('hello_tasks') }}">
@@ -14,10 +15,24 @@
 <h1>Welcome to new task</h1>
 
 {% block tasks %}
-    {% for task in tasks %}
-        <div class="message">
-            <p> {{ task['title'] }} </p>
-            <p> {{ task['description'] }} </p>
+    {% if tasks %}
+        <h2>Tasks</h2>
+        {% for task in tasks %}
+        <a href="">
+        <div class="message-box">
+            <div class="message">
+                <h4> {{ task['title'] }} </h4>
+                <h4 style="color: #676767;"> {{ task.tag.name }} </h4>
+            </div>
+
+            <div class="message-dot {% if task.status.name == 'In_Progress' %}progress-task
+                {% elif task.status.name == 'Completed' %}completed-task
+                {% elif task.status.name == 'Cancelled' %}cancelled-task
+                {% else %}unknown-task
+                {% endif %}">
+            </div>
         </div>
-    {% endfor %}
+        </a>
+        {% endfor %}
+    {% endif %}
 {% endblock tasks %}

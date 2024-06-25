@@ -19,6 +19,7 @@
 
 .nav_title{
     padding-left: 5%;
+    margin-bottom: 50px;
     background-image: linear-gradient(to right, #B5C2CA , #CCD6D9, #B5C2CA);
     display: flex;
     justify-content: start;
@@ -36,8 +37,13 @@ img{
     display: flex;
 }
 
+a{
+    text-decoration: none;
+}
+
 .cate > a {
     width: 100%;
+    padding-bottom: 50px;
 }
 
 .cate > a > div{
