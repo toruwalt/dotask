@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% extends "layout.html" %}
+    {% block head %}
+        <title>{% block title %}{% endblock %} Edit Task - DoTask</title>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css" {% endblock %}/>
+    {% endblock %}
+</head>
+<body>
+    {% block nav_title %}
+    <div class="nav_title">
+        <h1>Edit Task</h1>
+    </div>
+    {% endblock nav_title %}
+
+    {% block flash_div %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-div">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endblock flash_div %}
+
+    {% block task_image_colour %}
+        <a class="a2" href="{{ url_for('hello_tasks') }}">
+        <div id="logos">
+            <img class="imgs" src="../static/tasks_active.svg">
+            <h4 class="sidebar-text">Tasks</h4>
+        </div>
+        </a>
+    {% endblock task_image_colour %}
+    {% block new_task_form %}
+        <form action="/save_task/{{ task.id }}" method="POST">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="labels" id="title" value="{{ task['title'] }}">
+
+            
+
+            <label for="description">Description</label>
+            <textarea
+                name="description"class="labels description" id="description" rows="4" cols="30">{{ task['description'] }}
+            </textarea>
+
+            <label for="due_date">Due Date</label>
+            <input type="date" name="due_date" class="labels" id="due_date" value="{{ task['due_date'] }}">
+            
+            <!--
+            <label for="due_time">Due Time</label>
+            <input type="time" name="due_time" class="labels" id="due_time">
+            -->
+
+            <label for="status">Status</label>
+            <select name="status" id="status">
+
+                {% if task.status.name == 'Completed' %}
+                  <option value="In_Progress">In-process</option>
+                  <option value="Completed" selected>Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+
+                {% elif task.status.name == 'Cancelled' %}
+                  <option value="In_Progress">In-process</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled" selected>Cancelled</option>
+
+                {% else %}
+                  <option value="In_Progress" selected>In-process</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+
+                {% endif %}
+              </select>
+
+            <label for="tag">Tag</label>
+            <select name="tag" id="tag">
+
+                {% if task.tag.name == 'Home' %}
+                <option value="Home" selected>Home</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Errands">Errands</option>
+
+                {% elif task.tag.name == 'Work' %}
+                <option value="Home">Home</option>
+                <option value="Work" selected>Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Errands">Errands</option>
+
+                {% elif task.tag.name == 'Personal' %}
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Personal" selected>Personal</option>
+                <option value="Errands">Errands</option>
+
+                {% else %}
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Errands" selected>Errands</option>
+
+                {% endif %}
+            </select>
+
+            <input type="submit" value="Save Task">
+        </form>
+    {% endblock new_task_form %}
+</body>

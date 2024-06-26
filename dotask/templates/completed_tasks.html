@@ -32,5 +32,11 @@
                     </a>
                 {% endif %}
             {% endfor %}
+            {% else %}
+                <div class="message-box">
+                    <div class="message">
+                        <h2>No Tasks Yet</h2>
+                    </div>
+                </div>
         {% endif %}
     {% endblock tasks %}

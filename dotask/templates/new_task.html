@@ -16,6 +16,20 @@
         <h1>Add New Task</h1>
     </div>
     {% endblock nav_title %}
+
+    {% block flash_div %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-div">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <br>
+    {% endblock flash_div %}
+
     {% block task_image_colour %}
         <a class="a2" href="{{ url_for('hello_tasks') }}">
         <div id="logos">
@@ -43,13 +57,6 @@
             <label for="due_time">Due Time</label>
             <input type="time" name="due_time" class="labels" id="due_time">
             -->
-
-            <label for="status">Status</label>
-            <select name="status" id="status">
-                <option value="In_Progress">In-process</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-            </select>
 
             <label for="tag">Tag</label>
             <select name="tag" id="tag">

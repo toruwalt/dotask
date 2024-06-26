@@ -25,6 +25,18 @@
     </div>
     {% endblock nav_title %}
 
+    {% block flash_div %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-div">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% endblock flash_div %}
+
     {% block categories %}
     <h2>Categories</h2>
     <div class="cate">
@@ -61,21 +73,9 @@
     </div>
     {% endblock add_task %}
 
-    {% block flash_div %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flash-div">
-            {% for message in messages %}
-              {{ message }}
-            {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-    {% endblock flash_div %}
-
     {% block tasks %}
+        <h2>Tasks</h2>
         {% if tasks %}
-           <h2>Tasks</h2>
             {% for task in tasks %}
             <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
             <div class="message-box">
@@ -92,8 +92,14 @@
                 </div>
   
             </div>
-        </a>
+            </a>
             {% endfor %}
+            {% else %}
+                <div class="message-box">
+                    <div class="message">
+                        <h2>No Tasks Yet</h2>
+                    </div>
+                </div>
         {% endif %}
     {% endblock tasks %}
 

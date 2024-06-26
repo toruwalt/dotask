@@ -65,7 +65,7 @@
         </div>
         <h3 id="status-in-task">{{ task.tag.name }}</h3>
         <div class="task-clickables">
-            <a href="">
+            <a href="{{ url_for('hello_edit_task', task_id=task['id']) }}">
                 <div class="">
                     <h2>EDIT</h2>
                 </div>

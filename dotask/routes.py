@@ -2,7 +2,7 @@ from datetime import date
 from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
-from dotask.forms import RegisterForm, LoginForm
+from dotask.forms import RegisterForm, LoginForm, TaskForm
 from dotask.models import User, Task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
 
@@ -51,7 +51,7 @@ def hello_blog():
 def hello_register():
     form = RegisterForm(request.form)
     if request.method == 'GET':
-        return render_template('register.html', form=form)
+        return render_template('register.html')
 
     if request.method == 'POST':
         if form.validate():
@@ -91,7 +91,7 @@ def hello_submit():
 def hello_login():
     form = LoginForm(request.form)
     if request.method == 'GET':
-        return render_template('login.html', form=form)
+        return render_template('login.html')
 
     if request.method == 'POST':
         if form.validate():
@@ -164,32 +164,37 @@ def hello_cancelled_tasks():
 
 @app.route("/new_task", methods=['GET', 'POST'])
 def hello_new_task():
-    form = request.form
     if request.method == 'GET':
         return render_template("new_task.html")
 
     if request.method == 'POST':
-        try:
-            due_date_str = form.get('due_date')
-            year, month, day = map(int, due_date_str.split('-')[:3])
-            due_date = date(year, month, day)
-            task = Task(
-                title  = form.get('title'),
-                description  = form.get('description'),
-                due_date = due_date,
-                status = form.get('status'),
-                tag = form.get('tag'),
-                user_id = current_user.id
-            )
-            db.session.add(task)
-            db.session.commit()
-            flash('Task created successfully!')
-            task_id = task.id
-            return redirect(url_for('hello_each_task',task_id=task_id))  # Replace with your desired route
+        form = TaskForm(request.form)
+        if form.validate():
+            try:
+                due_date_str = form.due_date.data
+                """year, month, day = map(int, due_date_str.split('-')[:3])
+                due_date = date(year, month, day)"""
+                task = Task(
+                    title  = form.title.data,
+                    description  = form.description.data,
+                    due_date = due_date_str,
+                    #due_date = due_date,
+                    status = "In_Progress",
+                    tag = form.tag.data,
+                    user_id = current_user.id
+                )
+                db.session.add(task)
+                db.session.commit()
+                flash('Task created successfully!')
+                task_id = task.id
+                return redirect(url_for('hello_each_task',task_id=task_id))  # Replace with your desired route
 
-        except Exception as e:  # Catch potential errors during data processing
-            flash(f'Error creating task: {str(e)}')
-            return render_template("new_task.html")
+            except Exception as e:
+                flash(f'Error creating task: {str(e)}')
+                return render_template("new_task.html")
+        else:
+            flash(form.errors, category='error')
+            return render_template('new_task.html')
 
 @app.route("/task/<task_id>", methods=['GET','POST'])
 @login_required
@@ -197,6 +202,44 @@ def hello_each_task(task_id):
         task = Task.query.get_or_404(task_id)
         if task:
             return render_template("each_task.html", task=task)
+
+@app.route("/edit/<task_id>", methods=['GET','POST'])
+@login_required
+def hello_edit_task(task_id):
+        task = Task.query.get_or_404(task_id)
+        if task:
+            return render_template("edit_task.html", task=task)
+        
+@app.route("/save_task/<task_id>", methods=['GET','POST'])
+@login_required
+def hello_save_task(task_id):
+        form = TaskForm(request.form)
+        task = Task.query.get_or_404(task_id)
+        if form.validate():
+            due_date_str = form.due_date.data
+            form = request.form
+            due_date_str = form.get('due_date')
+            year, month, day = map(int, due_date_str.split('-')[:3])
+            due_date = date(year, month, day)
+            task = Task.query.get_or_404(task_id)
+            try:
+                if task:
+                    task.title  = form.get('title')
+                    task.description  = form.get('description')
+                    task.due_date = due_date
+                    task.status = form.get('status')
+                    task.tag = form.get('tag')
+                    task.verified = True
+                    db.session.commit()
+                    flash('Task updated successfully!')
+                    task_id = task.id
+                    return redirect(url_for('hello_each_task',task_id=task_id))
+            except Exception as e:  # Catch potential errors during data processing
+                flash(f'Error saving task: {str(e)}')
+                return render_template("each_task.html", task=task)
+        else:
+            flash(form.errors, category='error')
+            return render_template('edit_task.html', task=task)
         
 @app.route("/delete/<task_id>", methods=['GET','POST'])
 @login_required
