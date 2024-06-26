@@ -12,13 +12,12 @@
     </div>
     </a>
 {% endblock task_image_colour %}
-<h1>Welcome to new task</h1>
 
 {% block tasks %}
     {% if tasks %}
         <h1 class="task-h1">Tasks</h1>
         {% for task in tasks %}
-        <a href="">
+        <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
         <div class="message-box">
             <div class="message">
                 <h4> {{ task['title'] }} </h4>

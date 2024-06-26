@@ -184,7 +184,8 @@ def hello_new_task():
             db.session.add(task)
             db.session.commit()
             flash('Task created successfully!')
-            return redirect(url_for('hello_dashboard'))  # Replace with your desired route
+            task_id = task.id
+            return redirect(url_for('hello_each_task',task_id=task_id))  # Replace with your desired route
 
         except Exception as e:  # Catch potential errors during data processing
             flash(f'Error creating task: {str(e)}')
@@ -196,6 +197,18 @@ def hello_each_task(task_id):
         task = Task.query.get_or_404(task_id)
         if task:
             return render_template("each_task.html", task=task)
+        
+@app.route("/delete/<task_id>", methods=['GET','POST'])
+@login_required
+def hello_delete_task(task_id):
+        task = Task.query.get_or_404(task_id)
+        if task:
+            db.session.delete(task)
+            db.session.commit()
+            flash("Task Deleted")
+            return redirect(url_for('hello_dashboard'))  # Correct with quotes
+
+        
 
 @app.route("/settings")
 @login_required

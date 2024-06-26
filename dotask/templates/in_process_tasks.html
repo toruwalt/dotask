@@ -15,7 +15,7 @@
         {% if tasks %}
             {% for task in tasks %}
                 {% if task.status.name == 'In_Progress' %}
-                    <a href="">
+                    <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
                         <div class="message-box">
                             <div class="message">
                                 <h4> {{ task['title'] }} </h4>

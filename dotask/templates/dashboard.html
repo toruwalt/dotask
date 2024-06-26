@@ -61,9 +61,21 @@
     </div>
     {% endblock add_task %}
 
+    {% block flash_div %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-div">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% endblock flash_div %}
+
     {% block tasks %}
         {% if tasks %}
-           <h2 class="task-h2">Tasks</h2>
+           <h2>Tasks</h2>
             {% for task in tasks %}
             <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
             <div class="message-box">

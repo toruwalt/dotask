@@ -35,6 +35,7 @@ img{
 .cate{
     width: 60vw;
     margin-bottom: 50px;
+    display: flex;
 }
 
 a{
@@ -44,6 +45,7 @@ a{
 .cate > a {
     width: 60vw;
     padding-bottom: 50px;
+    margin: 10px;
 }
 
 .cate > a > div{
@@ -76,8 +78,24 @@ a{
     justify-content: center;
 }
 
-.task-h2{
-    text-decoration: underline;
+/* CSS for Flash Box above "Tasks" */
+
+.flashes {
+    color: #FEC347;
+}
+  
+.flash-success {
+    color: green;
+    background-color: #f0fff0;
+    border: 1px solid green;
+    padding: 10px;
+}
+  
+.flash-error {
+    color: red;
+    background-color: #ffdddd;
+    border: 1px solid red;
+    padding: 10px;
 }
 
 .message-box{
@@ -118,4 +136,13 @@ a{
 
 .cancelled-task {
     background-color: #F26E56; /* Light blue for personal tasks */
+}
+
+/* CSS for Flash Div in Each Task */
+.flash-div{
+    width: 100%;
+    color: green;
+    background-color: #f0fff0;
+    border: 1px solid green;
+    padding: 10px;
 }

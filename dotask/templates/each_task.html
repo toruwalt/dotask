@@ -13,14 +13,70 @@
     </a>
 {% endblock task_image_colour %}
 
+{% block flash_div %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-div">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock flash_div %}
+
 {% block tasks %}
     {% if task %}
-        <p>Title: {{ task['title'] }} </p>
-        <p>Description: {{ task['description'] }}</p>
-        <p>Due Date: {{ task['due_date'] }}</p>
-        <p>Status: {{ task.status.name }}</p>
-        <p>Tag: {{ task.tag.name }}</p>
+        <div class="task-header">
+            <img src="../static/title.svg">
+            <h3 class="grey_tags">Title</h3>
+        </div>
+        <h1 id="status-in-task">{{ task['title'] }}</h1>
+        <br>
+        <div class="task-header">
+            <img src="../static/description.svg">
+            <h3 class="grey_tags">Description</h3>
+        </div>
+        <h3 id="status-in-task">{{ task['description'] }}</h3>
+        <br>
+        <div class="task-header">
+            <img src="../static/due_dates.svg">
+            <h3 class="grey_tags">Due Date</h3>
+        </div>
+        <h3 id="status-in-task">{{ task['due_date'] }}</h3>
+        <br>
+        <div class="task-header">
+            <img src="../static/status.svg">
+            <h3 class="grey_tags">Status</h3>
+        </div>
+        <div class="status-in-task">
+            <div class="message-dot {% if task.status.name == 'In_Progress' %}progress-task
+            {% elif task.status.name == 'Completed' %}completed-task
+            {% elif task.status.name == 'Cancelled' %}cancelled-task
+            {% else %}unknown-task
+            {% endif %}">
+            </div>
+            <h3>{{ task.status.name }}</h3>
+        </div>
+        <br>
+        <div class="task-header">
+            <img src="../static/tag.svg">
+            <h3 class="grey_tags">Tag</h3>
+        </div>
+        <h3 id="status-in-task">{{ task.tag.name }}</h3>
+        <div class="task-clickables">
+            <a href="">
+                <div class="">
+                    <h2>EDIT</h2>
+                </div>
+            </a>
+            <a href="{{ url_for('hello_delete_task', task_id=task['id']) }}">
+                <div class="">
+                    <h2>DELETE</h2>
+                </div>
+            </a>
+        </div>
         {% else %}
-        <p>No task found.</p>
+        <h1>No task found.</h1>
     {% endif %}
 {% endblock tasks %}
