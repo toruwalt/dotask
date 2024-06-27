@@ -15,11 +15,85 @@
 
 {% block tasks %}
     {% if current_user %}
-        <p>First name: {{ current_user.first_name }}</p>
-        <p>Last name: {{ current_user.last_name }}</p>
-        <p>Username: {{ current_user.username }}</p>
-        <p>Email: {{ current_user.email }}</p>
-        {% else %}
-        <p>No user found.</p>
+    <h1>Account Information</h1>
+    <br>
+    <div class="shifts">
+        <div><h4>
+            Full name: 
+        </h4></div> 
+        <div><h4>
+            {{ current_user.last_name }} {{ current_user.first_name }}
+        </h4></div>
+    </div>
+
+    <div class="shifts">
+        <div><h4>
+            Username: 
+        </h4></div> 
+        <div><h4>
+            {{ current_user.username }} 
+        </h4></div>
+    </div>
+
+    <div class="shifts">
+        <div><h4>
+            Email: 
+        </h4></div> 
+        <div><h4>
+            {{ current_user.email }} 
+        </h4></div>
+    </div>
+    {% endif %}
+
+    
+    {% if task_all %}
+    <div class="shifts click">
+        <div><h4>
+            Tasks: 
+        </h4></div> 
+        <a href="{{ url_for('hello_tasks') }}">
+            <div>
+                <h4>{{ task_all }} </h4>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+
+    {% if task_in %}
+    <div class="shifts click">
+        <div><h4>
+            In Progress Tasks: 
+        </h4></div>
+        <a href="{{ url_for('hello_in_process_tasks') }}">
+            <div>
+                <h4>{{ task_in }} </h4>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+
+    {% if task_com %}
+    <div class="shifts click">
+        <div><h4>
+            Completed Tasks: 
+        </h4></div>
+        <a href="{{ url_for('hello_completed_tasks') }}">
+            <div>
+                <h4>{{ task_com }}</h4>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+
+    {% if task_can %}
+    <div class="shifts click">
+        <div><h4>
+            Cancelled Tasks: 
+        </h4></div>
+        <a href="{{ url_for('hello_cancelled_tasks') }}">
+        <div>
+            <h4>{{ task_can }}</h4>
+        </div>
+    </div>
     {% endif %}
 {% endblock tasks %}

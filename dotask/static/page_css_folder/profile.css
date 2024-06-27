@@ -8,6 +8,10 @@
     color: white;
 }
 
+h1{
+    margin-top: 10%;
+}
+
 
 .a3 > div > h4{
     color: white;
@@ -15,4 +19,17 @@
 
 .a3 > div > img{
     fill: #FFFFFF;
+}
+
+.shifts{
+    width: 100%;
+    display: flex;
+}
+
+.shifts > div:nth-child(1){
+    width: 50%;
+}
+
+.click{
+    cursor: pointer;
 }

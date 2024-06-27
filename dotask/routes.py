@@ -124,7 +124,20 @@ def hello_contact_us():
 @login_required
 def hello_profile():
     """The profile page"""
-    return render_template('profile.html', current_user=current_user)
+    task_all = 0
+    task_in = 0
+    task_com = 0
+    task_can = 0
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    for task in tasks:
+        task_all += 1
+        if task.status.name == 'Cancelled':
+            task_can += 1
+        elif task.status.name == 'Completed':
+            task_com += 1
+        else:
+            task_in += 1
+    return render_template('profile.html', current_user=current_user, task=task, task_all=task_all, task_in=task_in, task_com=task_com, task_can=task_can)
 
 @app.route("/tasks")
 @login_required
