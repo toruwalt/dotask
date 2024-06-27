@@ -2,6 +2,13 @@ from sqlalchemy import Enum
 from sqlalchemy.orm import relationship
 from dotask import app, db, enum, UserMixin
 
+user_task = db.Table(
+    "user_task",
+    db.Model.metadata,
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("task_id", db.Integer, db.ForeignKey("task.id"), primary_key=True),
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -10,7 +17,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(30), nullable=False, unique=True)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    tasks = relationship('Task', back_populates='user')
+    #tasks = relationship('Task', back_populates='user')
+    assigned_tasks = relationship('Task', secondary=user_task, backref='assigned_to')
+
 
 class TaskStatus(enum.Enum):
     In_Progress = "In_Progress"
@@ -32,8 +41,10 @@ class Task(db.Model):
     due_date = db.Column(db.Date, nullable=False)
     status = db.Column(Enum(TaskStatus))
     tag = db.Column(Enum(TaskTag))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = relationship('User', back_populates='tasks')
+    #users = relationship('User', back_populates='tasks')
+    users = relationship('User', secondary=user_task, backref='tasks')
+
+
 
 
 with app.app_context():

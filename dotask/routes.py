@@ -20,15 +20,12 @@ def load_user(user_id):
 @login_required
 def hello_dashboard():
     """The Dashboard"""
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
-    if tasks:
-        return render_template("dashboard.html", tasks=tasks)
-    else:
+    try:
+        tasks = current_user.tasks
+        if tasks:
+            return render_template("dashboard.html", tasks=tasks)
+    except:
         return render_template("dashboard.html")
-
-
-
-    return render_template('dashboard.html')
 
 @app.route("/")
 @app.route("/home")
@@ -124,23 +121,27 @@ def hello_contact_us():
 @login_required
 def hello_profile():
     """The profile page"""
-    task_all = 0
-    task_in = 0
-    task_com = 0
-    task_can = 0
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
-    if tasks:
-        for task in tasks:
-            task_all += 1
-            if task.status.name == 'Cancelled':
-                task_can += 1
-            elif task.status.name == 'Completed':
-                task_com += 1
-            else:
-                task_in += 1
-        return render_template('profile.html', current_user=current_user, task=task, task_all=task_all, task_in=task_in, task_com=task_com, task_can=task_can)
-    else:
+    try:
+        task_all = 0
+        task_in = 0
+        task_com = 0
+        task_can = 0
+        tasks = current_user.tasks
+        if tasks:
+            for task in tasks:
+                task_all += 1
+                if task.status.name == 'Cancelled':
+                    task_can += 1
+                elif task.status.name == 'Completed':
+                    task_com += 1
+                else:
+                    task_in += 1
+            return render_template('profile.html', current_user=current_user, task=task, task_all=task_all, task_in=task_in, task_com=task_com, task_can=task_can)
+        else:
+            return render_template('profile.html', current_user=current_user)
+    except:
         return render_template('profile.html', current_user=current_user)
+
     
 @app.route("/invites")
 @login_required
@@ -157,6 +158,9 @@ def hello_search_user():
         form = SearchUserForm(request.form)
         if form.validate():
             searched_user = User.query.filter_by(username=form.username.data).first()
+            if searched_user == current_user:
+                flash("You can't invite yourself")
+                return render_template('invites_to_task.html')
             if searched_user:
                 return render_template('invites_to_task.html', searched_user=searched_user)
             else:
@@ -169,48 +173,76 @@ def hello_search_user():
 @app.route("/invite_to_task/<task_id>", methods=['GET','POST'])
 @login_required
 def hello_invite_to_task(task_id):
-     tasks = Task.query.filter_by(user_id=current_user.id).first()
-     return render_template('invites_to_task.html')
+    try:
+        task = db.session.query(Task).get(task_id)
+        return render_template('invites_to_task.html', task=task)
+    except:
+        flash("Sorry, couldn't query the database")
+        return redirect(url_for('hello_each_task', task_id=task_id))
+
 
 
 @app.route("/tasks")
 @login_required
 def hello_tasks():
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
-    if tasks:
-        return render_template("tasks.html", tasks=tasks)
-    else:
+    try:
+        tasks = current_user.tasks
+        """
+        To get the Invited tasks, do
+        1- tasks = Task.query.filter_by(shared_id=current_user.id).all()
+        2- Render the template, but passed the shared_task as well owned_task
+            i.e return render_template("tasks.html", tasks=tasks, shared_tasks=shared_tasks)
+
+        This goes for cancelled, completed and in progress.
+        """
+        if tasks:
+            return render_template("tasks.html", tasks=tasks)
+        else:
+            return render_template("tasks.html")
+    except:
         return render_template("tasks.html")
+
     
 @app.route("/in_process_tasks")
 @login_required
 def hello_in_process_tasks():
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
-    if tasks:
-        return render_template("in_process_tasks.html", tasks=tasks)
-    else:
+    try:
+        tasks = current_user.tasks
+        if tasks:
+            return render_template("in_process_tasks.html", tasks=tasks)
+        else:
+            return render_template("in_process_tasks.html")
+    except:
         return render_template("in_process_tasks.html")
+
     
 @app.route("/completed_tasks")
 @login_required
 def hello_completed_tasks():
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
-    if tasks:
-        return render_template("completed_tasks.html", tasks=tasks)
-    else:
-        return render_template("completed_tasks.html")
+    try:
+        tasks = current_user.tasks
+        if tasks:
+            return render_template("completed_tasks.html", tasks=tasks)
+        else:
+            return render_template("completed_tasks.html")
+    except:
+        return render_template("completed_tasks.html")    
     
 @app.route("/cancelled_tasks")
 @login_required
 def hello_cancelled_tasks():
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
-    if tasks:
-        return render_template("cancelled_tasks.html", tasks=tasks)
-    else:
+    try:
+        tasks = current_user.tasks
+        if tasks:
+            return render_template("cancelled_tasks.html", tasks=tasks)
+        else:
+            return render_template("cancelled_tasks.html")
+    except:
         return render_template("cancelled_tasks.html")
 
 @app.route("/new_task", methods=['GET', 'POST'])
 def hello_new_task():
+    user = current_user
     if request.method == 'GET':
         return render_template("new_task.html")
 
@@ -227,11 +259,11 @@ def hello_new_task():
                     due_date = due_date_str,
                     #due_date = due_date,
                     status = "In_Progress",
-                    tag = form.tag.data,
-                    user_id = current_user.id
+                    tag = form.tag.data
                 )
-                db.session.add(task)
+                user.assigned_tasks.append(task)
                 db.session.commit()
+                
                 flash('Task created successfully!')
                 task_id = task.id
                 return redirect(url_for('hello_each_task',task_id=task_id))  # Replace with your desired route
@@ -292,8 +324,9 @@ def hello_save_task(task_id):
 @login_required
 def hello_delete_task(task_id):
         task = Task.query.get_or_404(task_id)
+        user = current_user
         if task:
-            db.session.delete(task)
+            user.assigned_tasks.remove(task)
             db.session.commit()
             flash("Task Deleted")
             return redirect(url_for('hello_dashboard'))  # Correct with quotes
