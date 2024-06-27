@@ -44,6 +44,16 @@
             {% endblock task_image_colour %}
         </div>
         <div>
+            {% block invites_image_colour %}
+            <a class="a5" href="{{ url_for('hello_invites') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/invites.svg">
+                <h4 class="sidebar-text">Invites</h4>
+            </div>
+            </a>
+            {% endblock invites_image_colour %}
+        </div>
+        <div>
             {% block profile_image_colour %}
             <a class="a3" href="{{ url_for('hello_profile') }}">
             <div id="logos">
@@ -90,6 +100,9 @@
 
         {% block new_task_form %}
         {% endblock new_task_form %}
+
+        {% block searched_user %}
+        {% endblock searched_user %}
         
         {% block content %}
         <!--

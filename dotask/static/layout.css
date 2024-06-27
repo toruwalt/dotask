@@ -85,6 +85,12 @@
         width: 40px;
     }
 
+    .imgss{
+        height: 40px;
+        width: 40px;
+        margin-right: 10px;
+    }
+
     li{
         font-size: 2em;
     }

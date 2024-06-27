@@ -23,3 +23,6 @@ class TaskForm(Form):
     description  = StringField('Description',[validators.DataRequired()])
     due_date = DateField('Due Date',[validators.DataRequired()])
     tag = SelectField(u'Tag', choices=['Home','Work','Personal','Errands'], validators=[DataRequired()])
+
+class SearchUserForm(Form):
+    username  = StringField('Title', [validators.DataRequired()])

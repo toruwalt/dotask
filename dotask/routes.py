@@ -2,7 +2,7 @@ from datetime import date
 from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
-from dotask.forms import RegisterForm, LoginForm, TaskForm
+from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
 from dotask.models import User, Task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
 
@@ -129,15 +129,49 @@ def hello_profile():
     task_com = 0
     task_can = 0
     tasks = Task.query.filter_by(user_id=current_user.id).all()
-    for task in tasks:
-        task_all += 1
-        if task.status.name == 'Cancelled':
-            task_can += 1
-        elif task.status.name == 'Completed':
-            task_com += 1
+    if tasks:
+        for task in tasks:
+            task_all += 1
+            if task.status.name == 'Cancelled':
+                task_can += 1
+            elif task.status.name == 'Completed':
+                task_com += 1
+            else:
+                task_in += 1
+        return render_template('profile.html', current_user=current_user, task=task, task_all=task_all, task_in=task_in, task_com=task_com, task_can=task_can)
+    else:
+        return render_template('profile.html', current_user=current_user)
+    
+@app.route("/invites")
+@login_required
+def hello_invites():
+     return render_template('invites.html')
+
+@app.route("/search_user", methods=['GET','POST'])
+@login_required
+def hello_search_user():
+    if request.method == 'GET':
+        return render_template("invites_to_task.html")
+
+    if request.method == 'POST':
+        form = SearchUserForm(request.form)
+        if form.validate():
+            searched_user = User.query.filter_by(username=form.username.data).first()
+            if searched_user:
+                return render_template('invites_to_task.html', searched_user=searched_user)
+            else:
+                flash('User not found')
+                return render_template('invites_to_task.html')
         else:
-            task_in += 1
-    return render_template('profile.html', current_user=current_user, task=task, task_all=task_all, task_in=task_in, task_com=task_com, task_can=task_can)
+            flash('Enter a username')
+            return render_template('invites_to_task.html')
+
+@app.route("/invite_to_task/<task_id>", methods=['GET','POST'])
+@login_required
+def hello_invite_to_task(task_id):
+     tasks = Task.query.filter_by(user_id=current_user.id).first()
+     return render_template('invites_to_task.html')
+
 
 @app.route("/tasks")
 @login_required

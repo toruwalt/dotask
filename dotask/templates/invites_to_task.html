@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% extends "layout.html" %}
+    {% block head %}
+        <title>{% block title %}{% endblock %} Invite - DoTask</title>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/invites.css" {% endblock %}/>
+    {% endblock %}
+</head>
+<body>
+    {% block invites_image_colour %}
+    <a class="a5" href="{{ url_for('hello_invites') }}">
+    <div id="logos">
+        <img class="imgs" src="../static/invites_active.svg">
+        <h4 class="sidebar-text">Invite</h4>
+    </div>
+    </a>
+    {% endblock invites_image_colour %}
+
+    {% block nav_title %}
+    <div class="nav_title">
+        <h1>Search by username</h1>
+    </div>
+    {% endblock nav_title %}
+
+    {% block flash_div %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-div">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% endblock flash_div %}
+
+    {% block new_task_form %}
+        <form action="/search_user" method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" class="labels" id="title">
+
+            <input type="submit" value="Search">
+        </form>
+
+    {% endblock new_task_form %}
+
+    {% block searched_user %}
+        {% if searched_user %}
+        <h2 style="margin-top: 100px;">User</h2>
+            <a href="">
+            <div class="message-box">
+                <div class="message">
+                    <h4> {{ searched_user['last_name'] }} {{ searched_user['first_name'] }}  </h4>
+                    <h4 style="color: #676767;"> {{ searched_user['email'] }} </h4>
+                </div>
+  
+            </div>
+            </a>
+        {% endif %}
+    {% endblock searched_user %}

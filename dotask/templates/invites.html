@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% extends "layout.html" %}
+    {% block head %}
+        <title>{% block title %}{% endblock %} Invites - DoTask</title>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/invites.css" {% endblock %}/>
+    {% endblock %}
+</head>
+<body>
+    {% block invites_image_colour %}
+        <a class="a5" href="{{ url_for('hello_invites') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/invites_active.svg">
+                <h4 class="sidebar-text">Invites</h4>
+            </div>
+        </a>
+    {% endblock invites_image_colour %}
+</body>
