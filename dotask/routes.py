@@ -3,7 +3,7 @@ from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
-from dotask.models import User, Task
+from dotask.models import User, Task, user_task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
 
 @app.after_request
@@ -148,11 +148,12 @@ def hello_profile():
 def hello_invites():
      return render_template('invites.html')
 
-@app.route("/search_user", methods=['GET','POST'])
+@app.route("/<task_id>/search_user", methods=['GET','POST'])
 @login_required
-def hello_search_user():
+def hello_search_user(task_id):
+    task = Task.query.filter_by(id=task_id).first()
     if request.method == 'GET':
-        return render_template("invites_to_task.html")
+        return render_template("invites_to_task.html", task=task)
 
     if request.method == 'POST':
         form = SearchUserForm(request.form)
@@ -160,26 +161,43 @@ def hello_search_user():
             searched_user = User.query.filter_by(username=form.username.data).first()
             if searched_user == current_user:
                 flash("You can't invite yourself")
-                return render_template('invites_to_task.html')
+                return render_template('invites_to_task.html', task=task)
+            if searched_user in task.users:
+                flash('User already invited')
+                return render_template('invites_to_task.html', task=task)
             if searched_user:
-                return render_template('invites_to_task.html', searched_user=searched_user)
+                return render_template('invites_to_task.html', task=task, searched_user=searched_user)
             else:
                 flash('User not found')
-                return render_template('invites_to_task.html')
+                return render_template('invites_to_task.html', task=task)
         else:
             flash('Enter a username')
-            return render_template('invites_to_task.html')
+            return render_template('invites_to_task.html', task=task)
 
 @app.route("/invite_to_task/<task_id>", methods=['GET','POST'])
 @login_required
 def hello_invite_to_task(task_id):
     try:
         task = db.session.query(Task).get(task_id)
-        return render_template('invites_to_task.html', task=task)
+        return render_template('invites_to_task.html', task=task, current_user=current_user)
     except:
         flash("Sorry, couldn't query the database")
         return redirect(url_for('hello_each_task', task_id=task_id))
 
+@app.route("/invite_user_to_task/<task_id>/<user_id>", methods=['GET','POST'])
+@login_required
+def hello_invite_user_to_task(task_id, user_id):
+    try:
+        user = db.session.query(User).get(user_id)
+        task = db.session.query(Task).get(task_id)
+        task.users.append(user)
+        team = task.users
+        db.session.commit() 
+        flash(f"{user.username} successfully added")
+        return redirect(url_for('hello_each_task', task_id=task_id, team=team))
+    except:
+        flash("Sorry, couldn't query the database")
+        return redirect(url_for('hello_each_task', task_id=task_id))
 
 
 @app.route("/tasks")
@@ -277,10 +295,11 @@ def hello_new_task():
 
 @app.route("/task/<task_id>", methods=['GET','POST'])
 @login_required
-def hello_each_task(task_id):
+def hello_each_task(task_id, team=None):
         task = Task.query.get_or_404(task_id)
+        team = task.users
         if task:
-            return render_template("each_task.html", task=task)
+            return render_template("each_task.html", task=task, team=team)
 
 @app.route("/edit/<task_id>", methods=['GET','POST'])
 @login_required

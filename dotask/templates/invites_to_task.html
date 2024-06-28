@@ -39,7 +39,7 @@
     {% endblock flash_div %}
 
     {% block new_task_form %}
-        <form action="/search_user" method="POST">
+        <form action="{{ url_for('hello_search_user', task_id=task['id']) }}" method="POST">
             <label for="username">Username</label>
             <input type="text" name="username" class="labels" id="title">
 
@@ -51,7 +51,7 @@
     {% block searched_user %}
         {% if searched_user %}
         <h2 style="margin-top: 100px;">User</h2>
-            <a href="">
+            <a href="{{ url_for('hello_invite_user_to_task', user_id=searched_user['id'], task_id=task['id']) }}">
             <div class="message-box">
                 <div class="message">
                     <h4> {{ searched_user['last_name'] }} {{ searched_user['first_name'] }}  </h4>

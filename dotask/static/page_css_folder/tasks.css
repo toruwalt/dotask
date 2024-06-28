@@ -183,6 +183,23 @@ label {
     justify-self: center;
 }
 
+.task-header-edit{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.task-header-edit > div{
+    display: block;
+    padding-bottom: 30px;
+}
+
+.task-header-edit > div > img{
+    width:20px;
+    height:20px;
+    
+}
+
 .task-header > img{
     width:20px;
     height:20px; 

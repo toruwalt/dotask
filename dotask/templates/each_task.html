@@ -64,13 +64,33 @@
             <h3 class="grey_tags">Tag</h3>
         </div>
         <h3 id="status-in-task">{{ task.tag.name }}</h3>
+
+        {% if team and team|length > 1 %}
+            <div class="task-header">
+                <img src="../static/teams.svg">
+                <h3 class="grey_tags">Team</h3>
+            </div>
+            {% for member in team %}
+                {% if member.email != current_user.email %}
+                <div class="task-header-edit">
+                    <div><img src="../static/add_task.svg"></div>
+                    <div>
+                        <h4 id="status-in-task"> {{ member.last_name }} {{ member.first_name }} </h4>
+                        <h4 id="status-in-task"> {{ member.email }} </h4>
+                    </div>
+                </div>
+                
+                {% endif  %}
+            {% endfor %}
+        {% endif %}
+
         <div class="task-clickables">
             <a href="{{ url_for('hello_edit_task', task_id=task['id']) }}">
                 <div class="">
                     <h2>EDIT</h2>
                 </div>
             </a>
-            <a href="{{ url_for('hello_invite_to_task', task_id=task['id']) }}">
+            <a href="{{ url_for('hello_invite_to_task', task_id=task['id'], ) }}">
                 <div class="">
                     <h2>INVITE</h2>
                 </div>
