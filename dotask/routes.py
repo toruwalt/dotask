@@ -146,7 +146,25 @@ def hello_profile():
 @app.route("/invites")
 @login_required
 def hello_invites():
-     return render_template('invites.html')
+    try:
+        tasks = current_user.tasks
+        #shared_tasks = [ task for task in tasks if len(task.users) > 1]
+
+        shared_tasks = {}
+        for task in tasks:
+            for user in task.users:
+                if user.id != current_user.id:
+                    if user.id not in shared_tasks:
+                        shared_tasks[user.id] = {'user': user, 'tasks': []}
+                    shared_tasks[user.id]['tasks'].append(task)
+
+        if shared_tasks:
+            return render_template('invites.html', current_user=current_user, shared_tasks=shared_tasks, tasks=tasks)
+        else:
+            return render_template('dashboard..html')
+    except:
+        flash
+        return render_template('invites.html')
 
 @app.route("/<task_id>/search_user", methods=['GET','POST'])
 @login_required
