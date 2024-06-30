@@ -99,3 +99,28 @@ label {
     justify-content: center;
     align-items: center;
 }
+
+.message-dot{
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+}
+
+.status-in-task{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: -20px;
+}
+
+.progress-task {
+    background-color: #FEC347; 
+}
+  
+.completed-task {
+    background-color: #5694F2; 
+}
+
+.cancelled-task {
+    background-color: #F26E56; 
+}
