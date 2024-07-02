@@ -47,8 +47,12 @@ def hello_dashboard():
         tasks = current_user.tasks
         if tasks:
             return render_template("dashboard.html", tasks=tasks)
+        else:
+            return render_template("dashboard.html")
     except:
-        return render_template("dashboard.html")
+        error_message = "An error occurred while retrieving tasks."
+        return render_template("dashboard.html", error_message=error_message)
+
 
 @app.route("/")
 @app.route("/home")
@@ -71,10 +75,10 @@ def hello_about():
     """
     return render_template('about.html')
 
-@app.route("/blog")
-def hello_blog():
+@app.route("/features")
+def hello_features():
     """The about page"""
-    return "<p>Hello, Blog!</p>"
+    return render_template('features.html')
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -102,10 +106,10 @@ def hello_register():
                 )
             db.session.add(user)
             db.session.commit()
-            return render_template('login.html')
+            return redirect(url_for('hello_login'))
         else:
             flash(form.errors, category='error')
-            return render_template('register.html')
+            return redirect(url_for('hello_register'))
     
 @app.route("/submit", methods=['GET', 'POST'])
 def hello_submit():
@@ -130,7 +134,7 @@ def hello_login():
                 password = user.password
                 if bcrypt.check_password_hash(password, form.password.data) == True:
                     login_user(user)
-                    return redirect(url_for('hello_dashboard', user=current_user))
+                    return render_template('dashboard.html', user=current_user)
 
                 else:
                     flash("Invalid login credentials. Please check your password.", category='error')

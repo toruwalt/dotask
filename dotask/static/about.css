@@ -86,6 +86,17 @@
         margin: 2%;
     }
 
+    .about-links{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+
+    .about-links > a{
+      margin: 2%;
+      justify-self: center;
+    }
   }
 
 @media (max-width: 769px) {

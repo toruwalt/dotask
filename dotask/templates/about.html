@@ -23,7 +23,7 @@
     <div class="off-screen-menu">
         <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
         <div class="top-bar-text-1"><a href="{{ url_for('hello_about') }}">ABOUT</a></div>
-          <div class="top-bar-text-1"><a href="{{ url_for('hello_blog') }}">BLOG</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_features') }}">FEATURES</a></div>
           <div class="top-bar-text-1"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
           <div class="top-bar-text-1"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
           <div class="top-bar-text-1"><a href="{{ url_for('hello_contact_us') }}">CONTACT US</a></div>
@@ -36,7 +36,7 @@
         <div class="header-text">
             <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
             <div class="top-bar-text-1"><a href="{{ url_for('hello_about') }}">ABOUT</a></div>
-            <div class="top-bar-text-1"><a href="{{ url_for('hello_blog') }}">BLOG</a></div>
+            <div class="top-bar-text-1"><a href="{{ url_for('hello_features') }}">FEATURES</a></div>
             </div>
             <div class="ham"></div>
             <nav><div class="hamburger">
@@ -48,36 +48,51 @@
         </div>
     </div>
     <div class="main-page-body">
-    <h3> <span><h1>doTask</h1></span> <span><h2>Take Control of Your Day</h2></span>
-    doTask is your one-stop shop for getting organized and boosting your productivity. We believe in the power of clear to-do lists and streamlined task management to help you achieve your goals and conquer your day.
+        <h3> <span><h1>doTask</h1></span> <span><h2>Take Control of Your Day</h2></span>
+        doTask is your one-stop shop for getting organized and boosting your productivity. We believe in the power of clear to-do lists and streamlined task management to help you achieve your goals and conquer your day.
+        <br>
+        <br>
+        
+        <span><h2>Here's what makes doTask stand out</h2></span>
+        <br><br>
+        Simple and Intuitive <br>We prioritize a user-friendly interface that's easy to learn and navigate. Get started adding tasks in seconds, no complex setup required.<br><br><br><br><br>
+        Focus on What Matters <br>Stay laser-focused with prioritized tasks and clear deadlines. Eliminate distractions and achieve more with a clear roadmap for your day.<br><br><br><br><br>
+        Organize Your Way <br>Create multiple lists to categorize your tasks by project, urgency, or personal preference. Keep work, errands, and hobbies neatly separated for optimal organization.<br><br><br><br><br>
+        Never Miss a Beat <br>Set reminders for important tasks and deadlines so nothing slips through the cracks. Stay on top of your schedule and avoid the stress of last-minute scrambling.<br><br><br><br><br>
+        Offline Accessibility <br>Access your to-do list even without an internet connection. doTask keeps your tasks readily available, allowing you to stay productive on the go.<br><br><br><br><br>
+        Always Evolving <br>We're constantly working on improving doTask with new features and functionalities. Stay tuned for exciting updates that will further enhance your task management experience.<br><br><br><br><br>
+        doTask is for everyone who wants to:
+        
+        <div class="about-aims"><img src="../static/about_check.svg"> Decrease stress and overwhelm </div>
+        
+        <div class="about-aims"><img src="../static/about_check.svg"> Optimize time and efficiency </div>
+
+        <div class="about-aims"><img src="../static/about_check.svg"> Track progress and celebrate achievements </div>
+        
+        <div class="about-aims"><img src="../static/about_check.svg"> Achieve your goals and objectives </div>
+
+        <div class="about-aims"><img src="../static/about_check.svg"> Sharpen focus and reduce distractions </div>
+
+        <div class="about-aims"><img src="../static/about_check.svg"> Keep organized and avoid missed deadlines </div>
+        
+        </h3>
+
+    </div>
+
+    <div class="about-links"><img src="../static/source_code.svg"> <a href="https://github.com/toruwalt/dotask.git" style="color: blue; font-size: 24px">Source Code</a> </div> <br><br>
+    
+    <hr>
+    <div class="about-links">
+        <a href="https://github.com/toruwalt"><img src="../static/github.svg" size="50px"></a>
+
+        <a href="https://x.com/dev_wally"><img src="../static/X.svg"></a>
+
+        <a href="https://linedin.com/walter-torubiri"><img src="../static/linkedin.svg"></a>
+    </div>
+
     <br>
     <br>
-    
-    <span><h2>Here's what makes doTask stand out</h2></span>
-    <br><br>
-    Simple and Intuitive <br>We prioritize a user-friendly interface that's easy to learn and navigate. Get started adding tasks in seconds, no complex setup required.<br><br><br><br><br>
-    Focus on What Matters <br>Stay laser-focused with prioritized tasks and clear deadlines. Eliminate distractions and achieve more with a clear roadmap for your day.<br><br><br><br><br>
-    Organize Your Way <br>Create multiple lists to categorize your tasks by project, urgency, or personal preference. Keep work, errands, and hobbies neatly separated for optimal organization.<br><br><br><br><br>
-    Never Miss a Beat <br>Set reminders for important tasks and deadlines so nothing slips through the cracks. Stay on top of your schedule and avoid the stress of last-minute scrambling.<br><br><br><br><br>
-    Offline Accessibility <br>Access your to-do list even without an internet connection. doTask keeps your tasks readily available, allowing you to stay productive on the go.<br><br><br><br><br>
-    Always Evolving <br>We're constantly working on improving doTask with new features and functionalities. Stay tuned for exciting updates that will further enhance your task management experience.<br><br><br><br><br>
-    doTask is for everyone who wants to:
-    
-    <div class="about-aims"><img src="../static/about_check.svg"> Decrease stress and overwhelm </div>
-    
-    <div class="about-aims"><img src="../static/about_check.svg"> Optimize time and efficiency </div>
 
-    <div class="about-aims"><img src="../static/about_check.svg"> Track progress and celebrate achievements </div>
-    
-    <div class="about-aims"><img src="../static/about_check.svg"> Achieve your goals and objectives </div>
-
-    <div class="about-aims"><img src="../static/about_check.svg"> Sharpen focus and reduce distractions </div>
-
-    <div class="about-aims"><img src="../static/about_check.svg"> Keep organized and avoid missed deadlines </div>
-    
-    </h3>
-
-</div>
     <script src="../static/xyz.js"></script>
 </body>
 </html>

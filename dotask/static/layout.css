@@ -1,7 +1,7 @@
 @media (min-width: 768px) {
     body{
         margin: auto;
-        padding: auto;
+        padding-bottom: 10vh;
         background-color: #E5ECEA;
         display: flex;
         font-family: inter;

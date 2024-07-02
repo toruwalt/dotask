@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotask</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../static/Logo.ico">
+
+    <!-- Font CSS -->
+    <link href="../static/fonts.css">
+
+
+
+    <!-- CSS files-->
+    <link href="../static/about.css" rel="stylesheet">
+    <link href="../static/feature.css" rel="stylesheet">
+
+    <!-- Font to Use -->
+    <link rel="stylesheet" type="text/css" href="../static/fonts.css">
+
+</head>
+<body>
+    <div class="off-screen-menu">
+        <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
+        <div class="top-bar-text-1"><a href="{{ url_for('hello_about') }}">ABOUT</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_features') }}">FEATURES</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
+          <div class="top-bar-text-1"><a href="{{ url_for('hello_contact_us') }}">CONTACT US</a></div>
+    </div>
+    <div class="hp_top_left">
+        <div id="logo">
+            <img src="../static/Logo.png">
+        </div>
+        <div><h1 class="logo-title">DOTASK</h1></div>
+        <div class="header-text">
+            <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
+            <div class="top-bar-text-1"><a href="{{ url_for('hello_about') }}">ABOUT</a></div>
+            <div class="top-bar-text-1"><a href="{{ url_for('hello_features') }}">FEATURES</a></div>
+        </div>
+        <div class="ham"></div>
+        <nav>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </div>
+    <div class="main-page-body">
+        <section>
+            <h2>1. Task Creation</h2>
+            <div>
+                <img class="features_images" src="../static/features_images/features_add_task_1.png">
+                <img class="features_images" src="../static/features_images/features_add_task_2.png">
+            </div>      
+            <div class="feature_text"><h4>DoTask's intuitive interface makes creating and managing tasks a breeze. Simply add a new task, provide a clear description, and set a due date if needed. <br><br> Your tasks are then displayed in a clear and organized list, allowing you to easily prioritize and stay on top of your workload.</h4></div>
+            <br>
+            <br>
+    
+        </section>
+        <section>
+            <h2>2. Task Categorization by Status
+            </h2>
+            <div>
+                <img class="features_images" src="../static/features_images/features_category_task_1.png">
+                <img class="features_images" src="../static/features_images/features_category_task_2.png">
+                <img class="features_images" src="../static/features_images/features_category_task_3.png">
+                <img class="features_images" src="../static/features_images/features_category_task_4.png">
+            </div>      
+            <div class="feature_text"><h4>DoTask goes beyond simple task creation by offering an automatic categorization system. This update introduces a visual and functional way to organize your tasks based on their current status:
+                
+                <br><br>In Process (Yellow): <br>Tasks that are currently being worked on. These will be prominently displayed to keep you focused on your active projects.
+                <br><br>Completed (Blue): <br>Tasks that have been successfully finished. Easily identify completed tasks for a sense of accomplishment and track your overall progress.
+                <br><br>Cancelled (Red): <br>Tasks that are no longer relevant and have been discontinued. Quickly remove clutter and maintain a clear view of your active workload.</h4></div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </section>
+        <section>
+            <h2>3. Task Sharing/Invitation to Task
+            </h2>
+            <div>
+                <img class="features_images" src="../static/features_images/features_invite_to_task_1.png">
+                <img class="features_images" src="../static/features_images/features_invite_to_task_2.png">
+                <img class="features_images" src="../static/features_images/features_invite_to_task_3.png">
+                <img class="features_images" src="../static/features_images/features_invite_to_task_4.png">
+            </div>      
+            <div class="feature_text"><h4>DoTask understands that teamwork makes the dream work. Our upcoming update introduces a powerful task sharing feature that allows you to invite others to collaborate on tasks.
+                <br><br>
+                Invite friends, colleagues, or family members to join you on specific tasks.
+                Share task details, deadlines, and progress with your collaborators.
+                Work together seamlessly, with everyone able to view, edit, and add comments to shared tasks.
+                Benefits:
+                <ul>
+                    <li>Enhanced Collaboration: Work together on projects and achieve goals efficiently.</li>
+                    <li>Improved Communication: Share task details and updates in a centralized location.</li>
+                    <li>Increased Productivity: Delegate tasks and hold collaborators accountable for their contributions.</li>
+                </ul>
+                <br><br>
+                DoTask's task sharing functionality is perfect for students working on group projects, professionals collaborating on assignments, or anyone who wants to share the workload and achieve more together.</h4></div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </section>
+    </div>
+    <script src="../static/xyz.js"></script>
+</body>
+</html>
