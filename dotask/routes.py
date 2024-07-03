@@ -134,7 +134,8 @@ def hello_login():
                 password = user.password
                 if bcrypt.check_password_hash(password, form.password.data) == True:
                     login_user(user)
-                    return render_template('dashboard.html', user=current_user)
+                    tasks = current_user.tasks
+                    return render_template('dashboard.html', user=current_user, tasks=tasks)
 
                 else:
                     flash("Invalid login credentials. Please check your password.", category='error')
