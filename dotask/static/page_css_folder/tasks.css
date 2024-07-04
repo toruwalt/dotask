@@ -253,12 +253,11 @@
     }
 }
 
-@media (max-width: 769px) {
+@media (max-width: 767px) {
     .a2 > div{
         background-color: #A08BF2;
         width: 100%;
         height: 10%;
-        padding: 10%;
         border-radius: 5px;
         color: white;
     }
@@ -375,8 +374,8 @@
     }
 
     .message-dot{
-        width: 20px;
-        height: 20px;
+        width: 10px;
+        height: 10px;
         border-radius: 50px;
     }
 
@@ -408,7 +407,7 @@
         padding: 2%;
         border-radius: 5px;
         display: flex;
-        justify-self: start;
+        justify-self: center;
         align-items: center;
     }
 
@@ -428,25 +427,29 @@
         padding: 2%;
         border-radius: 5px;
         display: flex;
-        justify-self: start;
+        justify-self: center;
         align-items: center;
     }
 
     /* CSS for Each Task Page */
     h1{
-        font-size: 24px;
+        font-size: 20px;
     }
 
     h2{
         font-size: 16px;
     }
+
+    h3{
+        font-size: 12px;
+    }
+
     .grey_tags{
         color: #989898;
     }
 
     .status-in-task{
         margin: 5%;
-
         display: flex;
         justify-content: start;
         align-items: center;
@@ -468,6 +471,11 @@
         justify-self: center;
     }
 
+
+    .task-header > h3{
+        font-size: 14px;
+    }
+
     .task-header-edit{
         margin: 0;
         padding: 0;
@@ -479,9 +487,15 @@
         padding-bottom: 30px;
     }
 
+
+
+    .task-header-edit > div > h4{
+        font-size: 12px;
+    }
+
     .task-header-edit > div > img{
-        width:20px;
-        height:20px;
+        width:15px;
+        height:15px;
         
     }
 
@@ -493,6 +507,7 @@
 
     .status-in-task > h3{
         padding-left: 20px;
+        font-size: 12px;
     }
 
     /* CSS for the Edit and Delete Buttons in Each Task */
@@ -506,18 +521,21 @@
         align-self: center;
     }
 
-    .task-clickables > a > h2{
-        width: 80%;
+    .task-clickables > a > div {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .task-clickables > a{
+        background-color: #FFFFFF;
         width: 80%;
         border:2px solid #A08BF2;
         color: #A08BF2;
         border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin: 10px;
     }
 
@@ -529,10 +547,12 @@
 
     /* CSS for Flash Div in Each Task */
     .flash-div{
-        width: 100%;
+        margin: 2%;
+        width: 90%;
         color: green;
         background-color: #f0fff0;
         border: 1px solid green;
-        padding: 10px;
+        font-size: 12px;
+        align-self: center;
     }
 }

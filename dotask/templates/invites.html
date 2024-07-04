@@ -29,7 +29,7 @@
     {% block tasks %}
     {% if shared_tasks %}
         {% for user_id, shared in shared_tasks.items() %}
-            <h3> {{ shared.user.last_name }} {{ shared.user.first_name }}</h3>
+            <div class="h3-shared-tasks"><h3> {{ shared.user.last_name }} {{ shared.user.first_name }}</h3></div>
             <ul>
                 {% for task in shared.tasks %}
                 <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
