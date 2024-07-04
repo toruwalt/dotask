@@ -108,12 +108,13 @@
         margin: 0%;
         background-color: #E5ECEA;
         display: block;
+        padding-bottom: 100px;
     }
 
 
     .sidebar-text{
         color: #989898;
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .sidebar{
@@ -139,16 +140,13 @@
 
     a{
         text-decoration: none;
+        color: black;
     }
 
     a > div{
         width: 100%;
         height: 100%;
         margin: 0 auto;
-    }
-
-    a > div:hover{
-        background-color: blue;
     }
 
     #logo{
@@ -163,10 +161,6 @@
         padding-top: 20px;
         width: 100%;
         height: 100%;
-    }
-
-    #logos:hover{
-        filter: hue-rotate(180deg) invert();
     }
 
     .imgs{
