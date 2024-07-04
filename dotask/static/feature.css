@@ -18,8 +18,12 @@ section{
     border: 0.5px solid black;
 }
 
-.feature_text{
-    margin: 0% 20%;
-    text-align: justify;
-    justify-content: end;
+
+
+@media (min-width: 768px) {
+    .feature_text{
+        margin: 0%;
+        text-align: justify;
+        justify-content: end;
+    }
 }
