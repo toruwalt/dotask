@@ -291,7 +291,7 @@
 
 @media (max-width: 769px) {
   body {
-    padding: 0%;
+    padding: 0% 5%;
     margin: auto;
     font-family: graduate;
     }
@@ -322,7 +322,7 @@
   }
 
   .header-text > div{
-    padding-left: px;
+    padding-left: 0px;
   }
 
   .hp_top_left{
