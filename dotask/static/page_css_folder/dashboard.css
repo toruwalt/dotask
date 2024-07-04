@@ -190,12 +190,12 @@
 
     a{
         text-decoration: none;
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .cate > a {
-        width: 90%;
-        padding: 10px;
+        width: 80%;
+        padding: 5px;
     }
 
     .cate > a > div{
