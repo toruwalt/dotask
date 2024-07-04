@@ -170,6 +170,9 @@
         cursor: pointer;
         margin-left: 5%;
     }
+    input[type=text] {
+        width: 50vw;
+    }
 
     input[type=submit] {
         width: 90vw;
