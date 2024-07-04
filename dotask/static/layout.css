@@ -109,6 +109,7 @@
         background-color: #E5ECEA;
         display: block;
         padding-bottom: 100px;
+        font-family: inter;
     }
 
 
@@ -132,6 +133,7 @@
     }
 
     .sidebar > div{
+        width: 50px;
         height: 100%;
         margin: 0 auto;
         border-radius: 10px;
