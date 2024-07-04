@@ -1,148 +1,152 @@
-.a1 > div{
-    background-color: #A08BF2;
-    width: 100%;
-    height: 10%;
-    padding-left: 30px;
-    margin: 5% auto;
-    border-radius: 20px;
-    color: white;
-}
+@media (min-width: 768px) {
+    .a1 > div{
+        background-color: #A08BF2;
+        width: 100%;
+        height: 10%;
+        padding-left: 30px;
+        margin: 5% auto;
+        border-radius: 20px;
+        color: white;
+    }
 
 
-.a1 > div > h4{
-    color: white;
+    .a1 > div > h4{
+        color: white;
+    }
+
+    .a1 > div > img{
+        fill: #FFFFFF;
+    }
+
+    .nav_title{
+        padding-left: 5%;
+        margin-bottom: 50px;
+        background-image: linear-gradient(to right, #B5C2CA , #CCD6D9, #B5C2CA);
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        width: 60vw;
+        height: 15vh;
+    }
+
+    img{
+        padding-right: 2%;
+    }
+
+    .cate{
+        width: 60vw;
+        margin-bottom: 50px;
+        display: flex;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    .cate > a {
+        width: 60vw;
+        padding-bottom: 50px;
+        margin: 10px;
+    }
+
+    .cate > a > div{
+        width: 100%;
+        padding: 2%;
+        border-radius: 5px;
+        display: flex;
+        justify-self: start;
+        align-items: center;
+    }
+
+    .cate-container-1{
+        background-color: #FEC347;
+        justify-content: center;
+    }
+
+    .cate-container-2{
+        background-color: #5694F2;
+        justify-content: center;
+    }
+
+    .cate-container-3{
+        background-color: #F26E56;
+        justify-content: center;
+    }
+
+    .cate-container-4{
+        background-color: #A08BF2;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* CSS for Flash Box above "Tasks" */
+
+    .flashes {
+        color: #FEC347;
+    }
+    
+    .flash-success {
+        color: green;
+        background-color: #f0fff0;
+        border: 1px solid green;
+        padding: 10px;
+    }
+    
+    .flash-error {
+        color: red;
+        background-color: #ffdddd;
+        border: 1px solid red;
+        padding: 10px;
+    }
+
+    .message-box{
+        display: flex;
+        margin-top: 2%;
+        padding-right: 10%;
+        padding-left: 10%;
+        padding-top: 3%;
+        padding-bottom: 3%;
+        border-left: 4px solid #A08BF2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message{
+        width: 100%;
+        border-radius: 5px;
+        display: block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message-dot{
+        width: 20px;
+        height: 20px;
+        border-radius: 50px;
+    }
+
+
+    .progress-task {
+        background-color: #FEC347; /* Light orange for work tasks */
+    }
+    
+    .completed-task {
+        background-color: #5694F2; /* Light blue for personal tasks */
+    }
+
+    .cancelled-task {
+        background-color: #F26E56; /* Light blue for personal tasks */
+    }
+
+    /* CSS for Flash Div in Each Task */
+    .flash-div{
+        width: 100%;
+        color: green;
+        background-color: #f0fff0;
+        border: 1px solid green;
+        padding: 10px;
+    }
 }
 
-.a1 > div > img{
-    fill: #FFFFFF;
-}
-
-.nav_title{
-    padding-left: 5%;
-    margin-bottom: 50px;
-    background-image: linear-gradient(to right, #B5C2CA , #CCD6D9, #B5C2CA);
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 60vw;
-    height: 15vh;
-}
-
-img{
-    padding-right: 2%;
-}
-
-.cate{
-    width: 60vw;
-    margin-bottom: 50px;
-    display: flex;
-}
-
-a{
-    text-decoration: none;
-}
-
-.cate > a {
-    width: 60vw;
-    padding-bottom: 50px;
-    margin: 10px;
-}
-
-.cate > a > div{
-    width: 100%;
-    padding: 2%;
-    border-radius: 5px;
-    display: flex;
-    justify-self: start;
-    align-items: center;
-}
-
-.cate-container-1{
-    background-color: #FEC347;
-    justify-content: center;
-}
-
-.cate-container-2{
-    background-color: #5694F2;
-    justify-content: center;
-}
-
-.cate-container-3{
-    background-color: #F26E56;
-    justify-content: center;
-}
-
-.cate-container-4{
-    background-color: #A08BF2;
-    align-items: center;
-    justify-content: center;
-}
-
-/* CSS for Flash Box above "Tasks" */
-
-.flashes {
-    color: #FEC347;
-}
-  
-.flash-success {
-    color: green;
-    background-color: #f0fff0;
-    border: 1px solid green;
-    padding: 10px;
-}
-  
-.flash-error {
-    color: red;
-    background-color: #ffdddd;
-    border: 1px solid red;
-    padding: 10px;
-}
-
-.message-box{
-    display: flex;
-    margin-top: 2%;
-    padding-right: 10%;
-    padding-left: 10%;
-    padding-top: 3%;
-    padding-bottom: 3%;
-    border-left: 4px solid #A08BF2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.message{
-    width: 100%;
-    border-radius: 5px;
-    display: block;
-    justify-content: center;
-    align-items: center;
-}
-
-.message-dot{
-    width: 20px;
-    height: 20px;
-    border-radius: 50px;
-}
-
-
-.progress-task {
-    background-color: #FEC347; /* Light orange for work tasks */
-}
-  
-.completed-task {
-    background-color: #5694F2; /* Light blue for personal tasks */
-}
-
-.cancelled-task {
-    background-color: #F26E56; /* Light blue for personal tasks */
-}
-
-/* CSS for Flash Div in Each Task */
-.flash-div{
-    width: 100%;
-    color: green;
-    background-color: #f0fff0;
-    border: 1px solid green;
-    padding: 10px;
-}
+@media (max-width: 769px) {}
