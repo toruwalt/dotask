@@ -50,7 +50,7 @@
 
     {% block searched_user %}
         {% if searched_user %}
-        <h2 style="margin-top: 100px;">User</h2>
+        <h2>User</h2>
             <a href="{{ url_for('hello_invite_user_to_task', user_id=searched_user['id'], task_id=task['id']) }}">
             <div class="message-box">
                 <div class="message">
