@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Font to Use -->
-    <link rel="stylesheet" type="text/css" href="../static/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/fonts.css">
 
      <!-- Favicon -->
-     <link rel="shortcut icon" type="image/x-icon" href="../static/Logo.ico">
+     <link rel="shortcut icon" type="image/x-icon" href="../static/images/logo.ico">
 
 
     <!-- CSS file to use -->
-    <link rel="stylesheet" href="../static/layout.css" />
+    <link rel="stylesheet" href="../static/css/layout.css" />
     {% block head %}
     <title>{% block title %}{% endblock %} </title>
-    <link rel="stylesheet" {% block css_tab_colour %} href="../static/layout.css" {% endblock %}/>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/layout.css" {% endblock %}/>
     {% endblock %}
 </head>
 <body>
     <div class="sidebar">
         <div id="logo">
-            <img src="../static/Logo.svg" height="60px" width="60px">
+            <img src="../static/svg/logo.svg" height="60px" width="60px">
         </div>
         <div>
             {% block dash_image_colour %}
             <a class="a1" href="{{ url_for('hello_dashboard') }}">
             <div id="logos">
-                <img class="imgs" src="../static/dashboard.svg">
+                <img class="imgs" src="../static/svg/dashboard.svg">
                 <h5 class="sidebar-text">Dashboard</h5>
             </div>
             </a>
@@ -37,7 +37,7 @@
             {% block task_image_colour %}
             <a class="a2" href="{{ url_for('hello_tasks') }}">
             <div id="logos">
-                <img class="imgs" src="../static/tasks.svg">
+                <img class="imgs" src="../static/svg/tasks.svg">
                 <h4 class="sidebar-text">Tasks</h4>
             </div>
             </a>
@@ -47,7 +47,7 @@
             {% block invites_image_colour %}
             <a class="a5" href="{{ url_for('hello_invites') }}">
             <div id="logos">
-                <img class="imgs" src="../static/invites.svg">
+                <img class="imgs" src="../static/svg/invites.svg">
                 <h4 class="sidebar-text">Invites</h4>
             </div>
             </a>
@@ -57,7 +57,7 @@
             {% block profile_image_colour %}
             <a class="a3" href="{{ url_for('hello_profile') }}">
             <div id="logos">
-                <img class="imgs" src="../static/profile.svg">
+                <img class="imgs" src="../static/svg/profile.svg">
                 <h4 class="sidebar-text">Profile</h4>
             </div>
             </a>
@@ -67,7 +67,7 @@
             {% block settings_image_colour %}
             <a class="a4" href="{{ url_for('hello_settings') }}">
             <div id="logos">
-                <img class="imgs" src="../static/settings.svg">
+                <img class="imgs" src="../static/svg/settings.svg">
                 <h4 class="sidebar-text">Settings</h4>
             </div>
             </a>
@@ -76,7 +76,7 @@
         <div>
             <a href="{{ url_for('hello_logout') }}">
             <div id="logos">
-                <img class="imgs" src="../static/logout.svg">
+                <img class="imgs" src="../static/svg/logout.svg">
                 <h4 class="sidebar-text">Logout</h4>
             </div>
             </a>

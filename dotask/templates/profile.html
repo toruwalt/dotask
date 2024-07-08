@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block head %}
     <title>{% block title %}{% endblock %} Profile - DoTask</title>
-    <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/profile.css" {% endblock %}/>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/profile.css" {% endblock %}/>
 {% endblock %}
 
 {% block profile_image_colour %}
             <a class="a3" href="{{ url_for('hello_profile') }}">
             <div id="logos">
-                <img class="imgs" src="../static/profile_active.svg">
+                <img class="imgs" src="../static/svg/profile_active.svg">
                 <h4 class="sidebar-text">Profile</h4>
             </div>
             </a>

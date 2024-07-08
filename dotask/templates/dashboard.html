@@ -7,14 +7,14 @@
     {% extends "layout.html" %}
     {% block head %}
         <title>{% block title %}{% endblock %} Dashboard - DoTask</title>
-        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/dashboard.css" {% endblock %}/>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/dashboard.css" {% endblock %}/>
     {% endblock %}
 </head>
 <body>
     {% block dash_image_colour %}
     <a class="a1" href="{{ url_for('hello_dashboard') }}">
     <div id="logos">
-        <img class="imgs" src="../static/dashboard_active.svg">
+        <img class="imgs" src="../static/svg/dashboard_active.svg">
         <h4 class="sidebar-text">Dashboard</h4>
     </div>
     </a>
@@ -42,19 +42,19 @@
     <div class="cate">
         <a href="{{ url_for('hello_in_process_tasks') }}">
             <div class="cate-container-1">
-                <img src="../static/in_process.png">
+                <img src="../static/images/in_process.png">
                 <h3>In-process</h3>
             </div>
         </a>
         <a href="{{ url_for('hello_completed_tasks') }}">
             <div class="cate-container-2">
-                <img src="../static/completed.svg">
+                <img src="../static/svg/completed.svg">
                 <h3>Completed</h3>
             </div>
         </a>
         <a href="{{ url_for('hello_cancelled_tasks') }}">
             <div class="cate-container-3">
-                <img src="../static/cancelled.svg">
+                <img src="../static/svg/cancelled.svg">
                 <h3>Cancelled</h3>
             </div>
         </a>
@@ -66,7 +66,7 @@
     <div class="cate">
         <a href="{{ url_for('hello_new_task') }}">
             <div class="cate-container-4">
-                <img src="../static/add_task.svg">
+                <img src="../static/svg/add_task.svg">
                 <h3>Add New Task</h3>
             </div>
         </a>

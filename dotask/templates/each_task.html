@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block head %}
     <title>{% block title %}{% endblock %} Tasks - DoTask</title>
-    <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css"> 
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/tasks.css">
     {% endblock %}
 {% endblock %}
 {% block task_image_colour %}
     <a class="a2" href="{{ url_for('hello_tasks') }}">
     <div id="logos">
-        <img class="imgs" src="../static/tasks_active.svg">
+        <img class="imgs" src="../static/svg/tasks_active.svg">
         <h4 class="sidebar-text">Tasks</h4>
     </div>
     </a>
@@ -28,25 +28,25 @@
 {% block tasks %}
     {% if task %}
         <div class="task-header">
-            <img src="../static/title.svg">
+            <img src="../static/svg/title.svg">
             <h3 class="grey_tags">Title</h3>
         </div>
         <h1 id="status-in-task">{{ task['title'] }}</h1>
         <br>
         <div class="task-header">
-            <img src="../static/description.svg">
+            <img src="../static/svg/description.svg">
             <h3 class="grey_tags">Description</h3>
         </div>
         <h3 id="status-in-task">{{ task['description'] }}</h3>
         <br>
         <div class="task-header">
-            <img src="../static/due_dates.svg">
+            <img src="../static/svg/due_dates.svg">
             <h3 class="grey_tags">Due Date</h3>
         </div>
         <h3 id="status-in-task">{{ task['due_date'] }}</h3>
         <br>
         <div class="task-header">
-            <img src="../static/status.svg">
+            <img src="../static/svg/status.svg">
             <h3 class="grey_tags">Status</h3>
         </div>
         <div class="status-in-task">
@@ -60,20 +60,20 @@
         </div>
         <br>
         <div class="task-header">
-            <img src="../static/tag.svg">
+            <img src="../static/svg/tag.svg">
             <h3 class="grey_tags">Tag</h3>
         </div>
         <h3 id="status-in-task">{{ task.tag.name }}</h3>
 
         {% if team and team|length > 1 %}
             <div class="task-header">
-                <img src="../static/teams.svg">
+                <img src="../static/svg/teams.svg">
                 <h3 class="grey_tags">Team</h3>
             </div>
             {% for member in team %}
                 {% if member.email != current_user.email %}
                 <div class="task-header-edit">
-                    <div><img src="../static/add_task.svg"></div>
+                    <div><img src="../static/svg/add_task.svg"></div>
                     <div>
                         <h4 id="status-in-task"> {{ member.last_name }} {{ member.first_name }} </h4>
                         <h4 id="status-in-task"> {{ member.email }} </h4>

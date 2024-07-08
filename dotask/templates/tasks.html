@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block head %}
     <title>{% block title %}{% endblock %} Tasks - DoTask</title>
-    <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css"> 
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/tasks.css"> 
     {% endblock %}
 {% endblock %}
 {% block task_image_colour %}
     <a class="a2" href="{{ url_for('hello_tasks') }}">
     <div id="logos">
-        <img class="imgs" src="../static/tasks_active.svg">
+        <img class="imgs" src="../static/svg/tasks_active.svg">
         <h4 class="sidebar-text">Tasks</h4>
     </div>
     </a>

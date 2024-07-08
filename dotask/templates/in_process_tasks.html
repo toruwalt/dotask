@@ -7,14 +7,14 @@
     {% extends "layout.html" %}
     {% block head %}
         <title>{% block title %}{% endblock %} In Process Tasks - DoTask</title>
-        <link rel="stylesheet" {% block css_tab_colour %} href="../static/page_css_folder/tasks.css" {% endblock %}/>
+        <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/tasks.css" {% endblock %}/>
     {% endblock %}
 </head>
 <body>
     {% block task_image_colour %}
         <a class="a2" href="{{ url_for('hello_tasks') }}">
         <div id="logos">
-            <img class="imgs" src="../static/tasks_active.svg">
+            <img class="imgs" src="../static/svg/tasks_active.svg">
             <h4 class="sidebar-text">Tasks</h4>
         </div>
         </a>
@@ -22,7 +22,7 @@
 
     {% block categories %}
         <div class="cate-container-1">
-            <img src="../static/in_process.png">
+            <img src="../static/images/in_process.png">
             <h3>In-process</h3>
         </div>
     {% endblock categories %}
