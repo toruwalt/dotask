@@ -289,7 +289,7 @@
       }
   }
 
-@media (max-width: 769px) {
+@media (max-width: 767px) {
   body {
     padding: 0%;
     margin: auto;
@@ -326,7 +326,7 @@
   }
 
   .hp_top_left{
-    width: 90%;
+    width: 85%;
     height: 100%;
     padding-left: 5%;
     display: flex;
