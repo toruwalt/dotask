@@ -382,7 +382,7 @@
 
   .off-screen-menu > div{
     height: 10%;
-    width: 20%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -564,10 +564,11 @@
     }
 
   .call-to-action{
+    background-color: aqua;
     height: 30%;
     width: 90%;
     display: flex;
-    margin-top: 5%;
+    margin: auto;
     justify-content: center;
     align-items: center;
   }

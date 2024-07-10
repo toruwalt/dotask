@@ -192,10 +192,9 @@ def hello_login():
        
 
 @app.route("/contact_us", methods=['GET', 'POST'])
-@login_required
 def hello_contact_us():
     """The about page"""
-    return "<p>Hello, Contact Us!</p>"
+    return render_template('contact_us.html')
 
 @app.route("/profile")
 @login_required
