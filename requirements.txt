@@ -7,6 +7,7 @@ WTForms
 SQLAlchemy
 enum34  # optional, for enum type if using Python < 3.4
 bcrypt  # optional, if not using Flask-Bcrypt
+Flask-Mail
 
 # Additional packages you might need based on your app's functionality:
 # - Werkzeug (usually comes with Flask)

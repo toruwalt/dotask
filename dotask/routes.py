@@ -5,6 +5,7 @@ from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
 from dotask.models import User, Task, user_task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
+from dotask import Mail, Message
 
 @app.after_request
 def after_request(response):
@@ -194,7 +195,17 @@ def hello_login():
 @app.route("/contact_us", methods=['GET', 'POST'])
 def hello_contact_us():
     """The about page"""
-    return render_template('contact_us.html')
+    if request.method == 'GET':
+        return render_template('contact_us.html')
+    """
+    if request.method == 'POST':
+        msg = Message('Test Email', sender='your_email@example.com', recipients=['recipient@email.com'])
+        msg.body = 'This is a test email sent from your Flask application.'
+        mail.send(msg)
+        return 'Email sent!'
+    """
+        
+
 
 @app.route("/profile")
 @login_required
