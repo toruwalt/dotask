@@ -5,7 +5,6 @@ from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
 from dotask.models import User, Task, user_task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
-#from dotask import Mail, Message
 
 @app.after_request
 def after_request(response):
@@ -655,14 +654,14 @@ def hello_delete_task(task_id):
 
 @app.route("/settings")
 @login_required
-def hello_settings():
+def hello_notices():
     """
     Displays the user settings page. (User must be logged in).
 
     Returns:
         - The rendered "Settings" template.
     """
-    return render_template("settings.html")
+    return render_template("notifications.html")
 
 
 @app.route("/logout")
