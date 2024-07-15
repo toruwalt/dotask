@@ -5,7 +5,7 @@ from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
 from dotask.models import User, Task, user_task
 from dotask import login_manager, current_user, login_user, login_required, logout_user
-from dotask import Mail, Message
+#from dotask import Mail, Message
 
 @app.after_request
 def after_request(response):
