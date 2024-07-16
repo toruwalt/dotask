@@ -10,6 +10,13 @@ user_task = db.Table(
     db.Column("task_id", db.Integer, db.ForeignKey("task.id"), primary_key=True),
 )
 
+user_notification = db.Table(
+    "user_notification",
+    db.Model.metadata,
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("notification_id", db.Integer, db.ForeignKey("notification.id"), primary_key=True),
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -18,14 +25,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(30), nullable=False, unique=True)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    #tasks = relationship('Task', back_populates='user')
     assigned_tasks = relationship('Task', secondary=user_task, backref='assigned_to')
-
-class Notifications(db.Model):
-    __tablename__ = "notifications"
-    id = db.Column(db.Integer, primary_key=True)
-    notification = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    notes = relationship('Notification', secondary=user_notification, backref='notes')
 
 class TaskStatus(enum.Enum):
     In_Progress = "In_Progress"
@@ -47,31 +48,17 @@ class Task(db.Model):
     due_date = db.Column(db.Date, nullable=False)
     status = db.Column(Enum(TaskStatus))
     tag = db.Column(Enum(TaskTag))
-    #users = relationship('User', back_populates='tasks')
-    users = relationship('User', secondary=user_task, backref='tasks')
+    users = relationship('User', secondary=user_task, 
+    backref='tasks')
+    
 
-
-def create_notification(mapper, connection, target):
-    session = Session.object_session(target)
-    if isinstance(target, Task):
-        notification_message = f"Task '{target.title}' was added/updated/removed."
-    else:
-        notification_message = f"Unknown change detected."
-
-    for user in target.users:
-        notification = Notifications(
-            notification=notification_message,
-            user_id=user.id
-        )
-        session.add(notification)
-    session.commit()
-    return notification_message
-
-event.listen(Task, 'after_insert', create_notification)
-event.listen(Task, 'after_update', create_notification)
-event.listen(Task, 'after_delete', create_notification)
-
-
+class Notification(db.Model):
+    __tablename__ = "notification"
+    id = db.Column(db.Integer, primary_key=True)
+    notification = db.Column(db.String(100), nullable=False)
+    seen = db.Column(db.Boolean, nullable=False, default=False)
+    task_title = db.Column(db.String(100), nullable=False)
+    users_to_notify = relationship('User', secondary=user_notification, backref='notices')
 
 with app.app_context():
     db.create_all()

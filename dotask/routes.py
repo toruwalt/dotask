@@ -3,7 +3,7 @@ from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
-from dotask.models import User, Task, user_task
+from dotask.models import User, Task, Notification, user_notification, user_task, event
 from dotask import login_manager, current_user, login_user, login_required, logout_user
 
 @app.after_request
@@ -48,7 +48,10 @@ def hello_dashboard():
     """
     try:
         tasks = current_user.tasks
+        notices = current_user.notes
         if tasks:
+            if notices:
+                return render_template("dashboard.html", tasks=tasks, notices=notices)
             return render_template("dashboard.html", tasks=tasks)
         else:
             return render_template("dashboard.html")
@@ -219,25 +222,22 @@ def hello_profile():
     Returns:
         The rendered profile template with user information and counters for total tasks, completed tasks, in-progress tasks, and cancelled tasks.
     """
+
     try:
-        task_all = 0
-        task_in = 0
-        task_com = 0
-        task_can = 0
         tasks = current_user.tasks
-        if tasks:
-            for task in tasks:
-                task_all += 1
-                if task.status.name == 'Cancelled':
-                    task_can += 1
-                elif task.status.name == 'Completed':
-                    task_com += 1
-                else:
-                    task_in += 1
-            return render_template('profile.html', current_user=current_user, task=task, task_all=task_all, task_in=task_in, task_com=task_com, task_can=task_can)
-        else:
-            return render_template('profile.html', current_user=current_user)
-    except:
+        notices = current_user.notes
+        task_counts = {
+            'all': len(tasks),
+            'in_progress': sum(task.status.name == 'In_Progress' for task in tasks),
+            'completed': sum(task.status.name == 'Completed' for task in tasks),
+            'cancelled': sum(task.status.name == 'Cancelled' for task in tasks),
+        }
+
+        return render_template('profile.html', current_user=current_user,
+                              notices=notices, task_counts=task_counts)
+
+    except Exception as e:
+        print(f"An error occurred while fetching tasks or notices: {e}")
         return render_template('profile.html', current_user=current_user)
 
     
@@ -377,9 +377,16 @@ def hello_invite_user_to_task(task_id, user_id):
     try:
         user = db.session.query(User).get(user_id)
         task = db.session.query(Task).get(task_id)
+        
+        notification = Notification(notification="You have been invited to a task titled", task_title=task.title)
+        db.session.add(notification)
+        db.session.commit()
+
         task.users.append(user)
+        user.notes.append(notification)
+
         team = task.users
-        db.session.commit() 
+        db.session.commit()
         flash(f"{user.username} successfully added")
         return redirect(url_for('hello_each_task', task_id=task_id, team=team))
     except:
@@ -652,7 +659,7 @@ def hello_delete_task(task_id):
         return redirect(url_for('hello_dashboard')) 
         
 
-@app.route("/settings")
+@app.route("/notifications")
 @login_required
 def hello_notices():
     """
@@ -661,7 +668,12 @@ def hello_notices():
     Returns:
         - The rendered "Settings" template.
     """
-    return render_template("notifications.html")
+    try:
+        task = current_user.tasks
+        notices = current_user.notes
+        return render_template("notifications.html", notices=notices, task=task)
+    except:
+        return render_template("notifications.html")
 
 
 @app.route("/logout")

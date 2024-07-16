@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block head %}
+    <title>{% block title %}{% endblock %} Notifications - DoTask</title>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/notification.css" {% endblock %}/>
+{% endblock %}
+
+{% block notifications_image_colour %}
+<a class="a4" href="{{ url_for('hello_notices') }}">
+<div id="logos">
+    {% if notices %}
+    <img class="imgs" src="../static/svg/notifications_with_note_active.svg">
+    {% else %}
+    <img class="imgs" src="../static/svg/notifications_active.svg">
+    {% endif %}
+    <h4 class="sidebar-text">Notices</h4>
+</div>
+</a>
+{% endblock notifications_image_colour %}
+
+
+{% block tasks %}
+    {% if notices %}
+        {% for item in notices %}
+            <a href="{{ url_for('hello_each_task', task_id=task.id) }}">
+                <div class="notification">
+                    <span class="notification-icon">!</span>
+                    <span class="notification-text"> {{ item.notification }} <b>{{ item.task_title }}</b> </span>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>No Notifications</p>
+    {% endif %}
+{% endblock tasks %}

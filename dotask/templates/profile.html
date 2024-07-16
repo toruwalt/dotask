@@ -46,53 +46,53 @@
     {% endif %}
 
     
-    {% if task_all %}
+    {% if task_counts.all > 0 %}
     <div class="shifts click">
         <div><h4>
             Tasks: 
         </h4></div> 
         <a href="{{ url_for('hello_tasks') }}">
             <div>
-                <h4>{{ task_all }} </h4>
+                <h4>{{ task_counts.all }} </h4>
             </div>
         </a>
     </div>
     {% endif %}
 
-    {% if task_in %}
+    {% if task_counts.in_progress > 0 %}
     <div class="shifts click">
         <div><h4>
             In Progress Tasks: 
         </h4></div>
         <a href="{{ url_for('hello_in_process_tasks') }}">
             <div>
-                <h4>{{ task_in }} </h4>
+                <h4>{{ task_counts.in_progress }} </h4>
             </div>
         </a>
     </div>
     {% endif %}
 
-    {% if task_com %}
+    {% if task_counts.completed > 0 %}
     <div class="shifts click">
         <div><h4>
             Completed Tasks: 
         </h4></div>
         <a href="{{ url_for('hello_completed_tasks') }}">
             <div>
-                <h4>{{ task_com }}</h4>
+                <h4>{{ task_counts.completed }}</h4>
             </div>
         </a>
     </div>
     {% endif %}
 
-    {% if task_can %}
+    {% if task_counts.cancelled > 0 %}
     <div class="shifts click">
         <div><h4>
             Cancelled Tasks: 
         </h4></div>
         <a href="{{ url_for('hello_cancelled_tasks') }}">
         <div>
-            <h4>{{ task_can }}</h4>
+            <h4>{{ task_counts.cancelled }}</h4>
         </div>
     </div>
     {% endif %}
