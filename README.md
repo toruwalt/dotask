@@ -1,4 +1,10 @@
+
 # DoTask
+=======
+![image](https://github.com/toruwalt/dotask/dotask/static/svg/logo.svg)
+
+#doTask
+>>>>>>> Stashed changes
 Get Organized and Get Things Done!
 This is the README for doTask, a productivity app designed to help you manage your tasks and stay on top of your goals.
 
