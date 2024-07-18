@@ -1,6 +1,6 @@
-![image](https://github.com/toruwalt/dotask/blob/main/dotask/static/svg/logo.svg)
+# ![image](https://github.com/toruwalt/dotask/blob/main/dotask/static/svg/logo.svg)  DoTask
 
-# DoTask
+
 Get Organized and Get Things Done!
 This is the README for doTask, a productivity app designed to help you manage your tasks and stay on top of your goals.
 
