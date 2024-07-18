@@ -1,4 +1,4 @@
-from sqlalchemy import Enum, event
+from sqlalchemy import Enum, update
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.session import Session
 from dotask import app, db, enum, UserMixin
@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     assigned_tasks = relationship('Task', secondary=user_task, backref='assigned_to')
-    notes = relationship('Notification', secondary=user_notification, backref='notes')
+    notes = relationship('Notification', secondary=user_notification, backref='note')
 
 class TaskStatus(enum.Enum):
     In_Progress = "In_Progress"
@@ -51,13 +51,12 @@ class Task(db.Model):
     users = relationship('User', secondary=user_task, 
     backref='tasks')
     
-
 class Notification(db.Model):
     __tablename__ = "notification"
     id = db.Column(db.Integer, primary_key=True)
     notification = db.Column(db.String(100), nullable=False)
-    seen = db.Column(db.Boolean, nullable=False, default=False)
     task_title = db.Column(db.String(100), nullable=False)
+    seen = db.Column(db.Boolean, nullable=False, default=False)
     users_to_notify = relationship('User', secondary=user_notification, backref='notices')
 
 with app.app_context():

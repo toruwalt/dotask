@@ -3,7 +3,7 @@ from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
-from dotask.models import User, Task, Notification, user_notification, user_task, event
+from dotask.models import User, Task,  user_task, Notification, user_notification
 from dotask import login_manager, current_user, login_user, login_required, logout_user
 
 @app.after_request
@@ -180,7 +180,7 @@ def hello_login():
                 if bcrypt.check_password_hash(password, form.password.data) == True:
                     login_user(user)
                     tasks = current_user.tasks
-                    return render_template('dashboard.html', user=current_user, tasks=tasks)
+                    return redirect(url_for('hello_dashboard'))
 
                 else:
                     flash("Invalid login credentials. Please check your password.", category='error')
@@ -263,6 +263,7 @@ def hello_invites():
         The rendered "Invites" page or "dashboard" page template with data.
     """
     try:
+        notices = current_user.notes
         tasks = current_user.tasks
         shared_tasks = {}
         for task in tasks:
@@ -273,11 +274,11 @@ def hello_invites():
                     shared_tasks[user.id]['tasks'].append(task)
 
         if shared_tasks:
-            return render_template('invites.html', current_user=current_user, shared_tasks=shared_tasks, tasks=tasks)
+            return render_template('invites.html', current_user=current_user, shared_tasks=shared_tasks, tasks=tasks, notices=notices)
         else:
-            return render_template('dashboard..html')
+            return render_template('invites.html', notices=notices)
     except:
-        return render_template('invites.html')
+        return render_template('invites.html', notices=notices)
     
 
 @app.route("/<task_id>/search_user", methods=['GET','POST'])
@@ -306,27 +307,24 @@ def hello_search_user(task_id):
     """
 
     task = Task.query.filter_by(id=task_id).first()
-    if request.method == 'GET':
-        return render_template("invites_to_task.html", task=task)
-
-    if request.method == 'POST':
-        form = SearchUserForm(request.form)
-        if form.validate():
-            searched_user = User.query.filter_by(username=form.username.data).first()
-            if searched_user == current_user:
-                flash("You can't invite yourself")
-                return render_template('invites_to_task.html', task=task)
-            if searched_user in task.users:
-                flash('User already invited')
-                return render_template('invites_to_task.html', task=task)
-            if searched_user:
-                return render_template('invites_to_task.html', task=task, searched_user=searched_user)
-            else:
-                flash('User not found')
-                return render_template('invites_to_task.html', task=task)
+    notices = current_user.notes
+    form = SearchUserForm(request.form)
+    if form.validate():
+        searched_user = User.query.filter_by(username=form.username.data).first()
+        if searched_user == current_user:
+            flash("You can't invite yourself")
+            return render_template('invites_to_task.html', task=task, notices=notices)
+        if searched_user in task.users:
+            flash('User already invited')
+            return render_template('invites_to_task.html', task=task, notices=notices)
+        if searched_user:
+            return render_template('invites_to_task.html', task=task, searched_user=searched_user, notices=notices)
         else:
-            flash('Enter a username')
-            return render_template('invites_to_task.html', task=task)
+            flash('User not found')
+            return render_template('invites_to_task.html', task=task, notices=notices)
+    else:
+        flash('Enter a username')
+        return render_template('invites_to_task.html', task=task, notices=notices)
         
 
 @app.route("/invite_to_task/<task_id>", methods=['GET','POST'])
@@ -349,11 +347,13 @@ def hello_invite_to_task(task_id):
     """
 
     try:
+
+        notices = current_user.notes
         task = db.session.query(Task).get(task_id)
-        return render_template('invites_to_task.html', task=task, current_user=current_user)
+        return render_template('invites_to_task.html', task=task, current_user=current_user, notices=notices)
     except:
         flash("Sorry, couldn't query the database")
-        return redirect(url_for('hello_each_task', task_id=task_id))
+        return redirect(url_for('hello_each_task', task_id=task_id, notices=notices))
     
 
 @app.route("/invite_user_to_task/<task_id>/<user_id>", methods=['GET','POST'])
@@ -378,12 +378,11 @@ def hello_invite_user_to_task(task_id, user_id):
         user = db.session.query(User).get(user_id)
         task = db.session.query(Task).get(task_id)
         
+        
         notification = Notification(notification="You have been invited to a task titled", task_title=task.title)
-        db.session.add(notification)
-        db.session.commit()
+        user.notes.append(notification)
 
         task.users.append(user)
-        user.notes.append(notification)
 
         team = task.users
         db.session.commit()
@@ -394,7 +393,7 @@ def hello_invite_user_to_task(task_id, user_id):
         return redirect(url_for('hello_each_task', task_id=task_id))
 
 
-@app.route("/tasks")
+@app.route("/tasks", methods=['GET','POST'])
 @login_required
 def hello_tasks():
     """
@@ -412,13 +411,14 @@ def hello_tasks():
         - The rendered "Tasks" template (without data) on database query error.
     """
     try:
+        notices = current_user.notes
         tasks = current_user.tasks
         if tasks:
-            return render_template("tasks.html", tasks=tasks)
+            return render_template("tasks.html", tasks=tasks, notices= notices)
         else:
-            return render_template("tasks.html")
+            return render_template("tasks.html", notices=notices)
     except:
-        return render_template("tasks.html")
+        return render_template("tasks.html", notices=notices)
 
     
 @app.route("/in_process_tasks")
@@ -440,13 +440,14 @@ def hello_in_process_tasks():
         - The rendered "In Process Tasks" template (without data) on database query error.
     """
     try:
+        notices = current_user.notes
         tasks = current_user.tasks
         if tasks:
-            return render_template("in_process_tasks.html", tasks=tasks)
+            return render_template("in_process_tasks.html", tasks=tasks, notices=notices)
         else:
-            return render_template("in_process_tasks.html")
+            return render_template("in_process_tasks.html", notices=notices)
     except:
-        return render_template("in_process_tasks.html")
+        return render_template("in_process_tasks.html", notices=notices)
 
     
 @app.route("/completed_tasks")
@@ -468,13 +469,14 @@ def hello_completed_tasks():
         - The rendered "Completed Tasks" template (without data) on database query error.
     """
     try:
+        notices = current_user.notes
         tasks = current_user.tasks
         if tasks:
-            return render_template("completed_tasks.html", tasks=tasks)
+            return render_template("completed_tasks.html", tasks=tasks, notices=notices)
         else:
-            return render_template("completed_tasks.html")
+            return render_template("completed_tasks.html", notices=notices)
     except:
-        return render_template("completed_tasks.html")    
+        return render_template("completed_tasks.html", notices=notices)
     
 
 @app.route("/cancelled_tasks")
@@ -496,13 +498,14 @@ def hello_cancelled_tasks():
         - The rendered "Cancelled Tasks" template (without data) on database query error.
     """
     try:
+        notices = current_user.notes
         tasks = current_user.tasks
         if tasks:
-            return render_template("cancelled_tasks.html", tasks=tasks)
+            return render_template("cancelled_tasks.html", tasks=tasks, notices=notices)
         else:
-            return render_template("cancelled_tasks.html")
+            return render_template("cancelled_tasks.html", notices=notices)
     except:
-        return render_template("cancelled_tasks.html")
+        return render_template("cancelled_tasks.html", notices=notices)
 
 
 @app.route("/new_task", methods=['GET', 'POST'])
@@ -533,8 +536,9 @@ def hello_new_task():
         - A redirection to the specific task page on successful task creation (POST request).
     """
     user = current_user
+    notices = current_user.notes
     if request.method == 'GET':
-        return render_template("new_task.html")
+        return render_template("new_task.html", notices=notices)
 
     if request.method == 'POST':
         form = TaskForm(request.form)
@@ -553,38 +557,45 @@ def hello_new_task():
                 
                 flash('Task created successfully!')
                 task_id = task.id
-                return redirect(url_for('hello_each_task',task_id=task_id))
+                return redirect(url_for('hello_each_task',task_id=task_id, notices=notices))
 
             except Exception as e:
                 flash(f'Error creating task: {str(e)}')
-                return render_template("new_task.html")
+                return render_template("new_task.html", notices=notices)
         else:
             flash(form.errors, category='error')
-            return render_template('new_task.html')
-        
+            return render_template('new_task.html', notices=notices)
 
+
+@app.route("/task/<task_id>/<notice_id>", methods=['GET','POST'])
 @app.route("/task/<task_id>", methods=['GET','POST'])
 @login_required
-def hello_each_task(task_id, team=None):
-    """
-    Displays details of a specific task. (User must be logged in).
-
-    * On success:
-        - Fetches the task using `Task.query.get_or_404(task_id)`, raising a 404 error if not found.
-        - Retrieves the team members associated with the task (`task.users`).
-        - Renders the "Each Task" template (`each_task.html`) with the retrieved task information and team members.
-
-    * Returns:
-        - The rendered "Each Task" template with task and team information on success.
-        - A 404 error response if the task is not found.
-    """
+def hello_each_task(task_id, team=None, notice_id=None):
     task = Task.query.get_or_404(task_id)
     team = task.users
-    if task:
-        return render_template("each_task.html", task=task, team=team)
+    notices = current_user.notes
+
+    if current_user not in team:
+        flash(f'Cannnot access that task')
+        return render_template("dashboard.html", task=task)
+    else:
+        try:
+            if notice_id is not None:
+                notification = Notification.query.get(notice_id)
+                notification.seen = True
+                db.session.commit()
+                return redirect(url_for('hello_each_task',task_id=task_id), notices=notices)
+            
+            else:
+                if task:
+                    return render_template("each_task.html", task=task, team=team, notices=notices)
+
+        except:
+            return redirect(url_for('hello_dashboard', task_id=task_id, notices=notices))
+
     
 
-@app.route("/edit/<task_id>", methods=['GET','POST'])
+@app.route("/edit/<task_id>", methods=['GET','PUT'])
 @login_required
 def hello_edit_task(task_id):
     """
@@ -598,8 +609,9 @@ def hello_edit_task(task_id):
         - A 404 error response if the task is not found.
     """
     task = Task.query.get_or_404(task_id)
+    notices = current_user.notes
     if task:
-        return render_template("edit_task.html", task=task)
+        return render_template("edit_task.html", task=task, notices=notices)
         
 
 @app.route("/save_task/<task_id>", methods=['GET','POST'])
@@ -607,6 +619,7 @@ def hello_edit_task(task_id):
 def hello_save_task(task_id):
         form = TaskForm(request.form)
         task = Task.query.get_or_404(task_id)
+        notices = current_user.notes
         if form.validate():
             due_date_str = form.due_date.data
             form = request.form
@@ -628,10 +641,10 @@ def hello_save_task(task_id):
                     return redirect(url_for('hello_each_task',task_id=task_id))
             except Exception as e:
                 flash(f'Error saving task: {str(e)}')
-                return render_template("each_task.html", task=task)
+                return render_template("each_task.html", task=task, notices=notices)
         else:
             flash(form.errors, category='error')
-            return render_template('edit_task.html', task=task)
+            return render_template('edit_task.html', task=task, notices=notices)
         
         
 @app.route("/delete/<task_id>", methods=['GET','POST'])
@@ -666,14 +679,16 @@ def hello_notices():
     Displays the user settings page. (User must be logged in).
 
     Returns:
-        - The rendered "Settings" template.
+        - The rendered "Notification" template.
     """
     try:
-        task = current_user.tasks
         notices = current_user.notes
-        return render_template("notifications.html", notices=notices, task=task)
-    except:
-        return render_template("notifications.html")
+        tasks = current_user.tasks
+        return render_template("notifications.html", notices=notices, tasks=tasks)
+    except Exception as e:
+
+        flash("Error fetching notifications or tasks: {}".format(e))
+        return render_template("dashboard.html")
 
 
 @app.route("/logout")

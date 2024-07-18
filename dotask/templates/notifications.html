@@ -7,7 +7,15 @@
 {% block notifications_image_colour %}
 <a class="a4" href="{{ url_for('hello_notices') }}">
 <div id="logos">
-    {% if notices %}
+    {% set note = namespace(count=0) %}
+
+    {% for notice in notices %}
+        {% if notice.seen == False %}
+            {% set note.count = note.count + 1 %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if note.count > 0 %}
     <img class="imgs" src="../static/svg/notifications_with_note_active.svg">
     {% else %}
     <img class="imgs" src="../static/svg/notifications_active.svg">
@@ -20,13 +28,49 @@
 
 {% block tasks %}
     {% if notices %}
-        {% for item in notices %}
-            <a href="{{ url_for('hello_each_task', task_id=task.id) }}">
-                <div class="notification">
-                    <span class="notification-icon">!</span>
-                    <span class="notification-text"> {{ item.notification }} <b>{{ item.task_title }}</b> </span>
-                </div>
-            </a>
+        {% for notice in notices if notice.seen == True %}
+            {% for task_item in tasks %}
+                {% if notice.task_title == task_item.title %}
+                    <a href="{{ url_for('hello_each_task', task_id=task_item.id, notice_id=notice.id) }}">
+                        <div class="notification">
+                            <span class="notification-icon">!</span>
+                            <span class="notification-text"> {{ notice.notification }} <b>{{ notice.task_title }}</b> </span>
+                        </div>
+                    </a>
+                {% endif %}            
+            {% endfor %}
+        {% endfor %}
+
+
+        {% set note = namespace(count=0) %}
+
+        {% for notice in notices %}
+            {% if notice.seen == False %}
+                {% set note.count = note.count + 1 %}
+            {% endif %}
+        {% endfor %}
+
+        
+        {% if note.count > 0 %}
+        <hr>
+            <div class="notification-alert">
+                <span>New ({{ note.count }})</span>
+            </div>
+        {% endif %}
+        
+
+
+        {% for notice in notices if notice.seen == False %}
+            {% for task_item in tasks %}
+                {% if notice.task_title == task_item.title %}
+                    <a href="{{ url_for('hello_each_task', task_id=task_item.id, notice_id=notice.id) }}">
+                        <div class="notification">
+                            <span class="notification-icon">!</span>
+                            <span class="notification-text"> {{ notice.notification }} <b>{{ notice.task_title }}</b> </span>
+                        </div>
+                    </a>
+                {% endif %}            
+            {% endfor %}
         {% endfor %}
     {% else %}
         <p>No Notifications</p>
