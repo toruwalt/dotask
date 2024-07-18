@@ -1,4 +1,4 @@
-![image](https://github.com/toruwalt/dotask/dotask/static/svg/logo.svg)
+![image](https://github.com/toruwalt/dotask/blob/main/dotask/static/svg/logo.svg)
 
 # DoTask
 Get Organized and Get Things Done!
