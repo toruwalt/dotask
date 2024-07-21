@@ -8,6 +8,7 @@
     margin-bottom: 10px;
     margin-top: 10px;
     position: relative;
+    font-size: 12px;
   }
   
   .notification-icon {
@@ -18,23 +19,6 @@
   
   .notification-text {
     flex-grow: 1;
-  }
-  
-  .notification-close {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    font-size: 16px;
-    color: #aaa;
-    opacity: 0.5;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-  }
-  
-  .notification-close:hover {
-    opacity: 1;
   }
 
   .notification-alert {
@@ -98,5 +82,17 @@
 
     .a4 > div > img{
         fill: #FFFFFF;
+    }
+
+    .notification {
+      width: 90dvw;
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin: 10px;
+      position: relative;
     }
 }

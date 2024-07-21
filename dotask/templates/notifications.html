@@ -34,7 +34,7 @@
                     <a href="{{ url_for('hello_each_task', task_id=task_item.id, notice_id=notice.id) }}">
                         <div class="notification">
                             <span class="notification-icon">!</span>
-                            <span class="notification-text"> {{ notice.notification }} <b>{{ notice.task_title }}</b> </span>
+                            <span class="notification-text"> <b>{{ notice.task_title }}</b> <br>{{ notice.notification }} </span>
                         </div>
                     </a>
                 {% endif %}            
@@ -66,7 +66,7 @@
                     <a href="{{ url_for('hello_each_task', task_id=task_item.id, notice_id=notice.id) }}">
                         <div class="notification">
                             <span class="notification-icon">!</span>
-                            <span class="notification-text"> {{ notice.notification }} <b>{{ notice.task_title }}</b> </span>
+                            <span class="notification-text"> <b>{{ notice.task_title }}</b> <br>{{ notice.notification }} </span>
                         </div>
                     </a>
                 {% endif %}            

@@ -115,12 +115,12 @@
 
     .sidebar-text{
         color: #989898;
-        font-size: 9px;
+        font-size: 16px;
     }
 
     .sidebar{
         width: 100%;
-        height: 60px;
+        height: 80px;
         z-index: 2;
         padding-bottom: 10px;
         background-color: #FFFFFF;
@@ -133,7 +133,7 @@
     }
 
     .sidebar > div{
-        width: 50px;
+        width: 100px;
         height: 100%;
         margin: 0 auto;
         border-radius: 10px;
@@ -166,8 +166,8 @@
     }
 
     .imgs{
-        height: 20px;
-        width: 20px;
+        height: 30px;
+        width: 30px;
     }
 
     #content{
