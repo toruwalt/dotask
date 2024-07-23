@@ -637,8 +637,8 @@ def hello_save_task(task_id):
                     task.verified = True
                     
 
-                    notification = Notification(notification="Task has been updated", task_title=task.title)
-                    users_to_notify = session.query(User).filter(User.id != current_user.id)
+                    notification = Notification(notification=f"Task has been updated by {current_user.last_name} {current_user.first_name}", task_title=task.title)
+                    users_to_notify = db.session.query(User).filter(User.id != current_user.id)
                     
                     for user in users_to_notify:
                         user.notes.append(notification)
@@ -676,11 +676,11 @@ def hello_delete_task(task_id):
     if task:
         user.assigned_tasks.remove(task)
         notification = Notification(notification=f"{current_user.last_name} {current_user.first_name} has left task", task_title=task.title)
-        users = task.users
-
-        for user in users:
-            if user is not current_user:
-                user.notes.append(notification)
+        users_to_notify = db.session.query(User).filter(User.id != current_user.id)
+                    
+        for user in users_to_notify:
+            user.notes.append(notification)
+            
         db.session.commit()
         flash("Task Deleted")
         return redirect(url_for('hello_dashboard')) 
