@@ -137,7 +137,7 @@ def hello_register():
                 )
             db.session.add(user)
 
-            notification = Notification(notification="Ready to simplify your life? Add your first task and let DoTask handle the rest. It’s quick, easy, and totally awesome! 🚀")
+            notification = Notification(notification="Ready to simplify your life? Add your first task and let DoTask handle the rest. It’s quick, easy, and totally awesome! 🚀", task_title="Welcome")
             user.notes.append(notification)
 
             db.session.commit()
