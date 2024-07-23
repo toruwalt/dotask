@@ -694,6 +694,17 @@ def hello_notices():
         flash("Error fetching notifications or tasks: {}".format(e))
         return render_template("dashboard.html")
 
+@app.route("/onboarding")
+@login_required
+def hello_onboarding_notice():
+    try:
+        notices = current_user.notes
+        tasks = current_user.tasks
+        return render_template("onboarding.html")
+    except Exception as e:
+        flash("Error fetching notifications or tasks: {}".format(e))
+        return render_template("onboarding.html")
+
 
 @app.route("/logout")
 def hello_logout():
