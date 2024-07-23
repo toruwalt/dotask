@@ -50,14 +50,12 @@ def hello_dashboard():
         tasks = current_user.tasks
         notices = current_user.notes
         if tasks:
-            if notices:
-                return render_template("dashboard.html", tasks=tasks, notices=notices)
-            return render_template("dashboard.html", tasks=tasks)
+            return render_template("dashboard.html", tasks=tasks, notices=notices)
         else:
-            return render_template("dashboard.html")
+            return render_template("dashboard.html", notices=notices)
     except:
         error_message = "An error occurred while retrieving tasks."
-        return render_template("dashboard.html", error_message=error_message)
+        return render_template("dashboard.html", notices=notices, error_message=error_message)
 
 
 @app.route("/")
