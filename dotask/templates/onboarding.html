@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block head %}
+    <title>{% block title %}{% endblock %} Notifications - DoTask</title>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/notification-onboard.css" {% endblock %}/>
+{% endblock %}
+
+{% block notifications_image_colour %}
+<a class="a4" href="{{ url_for('hello_notices') }}">
+<div id="logos">
+    {% set note = namespace(count=0) %}
+
+    {% for notice in notices %}
+        {% if notice.seen == False %}
+            {% set note.count = note.count + 1 %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if note.count > 0 %}
+    <img class="imgs" src="../static/svg/notifications_with_note_active.svg">
+    {% else %}
+    <img class="imgs" src="../static/svg/notifications_active.svg">
+    {% endif %}
+    <h4 class="sidebar-text">Notices</h4>
+</div>
+</a>
+{% endblock notifications_image_colour %}
+
+<div class="notification">
+    <h2 class="headline">Dive into DoTask! 🌊</h2>
+    <p class="body">Ready to simplify your life? Add your first task and let DoTask handle the rest. It’s quick, easy, and totally awesome! 🚀</p>
+    <button class="cta">Add Task</button>
+</div>
