@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block head %}
     <title>{% block title %}{% endblock %} Notifications - DoTask</title>
+    <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/notification.css" {% endblock %}/>
     <link rel="stylesheet" {% block css_tab_colour %} href="../static/css/notification-onboard.css" {% endblock %}/>
 {% endblock %}
 
@@ -25,8 +26,10 @@
 </a>
 {% endblock notifications_image_colour %}
 
+{% block tasks %}
 <div class="notification">
     <h2 class="headline">Dive into DoTask! 🌊</h2>
     <p class="body">Ready to simplify your life? Add your first task and let DoTask handle the rest. It’s quick, easy, and totally awesome! 🚀</p>
     <button class="cta">Add Task</button>
 </div>
+{% endblock tasks %}
