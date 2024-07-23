@@ -638,14 +638,10 @@ def hello_save_task(task_id):
                     
 
                     notification = Notification(notification="Task has been updated", task_title=task.title)
-                    users = task.users
-
-                    for user in users:
-                        if user is not current_user:
-                            user.notes.append(notification)   
-                        
-                    #user.notes.append(notification)
-                    #task.users.append(user)
+                    users_to_notify = session.query(User).filter(User.id != current_user.id)
+                    
+                    for user in users_to_notify:
+                        user.notes.append(notification)
 
                     db.session.commit()
                     flash('Task updated successfully!')
