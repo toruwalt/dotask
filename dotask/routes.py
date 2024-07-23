@@ -136,6 +136,10 @@ def hello_register():
                 password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
                 )
             db.session.add(user)
+
+            notification = Notification(notification="Ready to simplify your life? Add your first task and let DoTask handle the rest. It’s quick, easy, and totally awesome! 🚀")
+            user.notes.append(notification)
+
             db.session.commit()
             return redirect(url_for('hello_login'))
         else:
@@ -379,7 +383,7 @@ def hello_invite_user_to_task(task_id, user_id):
         task = db.session.query(Task).get(task_id)
         
         
-        notification = Notification(notification="You have been invited to a task", task_title=task.title)
+        notification = Notification(notification="You have been invited to a task titled", task_title=task.title)
         user.notes.append(notification)
 
         task.users.append(user)
@@ -591,7 +595,7 @@ def hello_each_task(task_id, team=None, notice_id=None):
                     return render_template("each_task.html", task=task, team=team, notices=notices)
 
         except:
-            return redirect(url_for('hello_each_task', task_id=task_id))
+            return redirect(url_for('hello_dashboard', task_id=task_id, notices=notices))
 
     
 
@@ -635,14 +639,6 @@ def hello_save_task(task_id):
                     task.status = form.get('status')
                     task.tag = form.get('tag')
                     task.verified = True
-                    
-
-                    notification = Notification(notification=f"Task has been updated by {current_user.last_name} {current_user.first_name}", task_title=task.title)
-                    users_to_notify = db.session.query(User).filter(User.id != current_user.id)
-                    
-                    for user in users_to_notify:
-                        user.notes.append(notification)
-
                     db.session.commit()
                     flash('Task updated successfully!')
                     task_id = task.id
@@ -675,12 +671,6 @@ def hello_delete_task(task_id):
     user = current_user
     if task:
         user.assigned_tasks.remove(task)
-        notification = Notification(notification=f"{current_user.last_name} {current_user.first_name} has left task", task_title=task.title)
-        users_to_notify = db.session.query(User).filter(User.id != current_user.id)
-                    
-        for user in users_to_notify:
-            user.notes.append(notification)
-            
         db.session.commit()
         flash("Task Deleted")
         return redirect(url_for('hello_dashboard')) 
