@@ -29,6 +29,14 @@
 {% block tasks %}
     {% if notices %}
         {% for notice in notices if notice.seen == True %}
+            {% if notice.id == 1 %}
+            <a href="{{ url_for('hello_onboarding_notice') }}">
+                <div class="notification">
+                    <span class="notification-icon">!</span>
+                    <span class="notification-text"> <b>{{ notice.task_title }}</b> <br>{{ notice.notification }} </span>
+                </div>
+            </a>
+            {% endif %}
             {% for task_item in tasks %}
                 {% if notice.task_title == task_item.title %}
                     <a href="{{ url_for('hello_each_task', task_id=task_item.id, notice_id=notice.id) }}">
@@ -61,6 +69,14 @@
 
 
         {% for notice in notices if notice.seen == False %}
+            {% if notice.id == 1 %}
+            <a href="{{ url_for('hello_onboarding_notice') }}">
+                <div class="notification">
+                    <span class="notification-icon">!</span>
+                    <span class="notification-text"> <b>{{ notice.task_title }}</b> <br>{{ notice.notification }} </span>
+                </div>
+            </a>
+            {% endif %}
             {% for task_item in tasks %}
                 {% if notice.task_title == task_item.title %}
                     <a href="{{ url_for('hello_each_task', task_id=task_item.id, notice_id=notice.id) }}">
