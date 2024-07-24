@@ -695,6 +695,12 @@ def hello_notices():
 @app.route("/onboarding")
 @login_required
 def hello_onboarding_notice():
+    
+    notice_id = 1
+    notification = Notification.query.get(notice_id)
+    notification.seen = True
+    db.session.commit()
+
     try:
         notices = current_user.notes
         tasks = current_user.tasks
