@@ -696,15 +696,14 @@ def hello_notices():
 @login_required
 def hello_onboarding_notice():
     
-    notice_id = 1
-    notification = Notification.query.get(notice_id)
+    notification = Notification.query.filter_by(task_title="Welcome",user.id=current_user.id)
     notification.seen = True
     db.session.commit()
 
     try:
         notices = current_user.notes
         tasks = current_user.tasks
-        return render_template("onboarding.html")
+        return render_template("onboarding.html", notices=notices)
     except Exception as e:
         flash("Error fetching notifications or tasks: {}".format(e))
         return render_template("onboarding.html")
