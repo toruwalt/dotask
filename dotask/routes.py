@@ -55,6 +55,7 @@ def hello_dashboard():
         return render_template("dashboard.html", error_message=error_message, notices=notices)
 
 
+
 @app.route("/")
 @app.route("/home")
 def hello_home():
@@ -709,6 +710,11 @@ def hello_notices():
 @app.route("/onboarding")
 @login_required
 def hello_onboarding_notice():
+    
+    notification = Notification.query.filter_by(task_title="Welcome",user.id=current_user.id)
+    notification.seen = True
+    db.session.commit()
+
     try:
         notices = current_user.notes
         #tasks = current_user.tasks
@@ -718,6 +724,7 @@ def hello_onboarding_notice():
                 notification = notice
         notification.seen = True
         db.session.commit()
+
         return render_template("onboarding.html", notices=notices)
     except Exception as e:
         flash("Error fetching notifications or tasks: {}".format(e))
