@@ -1,5 +1,6 @@
 .notification {
-    margin: auto;
+    margin: 10% auto;
+    display: block;
     background-color: #f0f0f0;
     padding: 20px;
     border-radius: 5px;
@@ -19,7 +20,7 @@
 }
 
 .cta {
-    background-color: #4CAF50;
+    background-color: #a08bf2;
     color: white;
     padding: 12px 20px;
     text-align: center;
