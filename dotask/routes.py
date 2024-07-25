@@ -49,13 +49,11 @@ def hello_dashboard():
     try:
         tasks = current_user.tasks
         notices = current_user.notes
-        if tasks:
-            return render_template("dashboard.html", tasks=tasks, notices=notices)
-        else:
-            return render_template("dashboard.html", notices=notices)
+        return render_template("dashboard.html", tasks=tasks, notices=notices)
     except:
         error_message = "An error occurred while retrieving tasks."
-        return render_template("dashboard.html", notices=notices, error_message=error_message)
+        return render_template("dashboard.html", error_message=error_message, notices=notices)
+
 
 
 @app.route("/")
@@ -240,7 +238,7 @@ def hello_profile():
 
     except Exception as e:
         print(f"An error occurred while fetching tasks or notices: {e}")
-        return render_template('profile.html', current_user=current_user)
+        return render_template('profile.html', current_user=current_user, notices=notices)
 
     
 @app.route("/invites")
@@ -349,7 +347,6 @@ def hello_invite_to_task(task_id):
     """
 
     try:
-
         notices = current_user.notes
         task = db.session.query(Task).get(task_id)
         return render_template('invites_to_task.html', task=task, current_user=current_user, notices=notices)
@@ -380,8 +377,7 @@ def hello_invite_user_to_task(task_id, user_id):
         user = db.session.query(User).get(user_id)
         task = db.session.query(Task).get(task_id)
         
-        
-        notification = Notification(notification="You have been invited to a task titled", task_title=task.title)
+        notification = Notification(notification="You have been invited to a task", task_title=task.title)
         user.notes.append(notification)
 
         task.users.append(user)
@@ -586,11 +582,13 @@ def hello_each_task(task_id, team=None, notice_id=None):
                 notification = Notification.query.get(notice_id)
                 notification.seen = True
                 db.session.commit()
-                return redirect(url_for('hello_each_task',task_id=task_id), notices=notices)
+                return redirect(url_for('hello_each_task',task_id=task_id, notices=notices))
             
             else:
                 if task:
-                    return render_template("each_task.html", task=task, team=team, notices=notices)
+                    return render_template("each_task.html",task_id=task_id, task=task, team=team, notices=notices)
+                else:
+                    return render_template("each_task.html",task_id=task_id, team=team, notices=notices)
 
         except:
             return redirect(url_for('hello_dashboard', task_id=task_id, notices=notices))
@@ -636,9 +634,16 @@ def hello_save_task(task_id):
                     task.due_date = due_date
                     task.status = form.get('status')
                     task.tag = form.get('tag')
-                    task.verified = True
+
+                    all_users = task.users
+                    notify = Notification(notification=f"Task has been updated by {current_user.last_name} {current_user.first_name}", task_title=task.title)
+
+                    for user in all_users:
+                        if user != current_user:
+                            user.notes.append(notify)
                     db.session.commit()
-                    flash('Task updated successfully!')
+
+                    flash(f'Task updated successfully!')
                     task_id = task.id
                     return redirect(url_for('hello_each_task',task_id=task_id))
             except Exception as e:
@@ -669,6 +674,13 @@ def hello_delete_task(task_id):
     user = current_user
     if task:
         user.assigned_tasks.remove(task)
+        all_users = task.users
+
+        notify = Notification(notification=f"{current_user.last_name} {current_user.first_name} has left the task", task_title=task.title)
+
+        for user in all_users:
+            if user != current_user:
+                user.notes.append(notify)
         db.session.commit()
         flash("Task Deleted")
         return redirect(url_for('hello_dashboard')) 
@@ -686,9 +698,12 @@ def hello_notices():
     try:
         notices = current_user.notes
         tasks = current_user.tasks
-        return render_template("notifications.html", notices=notices, tasks=tasks)
+        if tasks:
+            return render_template("notifications.html", notices=notices, tasks=tasks)
+        else:
+            return render_template("notifications.html", notices=notices)
+    
     except Exception as e:
-
         flash("Error fetching notifications or tasks: {}".format(e))
         return render_template("dashboard.html")
 
@@ -702,7 +717,14 @@ def hello_onboarding_notice():
 
     try:
         notices = current_user.notes
-        tasks = current_user.tasks
+        #tasks = current_user.tasks
+        task_title = "Welcome"
+        for notice in notices:
+            if notice.task_title:
+                notification = notice
+        notification.seen = True
+        db.session.commit()
+
         return render_template("onboarding.html", notices=notices)
     except Exception as e:
         flash("Error fetching notifications or tasks: {}".format(e))

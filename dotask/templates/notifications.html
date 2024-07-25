@@ -29,7 +29,8 @@
 {% block tasks %}
     {% if notices %}
         {% for notice in notices if notice.seen == True %}
-            {% if notice.task_title == "Welcome" and notice.user.id == current_user.id %}
+            {% if notice.task_title == "Welcome" %}
+
             <a href="{{ url_for('hello_onboarding_notice') }}">
                 <div class="notification">
                     <span class="notification-icon">!</span>
@@ -69,7 +70,8 @@
 
 
         {% for notice in notices if notice.seen == False %}
-	    {% if notice.task_title == "Welcome" and notice.user.id == current_user.id %}
+            {% if notice.task_title == "Welcome" %}
+
             <a href="{{ url_for('hello_onboarding_notice') }}">
                 <div class="notification">
                     <span class="notification-icon">!</span>
