@@ -44,6 +44,16 @@
             {% endblock task_image_colour %}
         </div>
         <div>
+          {% block calendar_image_colour %}
+            <a class="a6" href="{{ url_for('hello_calendar') }}">
+            <div id="logos">
+                <img class="imgs" src="../static/svg/calendar.svg">
+                <h4 class="sidebar-text">Calendar</h4>
+            </div>
+            </a>
+            {% endblock calendar_image_colour %}
+        </div>
+        <div>
             {% block invites_image_colour %}
             <a class="a5" href="{{ url_for('hello_invites') }}">
             <div id="logos">
@@ -85,14 +95,6 @@
             </div>
             </a>
             {% endblock profile_image_colour %}
-        </div>
-        <div>
-            <a href="{{ url_for('hello_logout') }}">
-            <div id="logos">
-                <img class="imgs" src="../static/svg/logout.svg">
-                <h4 class="sidebar-text">Logout</h4>
-            </div>
-            </a>
         </div>
     </div>
     <div id="content">
