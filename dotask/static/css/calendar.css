@@ -152,18 +152,15 @@
     .message-box{
         width: 50dvw;
         margin-top: 2%;
-        padding-right: 10%;
-        padding-left: 2%;
-        padding-top: 3%;
-        padding-bottom: 3%;
+        padding-left: 5%;
         border-left: 4px solid #A08BF2;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
     }
 
     .message{
-        width: 50%;
+        width: 90%;
         border-radius: 5px;
         display: block;
         justify-content: center;
@@ -174,6 +171,8 @@
         width: 20px;
         height: 20px;
         border-radius: 50px;
+        align-self: center;
+        justify-self: end;
     }
 
 
@@ -321,21 +320,18 @@
 }
 
 .message-box{
-    width: 50dvw;
+    width: 90dvw;
     margin-top: 2%;
-    padding-right: 10%;
-    padding-left: 2%;
-    padding-top: 3%;
-    padding-bottom: 3%;
+    padding: 3%;
     border-left: 4px solid #A08BF2;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     font-size: 12px;
 }
 
 .message{
-    width: 50%;
+    width: 80%;
     border-radius: 5px;
     display: block;
     justify-content: center;
