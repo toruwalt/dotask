@@ -1,4 +1,6 @@
-from datetime import date
+import calendar, traceback
+from datetime import date, datetime, timedelta
+from dotask.calendar import CustomHTMLCalendar
 from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
@@ -137,6 +139,7 @@ def hello_register():
             user.notes.append(notification)
 
             db.session.commit()
+            flash("Account Successfully created")
             return redirect(url_for('hello_login'))
         else:
             flash(form.errors, category='error')
@@ -377,7 +380,7 @@ def hello_invite_user_to_task(task_id, user_id):
         user = db.session.query(User).get(user_id)
         task = db.session.query(Task).get(task_id)
         
-        notification = Notification(notification="You have been invited to a task", task_title=task.title)
+        notification = Notification(notification=f"You have been invited to a task by {current_user.last_name} {current_user.first_name}", task_title=task.title)
         user.notes.append(notification)
 
         task.users.append(user)
@@ -725,7 +728,61 @@ def hello_onboarding_notice():
     except Exception as e:
         flash("Error fetching notifications or tasks: {}".format(e))
         return render_template("onboarding.html")
+    
+@app.route("/calendar/", methods=['GET','POST'])
+def hello_calendar():
+    notices = current_user.notes
+  
+    # Get the current year and month, or use provided values
+    try:
+      year = request.args.get('year', datetime.now().year, type=int)
+      month = request.args.get('month', datetime.now().month, type=int)
+      day = request.args.get('day', datetime.now().day, type=int)
+      day_str = f'{day:02}'
+      month_str = f'{month:02}'
+      selected_date = '{}-{}-{}'.format(year,month_str,day_str)
 
+
+      # Create a calendar object
+      cal = CustomHTMLCalendar(today=datetime.now())
+
+      # Generate the HTML calendar for the given month and year
+      html_calendar = cal.formatmonth(year, month, day)
+
+      # Calculate previous and next month/year
+      prev_month = month - 1 if month > 1 else 12
+      prev_year = year if month > 1 else year - 1
+      next_month = month + 1 if month < 12 else 1
+      next_year = year if month < 12 else year + 1
+
+      # Get today's date
+      today = datetime.now()
+
+      # Generate the days of the month
+      days_in_month = cal.monthdays2calendar(year, month)
+
+      #Getting names of months
+      mm = month -1
+      months_to_display =['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August','September', 'October', 'November', 'December']
+      month_to_display = months_to_display[mm]
+
+      try:
+        tasks = current_user.tasks
+        daily_tasks = []
+        for task in tasks:
+            if str(task.due_date) == selected_date:
+                daily_tasks.append(task)
+        return render_template('calendar.html', notices=notices,day=day, month=month, year=year, html_calendar=html_calendar, prev_month=prev_month, prev_year=prev_year, next_month=next_month, next_year=next_year, today=today, days_in_month=days_in_month, selected_date=selected_date, daily_tasks=daily_tasks, tasks=tasks, month_to_display=month_to_display)
+      except:
+          pass
+
+      # Render the template string
+      return render_template('calendar.html', notices=notices, month=month, year=year, html_calendar=html_calendar, prev_month=prev_month, prev_year=prev_year, next_month=next_month, next_year=next_year, today=today, days_in_month=days_in_month)
+    
+    except Exception as e:
+      error_details = traceback.format_exc()
+      flash("Error fetching notifications or tasks: {}{}".format(e, error_details))
+      return render_template("dashboard.html", notices=notices)
 
 @app.route("/logout")
 def hello_logout():

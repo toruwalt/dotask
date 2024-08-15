@@ -59,20 +59,20 @@
             <h3>{{ task.status.name }}</h3>
         </div>
         <br>
-        <div class="task-header">
+        <div class="task-header move-up-by-35px">
             <img src="../static/svg/tag.svg">
             <h3 class="grey_tags">Tag</h3>
         </div>
-        <h3 id="status-in-task">{{ task.tag.name }}</h3>
+        <h3 id="status-in-task" class="move-up-by-35px">{{ task.tag.name }}</h3>
 
         {% if team and team|length > 1 %}
-            <div class="task-header">
+            <div class="task-header move-up-by-30px" style="margin-bottom: 2%;">
                 <img src="../static/svg/teams.svg">
                 <h3 class="grey_tags">Team</h3>
             </div>
             {% for member in team %}
                 {% if member.email != current_user.email %}
-                <div class="task-header-edit">
+                <div class="task-header-edit move-up-by-30px">
                     <div><img src="../static/svg/add_task.svg"></div>
                     <div>
                         <h4 id="status-in-task"> {{ member.last_name }} {{ member.first_name }} </h4>
@@ -86,19 +86,18 @@
 
         <div class="task-clickables">
             <a href="{{ url_for('hello_edit_task', task_id=task['id']) }}">
-                <div class="">
-                    <h2>EDIT</h2>
-                </div>
+              <img class="task_actions" src="../static/svg/edit_task.svg">
+              <h3>Edit</h3>
             </a>
+
             <a href="{{ url_for('hello_invite_to_task', task_id=task['id'], ) }}">
-                <div class="">
-                    <h2>INVITE</h2>
-                </div>
+              <img class="task_actions" src="../static/svg/invite_task.svg">
+              <h3>Invite</h3>    
             </a>
+
             <a href="{{ url_for('hello_delete_task', task_id=task['id']) }}">
-                <div class="">
-                    <h2>DELETE</h2>
-                </div>
+              <img class="task_actions" src="../static/svg/delete_task.svg">
+              <h3>Delete</h3>
             </a>
         </div>
         {% else %}

@@ -96,4 +96,11 @@
         </div>
     </div>
     {% endif %}
+
+    <form action="{{ url_for('hello_logout') }}">
+      <button type="submit" class="logout-button">
+        <img class="imgss" src="../static/svg/logout_active.svg">
+        Logout
+      </button>
+    </form>
 {% endblock tasks %}
