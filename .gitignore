@@ -4,4 +4,7 @@ dotask/__pycache__/
 #Ignore the virtual environment
 DOT/
 
+#Ignore database file
+dotask/dotask.db
+
 
