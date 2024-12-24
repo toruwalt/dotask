@@ -1,0 +1,7 @@
+#Ignore the __pycache__ folder
+dotask/__pycache__/
+
+#Ignore the virtual environment
+DOT/
+
+
