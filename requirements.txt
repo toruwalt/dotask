@@ -5,14 +5,6 @@ Flask-Bcrypt
 Flask-Login
 WTForms
 SQLAlchemy
-enum34  # optional, for enum type if using Python < 3.4
-bcrypt  # optional, if not using Flask-Bcrypt
+enum34
+bcrypt
 Flask-Mail
-
-# Additional packages you might need based on your app's functionality:
-# - Werkzeug (usually comes with Flask)
-# - Jinja2 (usually comes with Flask)
-# - MarkupSafe (usually comes with Flask)
-# - requests (for making HTTP requests)
-# - psycopg2 (for connecting to a PostgreSQL database)
-# - etc.
