@@ -37,7 +37,7 @@
     }
 
     .logout-button {
-      background-color: #f44336; /* Red */
+      background-color: #f44336; 
       color: white;
       border: none;
       position: fixed;
@@ -56,8 +56,7 @@
       width: 15px;
     }
 
-        .calendar-container {
-          margin-top: 2vh;
+    .calendar-container {
           text-align: center;
           display: flex;
           flex-direction: column;
@@ -65,13 +64,13 @@
           justify-content: center;
       }
 
-      .calendar-navigation{
+    .calendar-navigation{
         display: flex;
         align-items: center;
         justify-content: center;
       }
       
-      .nav-btn {
+    .nav-btn {
           background-color: #A08BF2;
           color: white;
           border: none;
@@ -88,7 +87,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 2vh;
         margin-bottom: 5vh;
         width: 100%;
         border-collapse: collapse;
@@ -150,31 +148,46 @@
     }
 
     .message-box{
-        width: 50dvw;
-        margin-top: 2%;
-        padding-left: 5%;
+        height: 10vh;
+        display: flex;
+        margin-bottom: 2%;
+        padding-right: 10%;
+        padding-left: 10%;
+        padding-top: 3%;
+        padding-bottom: 3%;
         border-left: 4px solid #A08BF2;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        border-radius: 0px 8px 8px 0px;
+    }
+
+    .message-box:hover {
+        background-color: #e6e0fa; 
+        box-shadow: 0 4px 10px rgba(160, 139, 242, 0.5);
+        transform: translateY(-3px);
     }
 
     .message{
-        width: 90%;
+        width: 100%;
         border-radius: 5px;
         display: block;
         justify-content: center;
         align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .message-box:hover .message {
+        color: #6a49d8; 
     }
 
     .message-dot{
-        width: 20px;
-        height: 20px;
+        width: 10px;
+        height: 10px;
         border-radius: 50px;
-        align-self: center;
-        justify-self: end;
     }
-
 
     .progress-task {
         background-color: #FEC347; 
@@ -186,6 +199,58 @@
 
     .cancelled-task {
         background-color: #F26E56; 
+    }
+
+    /* Left Calendar */
+
+
+    .calendar {
+        height: 85vh;
+        width: 60vw;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+    }
+
+
+    .left-calendar {
+        position: relative;
+        width: 50%;
+    }
+
+    .right-calendar {
+        width: 50%;
+    }
+
+        /* Pagination container */
+    .pagination {
+        position: absolute;
+        bottom: 0px;
+        display: inline-block;
+        margin: 20px 0;
+    }
+
+    /* Pagination links */
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    /* Active page */
+    .pagination a.active {
+        background-color: #7c60ee;
+        color: white;
+        border: 1px solid #7c60ee;
+    }
+
+    /* Hover effect for links */
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
     }
 }
 

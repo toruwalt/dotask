@@ -68,46 +68,36 @@ x">
               <label for="username">Username</label>
               <input type="text" name="username" class="labels" id="username">
 
-              <label for="first_name">First Name</label>
-              <input type="text" name="first_name" class="labels" id="first_name">
+              <div class="input-row">
+                <div>
+                  <label for="first_name">First Name</label>
+                  <input type="text" name="first_name" class="labels" id="first_name">
+                </div>
 
-              <label for="last_name">Last Name</label>
-              <input type="text" name="last_name" class="labels" id="last_name">
-            
-              <label for="password">Password</label>
-              <input type="password" name="password" class="labels" id="password">
+                <div>
+                  <label for="last_name">Last Name</label>
+                  <input type="text" name="last_name" class="labels" id="last_name">
+                </div>
+              </div>
+              
+              <div class="input-row">
+                <div>
+                  <label for="password">Password</label>
+                  <input type="password" name="password" class="labels" id="password">
+                </div>
 
-              <label for="confirm">Confirm Password</label>
-              <input type="password" name="confirm" class="labels" id="confirm">
+                <div>
+                  <label for="confirm">Confirm Password</label>
+                  <input type="password" name="confirm" class="labels" id="confirm">
+                </div>
+              </div>
+
               <input type="submit" value="Register">
             </form>
           <h4 class="have-account-text" style="text-align: center;">Already have an account?  <span style="color: blue; cursor: pointer;"> <a href="{{ url_for('hello_login') }}">LogIn</a></span> </h4></div>
         </div>
         
         <div class="hero-base">
-          <div class="hero-base-art">
-            <div class="logo-mini">
-              <img src="../static/svg/rect_dark_blue.svg">
-            </div>
-            <div class="logo-mini">
-              <img src="../static/svg/rect_light_blue.svg">
-            </div>
-            <div class="logo-mini">
-              <img src="../static/svg/rect_dark_blue.svg">
-            </div>
-            <div class="logo-mini">
-              <img src="../static/svg/rect_light_blue.svg">
-            </div>
-            <div class="logo-mini">
-              <img src="../static/svg/rect_dark_blue.svg">
-            </div>
-            <div class="logo-mini">
-              <img src="../static/svg/rect_light_blue.svg">
-            </div>
-            <div class="logo-mini">
-              <img src="../static/svg/rect_dark_blue.svg">
-            </div>
-          </div>
           <div class="hero-reg">
             <div id="sign-bottom">Sign In</div>
             <div id="sign-bottom">Sign Up</div>

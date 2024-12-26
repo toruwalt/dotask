@@ -49,6 +49,11 @@
         margin: 10px;
     }
 
+    .cate > a > div > img {
+        height: 30px;
+        width: 30px;
+    }
+
     .cate > a > div{
         width: 100%;
         padding: 2%;
@@ -100,8 +105,9 @@
     }
 
     .message-box{
+        height: 10vh;
         display: flex;
-        margin-top: 2%;
+        margin-bottom: 2%;
         padding-right: 10%;
         padding-left: 10%;
         padding-top: 3%;
@@ -110,6 +116,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        border-radius: 0px 8px 8px 0px;
+    }
+
+    .message-box:hover {
+        background-color: #e6e0fa; 
+        box-shadow: 0 4px 10px rgba(160, 139, 242, 0.5);
+        transform: translateY(-3px);
     }
 
     .message{
@@ -118,11 +133,16 @@
         display: block;
         justify-content: center;
         align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .message-box:hover .message {
+        color: #6a49d8; 
     }
 
     .message-dot{
-        width: 20px;
-        height: 20px;
+        width: 10px;
+        height: 10px;
         border-radius: 50px;
     }
 
