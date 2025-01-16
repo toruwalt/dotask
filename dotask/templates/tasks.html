@@ -6,17 +6,19 @@
 {% endblock %}
 {% block task_image_colour %}
     <a class="a2" href="{{ url_for('hello_tasks') }}">
-    <div id="logos">
-        <img class="imgs" src="../static/svg/tasks_active.svg">
-        <h4 class="sidebar-text">Tasks</h4>
-    </div>
+        <div id="logos">
+            <img class="imgs" src="../static/svg/tasks_active.svg">
+            <h4 class="sidebar-text">Tasks</h4>
+        </div>
     </a>
 {% endblock task_image_colour %}
 
 {% block tasks %}
+    <br> {{ result }} <br>
+
     {% if tasks %}
         <h1 class="task-h1">Tasks</h1>
-        {% for task in tasks %}
+        {% for task in result['data'] %}
         <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
         <div class="message-box">
             <div class="message">
@@ -33,6 +35,42 @@
         </div>
         </a>
         {% endfor %}
+        <div class="pagination">
+            {% if result['total_pages'] <= result['max_buttons'] %}
+                {% for x in range(result['total_pages']) %}
+                    {% if loop.index == result['page'] %}
+                        <a class="active" href="{{ url_for('hello_tasks', page=loop.index) }}">{{ loop.index }}</a>
+                    {% else %}    
+                        <a href="{{ url_for('hello_tasks', page=loop.index) }}">{{ loop.index }}</a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if result['total_pages'] >= result['max_buttons'] %}
+                {% if result['prev_page'] is none %}
+                    {% for x in range(result['max_buttons']) %}
+                        {% if loop.index == result['page'] %}
+                            <a class="active" href="{{ url_for('hello_tasks', page=loop.index) }}">{{ loop.index }}</a>
+                        {% else %}    
+                            <a href="{{ url_for('hello_tasks', page=loop.index) }}">{{ loop.index }}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if result['next_page'] is none %}
+                    {% for x in range(result['max_buttons']) %}
+                    {% set point = result['page'] - (result['max_buttons'] - loop.index) %}
+                        {% if loop.index == result['max_buttons'] %}
+                            <a class="active" href="{{ url_for('hello_tasks', page=result['page']) }}">{{ result['page'] }}</a>
+                        {% else %}    
+                            <a href="{{ url_for('hello_tasks', page=point) }}">{{ point }}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+
+
+
+          </div>
         {% else %}
                 <div class="message-box">
                     <div class="message">

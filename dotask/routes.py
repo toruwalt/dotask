@@ -1,5 +1,7 @@
+import math
 import calendar, traceback
 from datetime import date, datetime, timedelta
+from typing import List, Tuple
 from dotask.calendar import CustomHTMLCalendar
 from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
@@ -7,6 +9,7 @@ from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
 from dotask.models import User, Task,  user_task, Notification, user_notification
 from dotask import login_manager, current_user, login_user, login_required, logout_user
+
 
 @app.after_request
 def after_request(response):
@@ -35,6 +38,49 @@ def load_user(user_id):
             user object from the database where the user_id matches
     """
     return User.query.get(user_id)
+
+
+def pagination_function(tasks):
+    """
+        Returns paginated content tasks from database
+        
+        Args:
+            task: All tasks from a particular user
+
+        Returns:
+            Details of a page containing tasks
+    """
+    all_task = len(tasks)
+    page_size = 1
+    total_pages = math.ceil(all_task / page_size)
+
+    page = request.args.get('page', 1, type=int)
+
+    if page > total_pages:
+        page = 1
+
+
+    assert isinstance(page, int)
+    assert isinstance(page_size, int)
+    assert page > 0 and page_size > 0
+
+    start_index = (page - 1) * page_size
+    end_index = start_index + page_size
+
+    page_list = tasks[start_index:end_index]
+
+    result = {
+    'page_size': page_size,
+    'page': page,
+    'data': page_list,
+    'next_page':  page + 1 if page < total_pages else None,
+    'prev_page': page - 1 if page > 1 else None,
+    'total_pages': total_pages,
+    'max_buttons': 5
+    }
+
+    return result
+
 
 
 @app.route("/dashboard")
@@ -135,7 +181,7 @@ def hello_register():
                 )
             db.session.add(user)
 
-            notification = Notification(notification="Ready to simplify your life? Add your first task and let DoTask handle the rest. It’s quick, easy, and totally awesome! 🚀", task_title="Welcome")
+            notification = Notification(notification="Ready to simplify your life? Add your first task and let DoTask handle the rest. It's quick, easy, and totally awesome! 🚀", task_title="Welcome")
             user.notes.append(notification)
 
             db.session.commit()
@@ -144,7 +190,6 @@ def hello_register():
         else:
             flash(form.errors, category='error')
             return redirect(url_for('hello_register'))
-    
 
 @app.route("/login", methods=['GET', 'POST'])
 def hello_login():
@@ -394,7 +439,7 @@ def hello_invite_user_to_task(task_id, user_id):
         return redirect(url_for('hello_each_task', task_id=task_id))
 
 
-@app.route("/tasks", methods=['GET','POST'])
+@app.route("/tasks/", methods=['GET','POST'])
 @login_required
 def hello_tasks():
     """
@@ -414,10 +459,18 @@ def hello_tasks():
     try:
         notices = current_user.notes
         tasks = current_user.tasks
-        if tasks:
-            return render_template("tasks.html", tasks=tasks, notices= notices)
-        else:
-            return render_template("tasks.html", notices=notices)
+
+        try:
+            result = pagination_function(tasks)
+            
+            return render_template('tasks.html', notices=notices, tasks=tasks, result=result)
+
+        except:
+
+            if tasks:
+                return render_template('tasks.html', notices=notices, tasks=tasks)
+            else:
+                return render_template("tasks.html", notices=notices)
     except:
         return render_template("tasks.html", notices=notices)
 
