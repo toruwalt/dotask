@@ -51,12 +51,12 @@ def pagination_function(tasks):
             Details of a page containing tasks
     """
     all_task = len(tasks)
-    page_size = 4
+    page_size = 3
     total_pages = math.ceil(all_task / page_size)
 
     page = request.args.get('page', 1, type=int)
 
-    if page > total_pages:
+    if page > total_pages or page < 1:
         page = 1
 
 
