@@ -40,6 +40,80 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
+def mod_pagination_function(tasks, access):
+    """
+        Returns paginated content tasks from database
+        
+        Args:
+            task: All tasks from a particular user
+
+        Returns:
+            Details of a page containing tasks
+    """
+    if access:
+
+        for task in tasks:
+            if task.status.name == 'In_Progress':
+                in_progress_tasks.append()
+            elif task.status.name == 'Completed':
+                completed_tasks.append()
+            elif task.status.name == 'Cancelled':
+                cancelled_tasks.append()
+
+        all_task = len(tasks)
+        page_size = 4
+        total_pages = math.ceil(all_task / page_size)
+
+        page = request.args.get('page', 1, type=int)
+
+        if page > total_pages or page < 1:
+            page = 1
+
+
+        assert isinstance(page, int)
+        assert isinstance(page_size, int)
+        assert page > 0 and page_size > 0
+
+        start_index = (page - 1) * page_size
+        end_index = start_index + page_size
+
+        in_progress_tasks = []
+        completed_tasks = []
+        cancelled_tasks = []
+
+
+
+        page_list = tasks[start_index:end_index]
+        in_progress_page_list = in_progress_tasks[start_index:end_index]
+        completed_page_list = completed_tasks[start_index:end_index]
+        cancelled_page_list = cancelled_tasks[start_index:end_index]
+
+        result = {
+        'page_size': page_size,
+        'page': page,
+        'data': page_list,
+        'next_page':  page + 1 if page < total_pages else None,
+        'prev_page': page - 1 if page > 1 else None,
+        'total_pages': total_pages,
+        'max_buttons': 5
+        }
+
+        result = {
+        'page_size': page_size,
+        'page': page,
+        'data': page_list,
+        'data_in_progress': in_progress_page_list,
+        'data_completed': completed_page_list,
+        'data_cancelled': cancelled_page_list,
+        'next_page':  page + 1 if page < total_pages else None,
+        'prev_page': page - 1 if page > 1 else None,
+        'total_pages': total_pages,
+        'max_buttons': 5
+        }
+
+        return result
+
+
 def pagination_function(tasks):
     """
         Returns paginated content tasks from database
@@ -50,6 +124,7 @@ def pagination_function(tasks):
         Returns:
             Details of a page containing tasks
     """
+
     all_task = len(tasks)
     page_size = 4
     total_pages = math.ceil(all_task / page_size)
@@ -66,7 +141,7 @@ def pagination_function(tasks):
 
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
-
+    
     page_list = tasks[start_index:end_index]
 
     result = {
@@ -496,10 +571,17 @@ def hello_in_process_tasks():
     try:
         notices = current_user.notes
         tasks = current_user.tasks
-        if tasks:
-            return render_template("in_process_tasks.html", tasks=tasks, notices=notices)
-        else:
-            return render_template("in_process_tasks.html", notices=notices)
+
+        try:
+            result = pagination_function(tasks)    
+            return render_template('in_process_tasks.html', notices=notices, tasks=tasks, result=result)
+
+        except:
+
+            if tasks:
+                return render_template("in_process_tasks.html", tasks=tasks, notices=notices)
+            else:
+                return render_template("in_process_tasks.html", notices=notices)
     except:
         return render_template("in_process_tasks.html", notices=notices)
 
@@ -525,10 +607,16 @@ def hello_completed_tasks():
     try:
         notices = current_user.notes
         tasks = current_user.tasks
-        if tasks:
-            return render_template("completed_tasks.html", tasks=tasks, notices=notices)
-        else:
-            return render_template("completed_tasks.html", notices=notices)
+
+        try:
+            result = pagination_function(tasks)    
+            return render_template('cancelled_tasks.html', notices=notices, tasks=tasks, result=result)
+
+        except:
+            if tasks:
+                return render_template("completed_tasks.html", tasks=tasks, notices=notices)
+            else:
+                return render_template("completed_tasks.html", notices=notices)
     except:
         return render_template("completed_tasks.html", notices=notices)
     
@@ -554,10 +642,16 @@ def hello_cancelled_tasks():
     try:
         notices = current_user.notes
         tasks = current_user.tasks
-        if tasks:
-            return render_template("cancelled_tasks.html", tasks=tasks, notices=notices)
-        else:
-            return render_template("cancelled_tasks.html", notices=notices)
+
+        try:
+            result = pagination_function(tasks)    
+            return render_template('cancelled_tasks.html', notices=notices, tasks=tasks, result=result)
+
+        except:
+            if tasks:
+                return render_template("cancelled_tasks.html", tasks=tasks, notices=notices)
+            else:
+                return render_template("cancelled_tasks.html", notices=notices)
     except:
         return render_template("cancelled_tasks.html", notices=notices)
 
@@ -785,6 +879,9 @@ def hello_onboarding_notice():
 @app.route("/calendar/", methods=['GET','POST'])
 def hello_calendar():
     notices = current_user.notes
+
+    #page in calendar
+    page = request.args.get('page', 1, type=int)
   
     # Get the current year and month, or use provided values
     try:
@@ -794,6 +891,9 @@ def hello_calendar():
       day_str = f'{day:02}'
       month_str = f'{month:02}'
       selected_date = '{}-{}-{}'.format(year,month_str,day_str)
+      
+      #page in calendar
+      page = request.args.get('page', 1, type=int)
 
 
       # Create a calendar object
@@ -825,7 +925,9 @@ def hello_calendar():
         for task in tasks:
             if str(task.due_date) == selected_date:
                 daily_tasks.append(task)
-        return render_template('calendar.html', notices=notices,day=day, month=month, year=year, html_calendar=html_calendar, prev_month=prev_month, prev_year=prev_year, next_month=next_month, next_year=next_year, today=today, days_in_month=days_in_month, selected_date=selected_date, daily_tasks=daily_tasks, tasks=tasks, month_to_display=month_to_display)
+        
+        result = pagination_function(daily_tasks)
+        return render_template('calendar.html', notices=notices,day=day, month=month, year=year, html_calendar=html_calendar, prev_month=prev_month, prev_year=prev_year, next_month=next_month, next_year=next_year, today=today, days_in_month=days_in_month, selected_date=selected_date, daily_tasks=daily_tasks, tasks=tasks, month_to_display=month_to_display, result=result)
       except:
           pass
 

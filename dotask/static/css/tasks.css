@@ -143,37 +143,61 @@
     /* CSS for In Process Page */
     .cate-container-1{
         background-color: #FEC347;
+        height: 30px;
         width: 100%;
         margin-bottom: 2%;
         padding: 2%;
         border-radius: 5px;
         display: flex;
-        justify-self: start;
+        justify-self: center;
         align-items: center;
+    }
+
+    .cate-container-1 > img {
+        height: 30px;
+        width: 30px;
+        margin-left: 10%;
+        margin-right: 2%;
     }
 
     /* CSS for Completed Page */
     .cate-container-2{
         background-color: #5694F2;
+        height: 30px;
         width: 100%;
         margin-bottom: 2%;
         padding: 2%;
         border-radius: 5px;
         display: flex;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
+    }
+
+    .cate-container-2 > img {
+        height: 30px;
+        width: 30px;
+        margin-left: 10%;
+        margin-right: 2%;
     }
 
     /* CSS for Cancelled Page */
     .cate-container-3{
         background-color: #F26E56;
+        height: 30px;
         width: 100%;
         margin-bottom: 2%;
         padding: 2%;
         border-radius: 5px;
         display: flex;
-        justify-self: start;
+        justify-self: center;
         align-items: center;
+    }
+
+    .cate-container-3 > img {
+        height: 30px;
+        width: 30px;
+        margin-left: 10%;
+        margin-right: 2%;
     }
 
     /* CSS for Each Task Page */
@@ -272,6 +296,39 @@
         background-color: #f0fff0;
         border: 1px solid green;
         padding: 10px;
+    }
+
+    /* Pagination container */
+    .pagination {
+        background-color: white;
+        position: absolute;
+        bottom: 10px;
+        display: inline-block;
+        margin: 20px 0;
+        padding: 1%;
+    }
+
+    /* Pagination links */
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    /* Active page */
+    .pagination a.active {
+        background-color: #7c60ee;
+        color: white;
+        border: 1px solid #7c60ee;
+    }
+
+    /* Hover effect for links */
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
     }
 
     /* Pagination container */
