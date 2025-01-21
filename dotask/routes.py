@@ -644,9 +644,9 @@ def hello_cancelled_tasks():
         tasks = current_user.tasks
 
         try:
-            result = pagination_function(tasks)    
-            return render_template('cancelled_tasks.html', notices=notices, tasks=tasks, result=result)
-
+            task_cancelled = [task for task in tasks if task.status.name == 'Cancelled']
+            result = pagination_function(task_cancelled)
+            return render_template('cancelled_tasks.html', notices=notices, tasks=tasks, result=result, task_cancelled=task_cancelled)
         except:
             if tasks:
                 return render_template("cancelled_tasks.html", tasks=tasks, notices=notices)
