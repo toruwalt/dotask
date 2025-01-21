@@ -575,8 +575,7 @@ def hello_in_process_tasks():
         try:
             task_in_process = [task for task in tasks if task.status.name == 'In_Progress']
             result = pagination_function(task_in_process)
-            return render_template('in_process_tasks.html', notices=notices, tasks=tasks, result=result)
-
+            return render_template('in_process_tasks.html', notices=notices, tasks=tasks, result=result, task_in_process=task_in_process)
         except:
 
             if tasks:
@@ -610,9 +609,9 @@ def hello_completed_tasks():
         tasks = current_user.tasks
 
         try:
-            result = pagination_function(tasks)    
-            return render_template('cancelled_tasks.html', notices=notices, tasks=tasks, result=result)
-
+            task_completed = [task for task in tasks if task.status.name == 'Completed']
+            result = pagination_function(task_completed)
+            return render_template('completed_tasks.html', notices=notices, tasks=tasks, result=result, task_completed=task_completed)
         except:
             if tasks:
                 return render_template("completed_tasks.html", tasks=tasks, notices=notices)
