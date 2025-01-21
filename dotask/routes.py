@@ -573,7 +573,8 @@ def hello_in_process_tasks():
         tasks = current_user.tasks
 
         try:
-            result = pagination_function(tasks)    
+            task_in_process = [task for task in tasks if task.status.name == 'In_Progress']
+            result = pagination_function(task_in_process)
             return render_template('in_process_tasks.html', notices=notices, tasks=tasks, result=result)
 
         except:
@@ -879,9 +880,6 @@ def hello_onboarding_notice():
 @app.route("/calendar/", methods=['GET','POST'])
 def hello_calendar():
     notices = current_user.notes
-
-    #page in calendar
-    page = request.args.get('page', 1, type=int)
   
     # Get the current year and month, or use provided values
     try:
@@ -891,9 +889,6 @@ def hello_calendar():
       day_str = f'{day:02}'
       month_str = f'{month:02}'
       selected_date = '{}-{}-{}'.format(year,month_str,day_str)
-      
-      #page in calendar
-      page = request.args.get('page', 1, type=int)
 
 
       # Create a calendar object
