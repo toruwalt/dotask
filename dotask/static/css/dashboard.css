@@ -167,6 +167,37 @@
         border: 1px solid green;
         padding: 10px;
     }
+
+    /* Pagination container */
+    .pagination {
+        background-color: white;
+        display: inline-block;
+        margin: 20px 0;
+        padding: 1%;
+    }
+
+    /* Pagination links */
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    /* Active page */
+    .pagination a.active {
+        background-color: #7c60ee;
+        color: white;
+        border: 1px solid #7c60ee;
+    }
+
+    /* Hover effect for links */
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
 }
 
 @media (max-width: 767px) {

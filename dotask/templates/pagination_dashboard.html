@@ -1,0 +1,85 @@
+<h2>Tasks</h2>
+{% if tasks or page_task %}
+    <div class="pagination" id="target-element">
+        {% if result['total_pages'] <= result['max_buttons'] %}
+            {% for x in range(result['total_pages']) %}
+                {% if loop.index == result['page'] %}
+                    <a class="active" href="{{ url_for('hello_dashboard', page=loop.index) }}">{{ loop.index }}</a>
+                {% else %}    
+                    <a href="{{ url_for('hello_dashboard', page=loop.index) }}">{{ loop.index }}</a>
+                {% endif %}
+            {% endfor %}
+
+        {% elif result['total_pages'] >= result['max_buttons'] %}
+            {% if result['prev_page'] is none %}
+                {% for x in range(result['max_buttons']) %}
+                    {% if loop.index == result['page'] %}
+                        <a class="active" href="{{ url_for('hello_dashboard', page=loop.index) }}">{{ loop.index }}</a>
+                    {% else %}    
+                        <a href="{{ url_for('hello_dashboard', page=loop.index) }}">{{ loop.index }}</a>
+                    {% endif %}
+                {% endfor %}
+            {% elif result['next_page'] is none %}
+                {% for x in range(result['max_buttons']) %}
+                {% set point = result['page'] - (result['max_buttons'] - loop.index) %}
+                    {% if loop.index == result['max_buttons'] %}
+                        <a class="active" href="{{ url_for('hello_dashboard', page=result['page']) }}">{{ result['page'] }}</a>
+                        <script src="../static/js/xyz.js"></script>
+                    {% else %}    
+                        <a href="{{ url_for('hello_dashboard', page=point) }}">{{ point }}</a>
+                        <script src="../static/js/xyz.js"></script>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% if result['page'] == 2 or result['page'] == result['total_pages'] - 1 %}
+                    {% set start_page = 1 if result['page'] == 2 else (result['total_pages'] - 4) %}
+                    {% set end_page = result['max_buttons'] if result['page'] == 2 else result['total_pages'] %}
+                    
+                    {% for page in range(start_page, end_page + 1) %}
+                        {% if page == result['page'] %}
+                            <a class="active" href="{{ url_for('hello_dashboard', page=page) }}">{{ page }}</a>
+                        {% else %}
+                            <a href="{{ url_for('hello_dashboard', page=page) }}">{{ page }}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% set half_range = result['max_buttons'] // 2 %}
+                    {% set start_page = result['page'] - half_range %}
+                    {% set end_page = result['page'] + half_range %}
+
+                    {% for page in range(start_page, end_page + 1) %}
+                        {% if page == result['page'] %}
+                            <a class="active" href="{{ url_for('hello_dashboard', page=page) }}">{{ page }}</a>
+                        {% else %}
+                            <a href="{{ url_for('hello_dashboard', page=page) }}">{{ page }}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+  </div>
+  {% for task in result['data'] %}
+  <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
+  <div class="message-box">
+      <div class="message">
+          <h4> {{ task['title'] }} </h4>
+          <h4 style="color: #676767;"> {{ task.tag.name }} </h4>
+      </div>
+
+      <div class="message-dot {% if task.status.name == 'In_Progress' %}progress-task
+          {% elif task.status.name == 'Completed' %}completed-task
+          {% elif task.status.name == 'Cancelled' %}cancelled-task
+          {% else %}unknown-task
+          {% endif %}">
+      </div>
+  </div>
+  </a>
+  {% endfor %}
+{% else %}
+        <div class="message-box">
+            <div class="message">
+                <h2>No Tasks Yet</h2>
+            </div>
+        </div>
+
+{% endif %}

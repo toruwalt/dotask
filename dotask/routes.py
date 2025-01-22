@@ -2,6 +2,8 @@ import math
 import calendar, traceback
 from datetime import date, datetime, timedelta
 from typing import List, Tuple
+
+import py_mini_racer
 from dotask.calendar import CustomHTMLCalendar
 from flask import render_template,  redirect, request, url_for, flash
 from dotask import app, db
@@ -172,7 +174,22 @@ def hello_dashboard():
     try:
         tasks = current_user.tasks
         notices = current_user.notes
-        return render_template("dashboard.html", tasks=tasks, notices=notices)
+
+        ctx = py_mini_racer.MiniRacer()
+
+        # # Execute JavaScript code
+        # result = ctx.execute("""
+        # function greet(name) {
+        #     return `Hello, ${name}!`;
+        # }
+        # greet("Python");
+        # """)
+
+        try:
+            result = pagination_function(tasks)
+            return render_template('dashboard.html', notices=notices, tasks=tasks, result=result)
+        except:
+            return render_template('dashboard.html', notices=notices, tasks=tasks)
     except:
         error_message = "An error occurred while retrieving tasks."
         return render_template("dashboard.html", error_message=error_message, notices=notices)

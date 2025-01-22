@@ -73,35 +73,19 @@
     </div>
     {% endblock add_task %}
 
-    {% block tasks %}
-        <h2>Tasks</h2>
-        {% if tasks %}
-            {% for task in tasks %}
-            <a href="{{ url_for('hello_each_task', task_id=task['id']) }}">
-            <div class="message-box">
-                <div class="message">
-                    <h4> {{ task['title'] }} </h4>
-                    <h4 style="color: #676767;"> {{ task.tag.name }} </h4>
-                </div>
-
-                <div class="message-dot {% if task.status.name == 'In_Progress' %}progress-task
-                    {% elif task.status.name == 'Completed' %}completed-task
-                    {% elif task.status.name == 'Cancelled' %}cancelled-task
-                    {% else %}unknown-task
-                    {% endif %}">
-                </div>
-  
-            </div>
-            </a>
-            {% endfor %}
-            {% else %}
-                <div class="message-box">
-                    <div class="message">
-                        <h2>No Tasks Yet</h2>
-                    </div>
-                </div>
-        {% endif %}
-    {% endblock tasks %}
+{% block tasks %}
+    {% include 'pagination_dashboard.html' %}
+    <!-- {% if result['page'] != 1 %} -->
+    <script>
+        // Scroll to specific x and y coordinates
+        window.scrollTo({
+        top: 600,  // Vertical position
+        left: 0,   // Horizontal position
+        behavior: 'smooth' // Optional for smooth scrolling
+        });
+    </script>
+{% endif %}
+{% endblock tasks %}
 
 
     
