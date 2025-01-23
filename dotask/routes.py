@@ -4,7 +4,6 @@ import calendar, traceback
 from datetime import date, datetime, timedelta
 from typing import List, Tuple
 
-import py_mini_racer
 from dotask.calendar import CustomHTMLCalendar
 from flask import Response, render_template,  redirect, request, url_for, flash
 from dotask import app, db
@@ -286,6 +285,12 @@ def hello_contact_us():
         mail.send(msg)
         return 'Email sent!'
     """
+
+
+@app.route("/land")
+@login_required
+def hello_land():
+    return render_template('land_page.html')
 
 
 def allowed_file(filename):
