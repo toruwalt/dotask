@@ -1,16 +1,20 @@
 import math
+import os
 import calendar, traceback
 from datetime import date, datetime, timedelta
 from typing import List, Tuple
 
 import py_mini_racer
 from dotask.calendar import CustomHTMLCalendar
-from flask import render_template,  redirect, request, url_for, flash
+from flask import Response, render_template,  redirect, request, url_for, flash
 from dotask import app, db
 from . import bcrypt
 from dotask.forms import RegisterForm, LoginForm, TaskForm, SearchUserForm
 from dotask.models import User, Task,  user_task, Notification, user_notification
 from dotask import login_manager, current_user, login_user, login_required, logout_user
+
+from werkzeug.utils import secure_filename
+from urllib.parse import urlparse, parse_qs
 
 
 @app.after_request
@@ -40,80 +44,6 @@ def load_user(user_id):
             user object from the database where the user_id matches
     """
     return User.query.get(user_id)
-
-
-def mod_pagination_function(tasks, access):
-    """
-        Returns paginated content tasks from database
-        
-        Args:
-            task: All tasks from a particular user
-
-        Returns:
-            Details of a page containing tasks
-    """
-    if access:
-
-        for task in tasks:
-            if task.status.name == 'In_Progress':
-                in_progress_tasks.append()
-            elif task.status.name == 'Completed':
-                completed_tasks.append()
-            elif task.status.name == 'Cancelled':
-                cancelled_tasks.append()
-
-        all_task = len(tasks)
-        page_size = 4
-        total_pages = math.ceil(all_task / page_size)
-
-        page = request.args.get('page', 1, type=int)
-
-        if page > total_pages or page < 1:
-            page = 1
-
-
-        assert isinstance(page, int)
-        assert isinstance(page_size, int)
-        assert page > 0 and page_size > 0
-
-        start_index = (page - 1) * page_size
-        end_index = start_index + page_size
-
-        in_progress_tasks = []
-        completed_tasks = []
-        cancelled_tasks = []
-
-
-
-        page_list = tasks[start_index:end_index]
-        in_progress_page_list = in_progress_tasks[start_index:end_index]
-        completed_page_list = completed_tasks[start_index:end_index]
-        cancelled_page_list = cancelled_tasks[start_index:end_index]
-
-        result = {
-        'page_size': page_size,
-        'page': page,
-        'data': page_list,
-        'next_page':  page + 1 if page < total_pages else None,
-        'prev_page': page - 1 if page > 1 else None,
-        'total_pages': total_pages,
-        'max_buttons': 5
-        }
-
-        result = {
-        'page_size': page_size,
-        'page': page,
-        'data': page_list,
-        'data_in_progress': in_progress_page_list,
-        'data_completed': completed_page_list,
-        'data_cancelled': cancelled_page_list,
-        'next_page':  page + 1 if page < total_pages else None,
-        'prev_page': page - 1 if page > 1 else None,
-        'total_pages': total_pages,
-        'max_buttons': 5
-        }
-
-        return result
 
 
 def pagination_function(tasks):
@@ -159,6 +89,20 @@ def pagination_function(tasks):
     return result
 
 
+def has_page_parameter(url):
+    """
+        Checks if the given URL has a 'page' parameter in its query string.
+
+        Args:
+            url: The URL to check.
+
+        Returns:
+            True if the URL contains a 'page' parameter, False otherwise.
+    """
+    parsed_url = urlparse(url)
+    query_params = parse_qs(parsed_url.query)
+    return 'page' in query_params
+
 
 @app.route("/dashboard")
 @login_required
@@ -175,19 +119,15 @@ def hello_dashboard():
         tasks = current_user.tasks
         notices = current_user.notes
 
-        ctx = py_mini_racer.MiniRacer()
-
-        # # Execute JavaScript code
-        # result = ctx.execute("""
-        # function greet(name) {
-        #     return `Hello, ${name}!`;
-        # }
-        # greet("Python");
-        # """)
+        url = request.url
+        if has_page_parameter(url):
+            scroll=True
+        else:
+            scroll=None
 
         try:
             result = pagination_function(tasks)
-            return render_template('dashboard.html', notices=notices, tasks=tasks, result=result)
+            return render_template('dashboard.html', notices=notices, tasks=tasks, result=result, scroll=scroll)
         except:
             return render_template('dashboard.html', notices=notices, tasks=tasks)
     except:
@@ -346,7 +286,10 @@ def hello_contact_us():
         mail.send(msg)
         return 'Email sent!'
     """
-        
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route("/profile")
@@ -372,13 +315,47 @@ def hello_profile():
             'completed': sum(task.status.name == 'Completed' for task in tasks),
             'cancelled': sum(task.status.name == 'Cancelled' for task in tasks),
         }
+        
+        shared_tasks = []
+        for task in tasks:
+            for user in task.users:
+                if user.id != current_user.id:
+                    shared_tasks.append(task)
+
+        shared = len(shared_tasks)
+
+        user = current_user
+        image_url = None
+
+        import base64
+        image_data = base64.b64encode(user.profile_picture).decode('utf-8')
+        image_url = f"data:image/jpeg;base64,{image_data}"
 
         return render_template('profile.html', current_user=current_user,
-                              notices=notices, task_counts=task_counts)
+                              notices=notices, task_counts=task_counts, image_url=image_url, shared=shared, shared_tasks=shared_tasks)
 
     except Exception as e:
         print(f"An error occurred while fetching tasks or notices: {e}")
         return render_template('profile.html', current_user=current_user, notices=notices)
+    
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'profile' not in request.files:
+        return "No file part", 400
+    file = request.files['profile']
+
+    if file.filename == '':
+        return "No selected file", 400
+
+    if file and allowed_file(file.filename):
+        file_data = file.read()
+
+        user = current_user 
+        user.profile_picture = file_data
+        db.session.commit()
+        return redirect(url_for('hello_profile'))
+    return "Invalid file type", 400
 
     
 @app.route("/invites")

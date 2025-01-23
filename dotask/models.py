@@ -25,6 +25,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(30), nullable=False, unique=True)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
+    profile_picture = db.Column(db.LargeBinary, nullable=True) 
     assigned_tasks = relationship('Task', secondary=user_task, backref='assigned_to')
     notes = relationship('Notification', secondary=user_notification, backref='note')
 

@@ -17,15 +17,38 @@
     {% if current_user %}
     <h1>Account Information</h1>
     <br>
-    <div class="shifts">
-        <div><h4>
-            Full name: 
-        </h4></div> 
-        <div><h4>
-            {{ current_user.last_name }} {{ current_user.first_name }}
-        </h4></div>
+    <div class="profile-head">
+        <div class="profile-head-left">
+            <div class="profile-container">
+                <div class="profile-picture">
+                <!-- Display placeholder or uploaded image -->
+                {% if image_url %}
+                    <img src="{{ image_url }}" alt="Profile Picture">
+                {% else %}
+                    <span>No Image</span>
+                {% endif %}
+                </div>
+                <!-- Pen icon -->
+                <label for="profile-input" class="edit-icon">
+                ✏️
+                </label>
+            </div>
+            
+            <form id="uploadForm" class="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" id="profile-input" name="profile" accept="image/*" onchange="document.getElementById('uploadForm').submit()">
+            </form>
+        </div>
+        <br>
+        <div class="profile-head-right">
+            <div class="shifts">
+                    <h4> {{ current_user.last_name }} {{ current_user.first_name }} </h4>
+            </div>
+            <div class="shifts">
+                <h4> {{ current_user.email }}  </h4>
+            </div>
+        </div>
     </div>
-
+    <br>
     <div class="shifts">
         <div><h4>
             Username: 
@@ -35,14 +58,6 @@
         </h4></div>
     </div>
 
-    <div class="shifts">
-        <div><h4>
-            Email: 
-        </h4></div> 
-        <div><h4>
-            {{ current_user.email }} 
-        </h4></div>
-    </div>
     {% endif %}
 
     
@@ -54,6 +69,19 @@
         <a href="{{ url_for('hello_tasks') }}">
             <div>
                 <h4>{{ task_counts.all }} </h4>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+
+    {% if shared > 0 %}
+    <div class="shifts click">
+        <div><h4>
+            Shared Tasks: 
+        </h4></div>
+        <a href="{{ url_for('hello_invites') }}">
+            <div>
+                <h4>{{ shared }} </h4>
             </div>
         </a>
     </div>
@@ -97,6 +125,9 @@
     </div>
     {% endif %}
 
+    <br>
+    <br>
+    <br>
     <form action="{{ url_for('hello_logout') }}">
       <button type="submit" class="logout-button">
         <img class="imgss" src="../static/svg/logout_active.svg">

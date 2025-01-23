@@ -81,8 +81,9 @@
 
     /* CSS for User Found Section */
     .message-box{
+        height: 10vh;
         display: flex;
-        margin-top: 2%;
+        margin-bottom: 2%;
         padding-right: 10%;
         padding-left: 10%;
         padding-top: 3%;
@@ -91,6 +92,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        border-radius: 0px 8px 8px 0px;
+    }
+
+    .message-box:hover {
+        background-color: #e6e0fa; 
+        box-shadow: 0 4px 10px rgba(160, 139, 242, 0.5);
+        transform: translateY(-3px);
     }
 
     .message{
@@ -99,31 +109,70 @@
         display: block;
         justify-content: center;
         align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .message-box:hover .message {
+        color: #6a49d8; 
     }
 
     .message-dot{
-        width: 20px;
-        height: 20px;
+        width: 10px;
+        height: 10px;
         border-radius: 50px;
     }
 
-    .status-in-task{
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        margin-top: -20px;
-    }
 
     .progress-task {
-        background-color: #FEC347; 
+        background-color: #FEC347; /* Light orange for work tasks */
     }
     
     .completed-task {
-        background-color: #5694F2; 
+        background-color: #5694F2; /* Light blue for personal tasks */
     }
 
     .cancelled-task {
-        background-color: #F26E56; 
+        background-color: #F26E56; /* Light blue for personal tasks */
+    }
+
+    /* CSS for Flash Div in Each Task */
+    .flash-div{
+        width: 100%;
+        color: green;
+        background-color: #f0fff0;
+        border: 1px solid green;
+        padding: 10px;
+    }
+
+    /* Pagination container */
+    .pagination {
+        background-color: white;
+        display: inline-block;
+        margin: 20px 0;
+        padding: 1%;
+    }
+
+    /* Pagination links */
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    /* Active page */
+    .pagination a.active {
+        background-color: #7c60ee;
+        color: white;
+        border: 1px solid #7c60ee;
+    }
+
+    /* Hover effect for links */
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
     }
 }
 

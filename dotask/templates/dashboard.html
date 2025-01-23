@@ -75,16 +75,15 @@
 
 {% block tasks %}
     {% include 'pagination_dashboard.html' %}
-    <!-- {% if result['page'] != 1 %} -->
-    <script>
-        // Scroll to specific x and y coordinates
-        window.scrollTo({
-        top: 600,  // Vertical position
-        left: 0,   // Horizontal position
-        behavior: 'smooth' // Optional for smooth scrolling
-        });
-    </script>
-{% endif %}
+    {% if scroll %}
+        <script>
+            window.scrollTo({
+            top: 600,
+            left: 0,
+            behavior: "instant"
+            });
+        </script>
+    {% endif %}
 {% endblock tasks %}
 
 
