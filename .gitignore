@@ -6,3 +6,6 @@ DOT/
 
 #Ignore database file
 dotask/dotask.db
+
+#Ignore database migration file
+dotask/migrations
