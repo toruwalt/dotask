@@ -1,0 +1,33 @@
+{% extends "landing_layout.html" %}
+{% block CSS_page %}
+        <!-- CSS files-->
+        <link href="../static/css/landing_page.css" rel="stylesheet">
+        <link href="../static/css/login.css" rel="stylesheet">
+        <link href="../static/css/preregister.css" rel="stylesheet">
+{% endblock CSS_page %}
+{% block important_section %}
+    <div class="signup-container">
+        <h2>Get Started</h2>
+        <a>
+          <button class="signup-btn google-btn">
+              <div> <img src="../static/images/Google.svg" alt="Google Icon"> </div>
+              Google
+          </button>
+        </a>
+        <a>
+          <button class="signup-btn facebook-btn">
+              <div> <img src="../static/images/Facebook.svg" alt="Facebook Icon"> </div>
+              Facebook
+          </button>
+        </a>
+        <a href="{{ url_for('hello_register') }}">
+          <button class="signup-btn email-btn">
+              <div> <img src="../static/images/Email.svg" alt="Email Icon"> </div>
+              Email
+          </button>
+        </a>
+    </div>
+{% endblock important_section %}
+
+  </body>
+</html>

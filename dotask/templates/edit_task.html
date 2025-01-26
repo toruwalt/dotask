@@ -18,15 +18,18 @@
     {% endblock nav_title %}
 
     {% block flash_div %}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="flash-div">
-                {% for message in messages %}
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
                 {{ message }}
-                {% endfor %}
-                </div>
-            {% endif %}
+              </div>
+            {% endfor %}
+          {% endif %}
         {% endwith %}
+    </div>
     {% endblock flash_div %}
 
     {% block task_image_colour %}
@@ -38,7 +41,7 @@
         </a>
     {% endblock task_image_colour %}
     {% block new_task_form %}
-        <form action="/save_task/{{ task.id }}" method="POST">
+        <form action="/save_task/{{ task.id }}" method="POST" autocomplete="off">
             <label for="title">Title</label>
             <input type="text" name="title" class="labels" id="title" value="{{ task['title'] }}">
 

@@ -8,43 +8,16 @@
 
 @media (min-width: 768px) {
 
-    .hero-text{
-        width: 80%;
-        height: 60%;
-        margin: auto;
-        margin-top: 1%;
-        display: block;
-        align-items: center;
-    }
-
-    .hero-text-div{
-        height: 100%;
-        width: 100%;
-        align-self: center;
-        justify-self: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-    }
-
     .hero-text-div > div {
         display: flex;
         flex-direction: column;
     }
-
-    .AA {
-        font-size: 96px;
-        position: relative;
-        top: -48px;
-    }
-
 
     input[type=submit] {
         background-color: blue;
         width: 100%;
         color: white;
         padding: 10px 0px 10px 10px;
-        margin-top: 10px;
         border: none;
         border-radius: 3px;
         cursor: pointer;
@@ -89,19 +62,6 @@
         width: 100%;
         display: grid;
     }
-
-
-
-    .hero-base{
-        width: 100%;
-        display: flex;
-        background-color: #04AA6D;
-    }
-
-    .hero-reg{
-        display: none;
-    }
-
 }
 
 @media (max-width: 769px) {

@@ -1,0 +1,67 @@
+
+.signup-container {
+    margin: auto;
+    margin-top: 5%;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.signup-container h2 {
+    margin-bottom: 5rem;
+    font-size: 24px;
+    color: #333;
+}
+
+.signup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    padding: 12px 100px;
+    margin-bottom: 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-btn > div {
+    width: 40%;
+}
+
+.signup-btn img {
+    height: 20px;
+    margin-right: 10px;
+}
+
+.google-btn {
+    background-color: #677897;
+    color: #ffffff;
+}
+
+.google-btn:hover {
+    background-color: #4b576c;
+}
+
+.facebook-btn {
+    background-color: #1877f2;
+    color: #ffffff;
+}
+
+.facebook-btn:hover {
+    background-color: #145dbf;
+}
+
+.email-btn {
+    background-color: #f12727;
+    color: #fff;
+    border: 1px solid #ccc;
+}
+
+.email-btn:hover {
+    background-color: #d32323;
+}

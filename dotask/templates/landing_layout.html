@@ -10,9 +10,10 @@
     <!-- Font CSS -->
     <link href="../static/css/fonts.css">
 
-
+    {% block CSS_page %}
     <!-- CSS files-->
     <link href="../static/css/landing_page.css" rel="stylesheet">
+    {% endblock CSS_page %}
 
     <!-- Font to Use -->
     <link rel="stylesheet" type="text/css" href="../static/css/fonts.css">
@@ -26,7 +27,6 @@
         <div class="top-bar-text-1"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
         <div class="top-bar-text-1"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
         <div class="top-bar-text-1"><a href="{{ url_for('hello_contact_us') }}">CONTACT US</a></div>
-    </div>
     </div>
     <div class="main-page">
       <div class="hero-left">
@@ -49,32 +49,27 @@
             </nav>
           </div>
         </div>
-        <div class="hero-text">
-          <div class="hero-text-div">
-            <h1 style="font-size: 50px;">Simplify your workflow and optimize your day.</h1>
-            <!-- <p style="font-size: 16px; font-weight: bolder;">
-              your TaskManager <br> as a service
-              Manage. Plan. Collaborate.
-            </p> -->
+        {% block important_section %}
+          <div class="hero-text">
+            <div class="hero-text-div">
+              <h1 style="font-size: 50px;">Simplify your workflow and optimize your day.</h1>
+              <!-- <p style="font-size: 16px; font-weight: bolder;">
+                your TaskManager <br> as a service
+                Manage. Plan. Collaborate.
+              </p> -->
+            </div>
+            <div>
+              <a href="{{ url_for('hello_login') }}" class="cta-button">
+                Get Started for Free →
+              </a>
+            </div>
           </div>
-          <div>
-            <a href="{{ url_for('hello_login') }}" class="cta-button">
-              Get Started for Free →
-            </a>
-          </div>
-        </div>
+        {% endblock important_section %}
       </div>
       <div>
         <img class="hero-right-image" src="../static/images/landing_page_image.png">
       </div>
         </div>
-      </div>
-      </div>
-    </div>
-
-    <!-- Optional JavaScript; choose one of the two! -->
-    <!-- <script src="{{ url_for('static', filename='xyz.js') }}"></script> -->
-
     <script src="../static/js/xyz.js"></script>
   </body>
 </html>

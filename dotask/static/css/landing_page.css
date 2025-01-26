@@ -117,7 +117,9 @@
     }
 
     .cta-button {
-      display: inline-block;
+      height: 50px;
+      display: flex;
+      flex-direction: column;
       font-family: graduate;
       font-size: 18px;
       font-weight: 600;
@@ -125,6 +127,7 @@
       background: linear-gradient(90deg, #360AE3, #A08BF2);
       padding: 15px 30px;
       text-align: center;
+      justify-content: center;
       text-decoration: none;
       border-radius: 50px;
       transition: all 0.3s ease-in-out;

@@ -1,49 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Dotask</title>
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="../static/images/logo.ico">
-
-    <!-- CSS files-->
-    <link href="../static/css/landing_page.css" rel="stylesheet">
-    <link href="../static/css/login.css" rel="stylesheet">
-
-    <!-- Font to Use -->
-    <link rel="stylesheet" type="text/css" href="../static/css/fonts.css">
-
-  </head>
-  <body>
-    <div class="off-screen-menu">
-      <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
-      <div class="top-bar-text-1"><a href="{{ url_for('hello_about') }}">ABOUT</a></div>
-        <div class="top-bar-text-1"><a href="{{ url_for('hello_features') }}">FEATURES</a></div>
-        <div class="top-bar-text-1"><a href="{{ url_for('hello_login') }}">LOGIN</a></div>
-        <div class="top-bar-text-1"><a href="{{ url_for('hello_register') }}">REGISTER</a></div>
-        <div class="top-bar-text-1"><a href="{{ url_for('hello_contact_us') }}">CONTACT US</a></div>
-    </div>
-    <div class="main-page">
-      <div class="hero-left">
-        <div class="hp_top">
-          <div class="hp_top_left">
-            <img src="../static/svg/logo.svg" height="50px" width="50px">
-            <div><h1 class="logo-title">DOTASK</h1></div>
-            <div class="header-text">
-            <div class="top-bar-text-1"><a href="{{ url_for('hello_home') }}">HOME</a></div>
-            <div class="top-bar-text-1"><a href="{{ url_for('hello_about') }}">ABOUT</a></div>
-              <div class="top-bar-text-1"><a href="{{ url_for('hello_features') }}">FEATURES</a></div>
-              </div>
-            <div class="ham"></div>
-            <nav><div class="hamburger">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div></nav>
-          </div>
-        </div>
+{% extends "landing_layout.html" %}
+{% block CSS_page %}
+        <!-- CSS files-->
+        <link href="../static/css/landing_page.css" rel="stylesheet">
+        <link href="../static/css/login.css" rel="stylesheet">
+{% endblock CSS_page %}
+{% block important_section %}
         <div class="hero-text">
           <div class="flash-div">
             {% with messages = get_flashed_messages() %}
@@ -55,94 +16,22 @@
             {% endwith %}
             </div>
           <div class="hero-text-div">
-              <div><h2>Sign In</h2>
-              <h5>Please login to continue to use our service</h5></div>
-              <form method="POST">
+              <div>
+                <h2>Sign In</h2>
+                <p style="font-weight: bold; font-size: smaller; color: #666; margin-top: -10px; margin-bottom: 50px;">Please login to continue to use our service</p>
+              </div>
+              <form method="POST" autocomplete="off">
                 <label for="email">Email</label>
                 <input type="email" name="email" autocomplete="on" class="labels" id="email">
               
                 <label for="password">Password</label>
                 <input type="password" name="password" class="labels" id="password">
                 <input type="submit" value="Login">
-            </form>
-          <h4 style="text-align: center;">Are you new?  <span style="color: blue; cursor: pointer;"><a href="{{ url_for('hello_register') }}">Create an Account</a></span> </h4></div>
-        </div>
-        
-        <div class="hero-base">
-          <div class="hero-reg">
-            <div id="sign-bottom">Sign In</div>
-            <div id="sign-bottom">Sign Up</div>
+              </form>
+              <h4 style="text-align: center;">Are you new?  <span style="color: blue; cursor: pointer;"><a href="{{ url_for('hello_preregister') }}">Create an Account</a></span></h4>
           </div>
         </div>
-        
-      </div>
-      <div class="hero-right">
-        <div class="hp-row-1">
-            <div class="A" id="A1"><h1 class="AA">D</h1></div>
-            <div class="A" id="CC"><h4 class="BB">Decrease stress and overwhelm</h1></div>
-            <div class="A">
-              <div class="A-3-1" class="CCC"><h1 class="CC">DO</h1></div>
-              <div class="A-3-2">
-                <img src="../static/svg/rect_dark_blue.svg">
-                <img src="../static/svg/rect_light_blue.svg">
-                <img src="../static/svg/rect_dark_blue.svg">
-                <img src="../static/svg/rect_light_blue.svg">
-              </div>
-            </div>
-            <div class="A">
-              <div class="A-3-1"><h1 class="CC">TASK</h1></div>
-              <div class="A-3-2">
-                <img src="../static/svg/rect_dark_blue.svg">
-                <img src="../static/svg/rect_light_blue.svg">
-                <img src="../static/svg/rect_dark_blue.svg">
-                <img src="../static/svg/rect_light_blue.svg">
-              </div>
-            </div>  
-        </div>
-        <div class="hp-row-1">
-          <div class="A" id="img-border-1"></div>
-          <div class="A" id="CC"><h4 class="BB">Optimize time and efficiency</h4></div>
-          <div class="A"><h1 class="AA">O</h1></div>
-          <div class="A" id="img-border-2"></div> 
-        </div>
-        <div class="hp-row-1">
-          <div class="A" id="CC"><h4 class="BB">Achieve your goals and objectives</h4></div> 
-          <div class="A"><h1 class="AA">A</h1></div>
-          <div class="A" id="CC" style="border-left: 1px solid black"><h4 class="BB">Sharpen focus and reduce distractions</h4></div>
-          <div class="A"><h1 class="AA">S</h1></div>
-        </div>
-        <div class="hp-row-disappear">
-          <div class="A"><h1 class="AA">T</h1></div>
-          <div class="A" id="CC"><h4 class="BB">Track progress and celebrate achievements</h4></div>
-          <div class="A"><h1 class="AA">K</h1></div>
-          <div class="A" id="CC" style="border-left: 1px solid black"><h4 class="BB">Keep organized and avoid missed deadlines</h4></div>
-        </div>
-        <div class="hp-row-2">
-          <div class="hp-row-last">
-            <div class="A" id="DDDD"><h1 class="AA">T</h1></div>
-            <div class="A" id="DDDD"><h4 class="BB">Track progress and celebrate achievements</h4></div>
-          </div>
-          <div class="hp-row-3" id="img-border-3"></div>
-          <div class="hp-row-last">
-            <div class="A" id="DDDD"><h1 class="AA">K</h1></div>
-            <div class="A" id="DDDD"><h4 class="BB">Keep organized and avoid missed deadlines</h4></div>
-          </div>   
-        </div>
-        <div class="call-to-action">
-          <div class="signup">SIGN IN</div>
-          <div class="signup">REGISTER</div>
-        </div>
-        </div>
-      </div>
-        
-        </div>
-      </div>
-      </div>
-    </div>
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <script src="../static/js/xyz.js"></script>
+{% endblock important_section %}
 
   </body>
 </html>

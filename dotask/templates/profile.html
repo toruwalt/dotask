@@ -15,115 +15,124 @@
 
 {% block tasks %}
     {% if current_user %}
-    <h1>Account Information</h1>
-    <br>
-    <div class="profile-head">
-        <div class="profile-head-left">
-            <div class="profile-container">
-                <div class="profile-picture">
-                <!-- Display placeholder or uploaded image -->
-                {% if image_url %}
-                    <img src="{{ image_url }}" alt="Profile Picture">
-                {% else %}
-                    <span>No Image</span>
-                {% endif %}
+        <h1>Account Information</h1>
+        <br>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="flash-message {{ category }}">
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        </div>
+        <div class="profile-head">
+            <div class="profile-head-left">
+                <div class="profile-container">
+                    
+                    <div class="profile-picture">
+                    {% if image_url %}
+                        <img src="{{ image_url }}" alt="Profile Picture">
+                    {% else %}
+                        <span>No Image</span>
+                    {% endif %}
+                    </div>
+                    
+                    <label for="profile-input" class="edit-icon">
+                    ✏️
+                    </label>
                 </div>
-                <!-- Pen icon -->
-                <label for="profile-input" class="edit-icon">
-                ✏️
-                </label>
+                
+                <form id="uploadForm" class="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="profile-input" name="profile" accept="image/*" onchange="document.getElementById('uploadForm').submit()">
+                </form>
             </div>
-            
-            <form id="uploadForm" class="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" id="profile-input" name="profile" accept="image/*" onchange="document.getElementById('uploadForm').submit()">
-            </form>
+            <br>
+            <div class="profile-head-right">
+                <div class="shifts">
+                        <h4> {{ current_user.last_name }} {{ current_user.first_name }} </h4>
+                </div>
+                <div class="shifts">
+                    <h4> {{ current_user.email }}  </h4>
+                </div>
+            </div>
         </div>
         <br>
-        <div class="profile-head-right">
-            <div class="shifts">
-                    <h4> {{ current_user.last_name }} {{ current_user.first_name }} </h4>
-            </div>
-            <div class="shifts">
-                <h4> {{ current_user.email }}  </h4>
+        <div class="shifts">
+            <div><h4>
+                Username: 
+            </h4></div> 
+            <div><h4>
+                {{ current_user.username }} 
+            </h4></div>
+        </div>
+        
+        {% if task_counts.all > 0 %}
+        <div class="shifts click">
+            <div><h4>
+                Tasks: 
+            </h4></div> 
+            <a href="{{ url_for('hello_tasks') }}">
+                <div>
+                    <h4>{{ task_counts.all }} </h4>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+
+        {% if shared > 0 %}
+        <div class="shifts click">
+            <div><h4>
+                Shared Tasks: 
+            </h4></div>
+            <a href="{{ url_for('hello_invites') }}">
+                <div>
+                    <h4>{{ shared }} </h4>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+
+        {% if task_counts.in_progress > 0 %}
+        <div class="shifts click">
+            <div><h4>
+                In Progress Tasks: 
+            </h4></div>
+            <a href="{{ url_for('hello_in_process_tasks') }}">
+                <div>
+                    <h4>{{ task_counts.in_progress }} </h4>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+
+        {% if task_counts.completed > 0 %}
+        <div class="shifts click">
+            <div><h4>
+                Completed Tasks: 
+            </h4></div>
+            <a href="{{ url_for('hello_completed_tasks') }}">
+                <div>
+                    <h4>{{ task_counts.completed }}</h4>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+
+        {% if task_counts.cancelled > 0 %}
+        <div class="shifts click">
+            <div><h4>
+                Cancelled Tasks: 
+            </h4></div>
+            <a href="{{ url_for('hello_cancelled_tasks') }}">
+            <div>
+                <h4>{{ task_counts.cancelled }}</h4>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="shifts">
-        <div><h4>
-            Username: 
-        </h4></div> 
-        <div><h4>
-            {{ current_user.username }} 
-        </h4></div>
-    </div>
-
-    {% endif %}
-
-    
-    {% if task_counts.all > 0 %}
-    <div class="shifts click">
-        <div><h4>
-            Tasks: 
-        </h4></div> 
-        <a href="{{ url_for('hello_tasks') }}">
-            <div>
-                <h4>{{ task_counts.all }} </h4>
-            </div>
-        </a>
-    </div>
-    {% endif %}
-
-    {% if shared > 0 %}
-    <div class="shifts click">
-        <div><h4>
-            Shared Tasks: 
-        </h4></div>
-        <a href="{{ url_for('hello_invites') }}">
-            <div>
-                <h4>{{ shared }} </h4>
-            </div>
-        </a>
-    </div>
-    {% endif %}
-
-    {% if task_counts.in_progress > 0 %}
-    <div class="shifts click">
-        <div><h4>
-            In Progress Tasks: 
-        </h4></div>
-        <a href="{{ url_for('hello_in_process_tasks') }}">
-            <div>
-                <h4>{{ task_counts.in_progress }} </h4>
-            </div>
-        </a>
-    </div>
-    {% endif %}
-
-    {% if task_counts.completed > 0 %}
-    <div class="shifts click">
-        <div><h4>
-            Completed Tasks: 
-        </h4></div>
-        <a href="{{ url_for('hello_completed_tasks') }}">
-            <div>
-                <h4>{{ task_counts.completed }}</h4>
-            </div>
-        </a>
-    </div>
-    {% endif %}
-
-    {% if task_counts.cancelled > 0 %}
-    <div class="shifts click">
-        <div><h4>
-            Cancelled Tasks: 
-        </h4></div>
-        <a href="{{ url_for('hello_cancelled_tasks') }}">
-        <div>
-            <h4>{{ task_counts.cancelled }}</h4>
-        </div>
-    </div>
-    {% endif %}
+        {% endif %}
 
     <br>
     <br>
@@ -134,4 +143,15 @@
         Logout
       </button>
     </form>
+    {% endif %}
 {% endblock tasks %}
+
+<script>
+    // Auto-dismiss flash messages after 5 seconds
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const flashMessages = document.querySelectorAll('.alert');
+        flashMessages.forEach(msg => msg.style.display = 'none');
+      }, 5000); // 5000ms = 5 seconds
+    });
+</script>

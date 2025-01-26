@@ -27,7 +27,9 @@ def after_request(response):
         Returns:
             The modified response object. (i.e response)
     """
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
     return response
 
 
@@ -144,7 +146,7 @@ def hello_home():
         Returns:
             HTML page with content
     """
-    return render_template('landing_page.html')
+    return render_template('landing_layout.html')
 
 
 @app.route("/about")
@@ -167,6 +169,13 @@ def hello_features():
         Features html page with content and tasks data
     """
     return render_template('features.html')
+
+
+
+@app.route("/preregister", methods=['GET', 'POST'])
+def hello_preregister():
+    if request.method == 'GET':
+        return render_template('preregister.html')
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -198,10 +207,10 @@ def hello_register():
             user = User.query.filter_by(email=form.email.data).first()
             username = User.query.filter_by(username=form.username.data).first()
             if user:
-                flash("Email already used")
+                flash("Email already used", "error")
                 return render_template('register.html')
             if username:
-                flash("Username already exist")
+                flash("Username already exist", "error")
                 return render_template('register.html')
             user = User(
                 email = form.email.data,
@@ -216,7 +225,7 @@ def hello_register():
             user.notes.append(notification)
 
             db.session.commit()
-            flash("Account Successfully created")
+            flash("Account Successfully created", "success")
             return redirect(url_for('hello_login'))
         else:
             flash(form.errors, category='error')
@@ -288,7 +297,6 @@ def hello_contact_us():
 
 
 @app.route("/land")
-@login_required
 def hello_land():
     return render_template('land_page.html')
 
@@ -331,36 +339,62 @@ def hello_profile():
 
         user = current_user
         image_url = None
+        try:
+            import base64
+            image_data = base64.b64encode(user.profile_picture).decode('utf-8')
+            image_url = f"data:image/jpeg;base64,{image_data}"
 
-        import base64
-        image_data = base64.b64encode(user.profile_picture).decode('utf-8')
-        image_url = f"data:image/jpeg;base64,{image_data}"
-
-        return render_template('profile.html', current_user=current_user,
-                              notices=notices, task_counts=task_counts, image_url=image_url, shared=shared, shared_tasks=shared_tasks)
+            return render_template('profile.html', current_user=current_user, notices=notices, task_counts=task_counts, image_url=image_url, shared=shared, shared_tasks=shared_tasks)
+        
+        except:
+            return render_template('profile.html', current_user=current_user, notices=notices, task_counts=task_counts, shared=shared, shared_tasks=shared_tasks)
 
     except Exception as e:
-        print(f"An error occurred while fetching tasks or notices: {e}")
+        print(f"An error occurred while fetching tasks or notices: {e}", "error")
         return render_template('profile.html', current_user=current_user, notices=notices)
     
 
+from werkzeug.utils import secure_filename
+
 @app.route('/upload', methods=['POST'])
 def upload():
-    if 'profile' not in request.files:
-        return "No file part", 400
-    file = request.files['profile']
+    try:
+        # Check if the request contains a file
+        if 'profile' not in request.files:
+            flash("No file part in the request.", "error")
+            return redirect(url_for('hello_profile'))
+        
+        file = request.files['profile']
+        
+        # Check if a file was selected
+        if file.filename == '':
+            flash("No file selected.", "error")
+            return redirect(url_for('hello_profile'))
+        
+        # Validate the file type
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)  # Ensure the filename is safe
+            file_data = file.read()
 
-    if file.filename == '':
-        return "No selected file", 400
-
-    if file and allowed_file(file.filename):
-        file_data = file.read()
-
-        user = current_user 
-        user.profile_picture = file_data
-        db.session.commit()
+            # Save the file data to the user's profile
+            user = current_user
+            user.profile_picture = file_data
+            db.session.commit()
+            
+            flash("Profile picture uploaded successfully!", "success")
+            return redirect(url_for('hello_profile'))
+        else:
+            flash("Invalid file type. Please upload a valid image file.", "error")
+            return redirect(url_for('hello_profile'))
+    
+    except Exception as e:
+        # Log the exception for debugging purposes (optional)
+        app.logger.error(f"Error during file upload: {e}")
+        
+        flash("An unexpected error occurred. Please try again later.", "error")
         return redirect(url_for('hello_profile'))
-    return "Invalid file type", 400
+
+    
 
     
 @app.route("/invites")
@@ -428,25 +462,32 @@ def hello_search_user(task_id):
         - The rendered "Invites to Task" template with the task information on GET request.
     """
 
-    task = Task.query.filter_by(id=task_id).first()
-    notices = current_user.notes
-    form = SearchUserForm(request.form)
-    if form.validate():
-        searched_user = User.query.filter_by(username=form.username.data).first()
-        if searched_user == current_user:
-            flash("You can't invite yourself")
-            return render_template('invites_to_task.html', task=task, notices=notices)
-        if searched_user in task.users:
-            flash('User already invited')
-            return render_template('invites_to_task.html', task=task, notices=notices)
-        if searched_user:
-            return render_template('invites_to_task.html', task=task, searched_user=searched_user, notices=notices)
+    if request.method == 'GET':
+        task = Task.query.filter_by(id=task_id).first()
+        notices = current_user.notes
+        return render_template('invites_to_task.html', task=task, notices=notices, task_id=task_id)
+
+    if request.method == 'POST':
+        task = Task.query.filter_by(id=task_id).first()
+        notices = current_user.notes
+        form = SearchUserForm(request.form)
+        if form.validate():
+            searched_user = User.query.filter_by(username=form.username.data).first()
+            if searched_user == current_user:
+                flash("You can't invite yourself","error")
+                return redirect(url_for('hello_search_user', task_id=task_id, task=task, notices=notices, cache_control='no-cache, no-store, must-revalidate'))
+            if searched_user in task.users:
+                flash('User already invited',"error")
+                return redirect(url_for('hello_search_user', task_id=task_id, task=task, notices=notices, cache_control='no-cache, no-store, must-revalidate'))
+            if searched_user:
+                flash('User found, click to add user to task',"info")
+                return redirect(url_for('hello_search_user', task_id=task_id, task=task, searched_user=searched_user, notices=notices, cache_control='no-cache, no-store, must-revalidate'))
+            else:
+                flash('User not found',"error")
+                return redirect(url_for('hello_search_user', task_id=task_id, task=task, notices=notices, cache_control='no-cache, no-store, must-revalidate'))
         else:
-            flash('User not found')
-            return render_template('invites_to_task.html', task=task, notices=notices)
-    else:
-        flash('Enter a username')
-        return render_template('invites_to_task.html', task=task, notices=notices)
+            flash('Enter a username', "info")
+            return redirect(url_for('hello_search_user', task=task, notices=notices, task_id=task_id))
         
 
 @app.route("/invite_to_task/<task_id>", methods=['GET','POST'])
@@ -473,7 +514,7 @@ def hello_invite_to_task(task_id):
         task = db.session.query(Task).get(task_id)
         return render_template('invites_to_task.html', task=task, current_user=current_user, notices=notices)
     except:
-        flash("Sorry, couldn't query the database")
+        flash("Sorry, couldn't query the database","error")
         return redirect(url_for('hello_each_task', task_id=task_id, notices=notices))
     
 
@@ -506,10 +547,10 @@ def hello_invite_user_to_task(task_id, user_id):
 
         team = task.users
         db.session.commit()
-        flash(f"{user.username} successfully added")
+        flash(f"{user.username} successfully added","success")
         return redirect(url_for('hello_each_task', task_id=task_id, team=team))
     except:
-        flash("Sorry, couldn't query the database")
+        flash("Sorry, couldn't query the database","error")
         return redirect(url_for('hello_each_task', task_id=task_id))
 
 
@@ -702,15 +743,18 @@ def hello_new_task():
                 user.assigned_tasks.append(task)
                 db.session.commit()
                 
-                flash('Task created successfully!')
+                flash('Task created successfully!', "success")
                 task_id = task.id
                 return redirect(url_for('hello_each_task',task_id=task_id, notices=notices))
 
             except Exception as e:
-                flash(f'Error creating task: {str(e)}')
-                return render_template("new_task.html", notices=notices)
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{field.capitalize()}: {error}", category='error')
         else:
-            flash(form.errors, category='error')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"{field.capitalize()}: {error}", category='error')
             return render_template('new_task.html', notices=notices)
 
 
@@ -723,8 +767,8 @@ def hello_each_task(task_id, team=None, notice_id=None):
     notices = current_user.notes
 
     if current_user not in team:
-        flash(f'Cannnot access that task')
-        return render_template("dashboard.html", task=task)
+        flash(f'Cannnot access that task', "error")
+        return redirect(url_for('hello_dashboard'))
     else:
         try:
             if notice_id is not None:
@@ -792,14 +836,19 @@ def hello_save_task(task_id):
                             user.notes.append(notify)
                     db.session.commit()
 
-                    flash(f'Task updated successfully!')
+                    flash(f'Task updated successfully!', "success")
                     task_id = task.id
                     return redirect(url_for('hello_each_task',task_id=task_id))
+                
             except Exception as e:
-                flash(f'Error saving task: {str(e)}')
-                return render_template("each_task.html", task=task, notices=notices)
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{field.capitalize()}: {error}", category='error')
+                return redirect(url_for('hello_each_task', task=task, notices=notices))
         else:
-            flash(form.errors, category='error')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"{field.capitalize()}: {error}", category='error')
             return render_template('edit_task.html', task=task, notices=notices)
         
         
@@ -831,7 +880,7 @@ def hello_delete_task(task_id):
             if user != current_user:
                 user.notes.append(notify)
         db.session.commit()
-        flash("Task Deleted")
+        flash("Task Deleted", "success")
         return redirect(url_for('hello_dashboard')) 
         
 
@@ -853,7 +902,7 @@ def hello_notices():
             return render_template("notifications.html", notices=notices)
     
     except Exception as e:
-        flash("Error fetching notifications or tasks: {}".format(e))
+        flash("Error fetching notifications or tasks: {}".format(e), "error")
         return render_template("dashboard.html")
 
 @app.route("/onboarding")
@@ -872,7 +921,7 @@ def hello_onboarding_notice():
 
         return render_template("onboarding.html", notices=notices)
     except Exception as e:
-        flash("Error fetching notifications or tasks: {}".format(e))
+        flash("Error fetching notifications or tasks: {}".format(e), "error")
         return render_template("onboarding.html")
     
 @app.route("/calendar/", methods=['GET','POST'])

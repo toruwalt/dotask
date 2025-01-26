@@ -27,25 +27,27 @@
     {% endblock nav_title %}
 
     {% block flash_div %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flash-div">
-            {% for message in messages %}
-              {{ message }}
-            {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     {% endblock flash_div %}
 
     {% block new_task_form %}
-        <form action="{{ url_for('hello_search_user', task_id=task['id']) }}" method="POST">
+        <form action="{{ url_for('hello_search_user', task_id=task['id']) }}" method="POST" autocomplete="off">
             <label for="username">Username</label>
             <input type="text" name="username" class="labels" id="title">
 
             <input type="submit" value="Search">
         </form>
-
     {% endblock new_task_form %}
 
     {% block searched_user %}

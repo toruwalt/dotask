@@ -34,6 +34,60 @@ body {
         cursor: pointer;
     }
 
+    /* Flash Messages Container */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    z-index: 1000;
+  }
+  
+  /* Base Style for Flash Messages */
+  .flash-message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.9;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  /* Categories */
+  .flash-message.success {
+    background-color: #4caf50; /* Green */
+  }
+  
+  .flash-message.error {
+    background-color: #f44336; /* Red */
+  }
+  
+  .flash-message.warning {
+    background-color: #ff9800; /* Orange */
+  }
+  
+  .flash-message.info {
+    background-color: #2196f3; /* Blue */
+  }
+  
+  /* Close Button */
+  .flash-message .close-btn {
+    float: right;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  /* Animation for Auto-Hide */
+  .flash-message.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
     .profile-head{
         width: 100%;
         display: flex;
