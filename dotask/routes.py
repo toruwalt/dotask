@@ -228,7 +228,9 @@ def hello_register():
             flash("Account Successfully created", "success")
             return redirect(url_for('hello_login'))
         else:
-            flash(form.errors, category='error')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"{field.capitalize()}: {error}", category='error')
             return redirect(url_for('hello_register'))
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -278,7 +280,9 @@ def hello_login():
                     flash("Invalid login credentials. Please check your email.", category='error')
                     return render_template('login.html')
         else:
-            flash(form.errors, category='error')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"{field.capitalize()}: {error}", category='error')
             return render_template('login.html')
        
 
