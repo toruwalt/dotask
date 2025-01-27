@@ -39,29 +39,29 @@
 }
 
 .google-btn {
-    background-color: #677897;
+    background-color: #4b576c;
     color: #ffffff;
 }
 
 .google-btn:hover {
-    background-color: #4b576c;
+    background-color: #677897;
 }
 
 .facebook-btn {
-    background-color: #1877f2;
+    background-color: #145dbf;
     color: #ffffff;
 }
 
 .facebook-btn:hover {
-    background-color: #145dbf;
+    background-color: #1877f2;
 }
 
 .email-btn {
-    background-color: #f12727;
+    background-color: #d32323;
     color: #fff;
     border: 1px solid #ccc;
 }
 
 .email-btn:hover {
-    background-color: #d32323;
+    background-color: #f12727;
 }
