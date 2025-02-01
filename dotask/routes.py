@@ -361,6 +361,7 @@ def hello_profile():
 from werkzeug.utils import secure_filename
 
 @app.route('/upload', methods=['POST'])
+@login_required
 def upload():
     try:
         # Check if the request contains a file
@@ -701,6 +702,7 @@ def hello_cancelled_tasks():
 
 
 @app.route("/new_task", methods=['GET', 'POST'])
+@login_required
 def hello_new_task():
     """
     Creates a new task. (User must be logged in).
@@ -929,6 +931,7 @@ def hello_onboarding_notice():
         return render_template("onboarding.html")
     
 @app.route("/calendar/", methods=['GET','POST'])
+@login_required
 def hello_calendar():
     notices = current_user.notes
   
@@ -986,6 +989,7 @@ def hello_calendar():
       return render_template("dashboard.html", notices=notices)
 
 @app.route("/logout")
+@login_required
 def hello_logout():
     """
     Logs out the current user and redirects to the login page.
