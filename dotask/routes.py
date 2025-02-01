@@ -15,6 +15,8 @@ from dotask import login_manager, current_user, login_user, login_required, logo
 from werkzeug.utils import secure_filename
 from urllib.parse import urlparse, parse_qs
 
+from dotask.helpers.utils import go_back_two
+
 
 @app.after_request
 def after_request(response):
@@ -887,8 +889,7 @@ def hello_delete_task(task_id):
                 user.notes.append(notify)
         db.session.commit()
         flash("Task Deleted", "success")
-        return redirect(url_for('hello_dashboard')) 
-        
+        return redirect(url_for('go_back_two'))
 
 @app.route("/notifications")
 @login_required

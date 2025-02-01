@@ -333,24 +333,6 @@
         justify-content: center;
     }
 
-    .flashes {
-        color: #FEC347;
-    }
-    
-    .flash-success {
-        color: green;
-        background-color: #f0fff0;
-        border: 1px solid green;
-        padding: 10px;
-    }
-    
-    .flash-error {
-        color: red;
-        background-color: #ffdddd;
-        border: 1px solid red;
-        padding: 10px;
-    }
-
     h2{
         margin-left: 5%;   
     }
@@ -421,7 +403,9 @@
 
     .pagination {
         background-color: white;
-        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-self: center;
         margin: 20px 0;
         padding: 1%;
         margin: 2% 5%;
